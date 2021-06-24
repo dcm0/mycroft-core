@@ -74,6 +74,8 @@ def main(ready_hook=on_ready, error_hook=on_error, stopping_hook=on_stopping):
     only the GUI bus will be started.
     """
     # Read the system configuration
+    # doesn't conform to the normal config practices, so user level doesn't override.
+    # manually doing it for the moment in /etc/mycroft/mycroft.conf
     system_config = LocalConf(SYSTEM_CONFIG)
     platform = system_config.get("enclosure", {}).get("platform")
 

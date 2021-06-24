@@ -23,6 +23,7 @@ class EnclosureEyes:
     def __init__(self, bus, writer):
         self.bus = bus
         self.writer = writer
+        self.isOpen = False
 
         self._num_pixels = 1 * 2
         self._current_rgb = [(255, 255, 255) for i in range(self._num_pixels)]
@@ -55,9 +56,11 @@ class EnclosureEyes:
 
     def on(self, event=None):
         self.writer.write("OPEN")
+        self.isOpen = True
 
     def off(self, event=None):
         self.writer.write("CLOSE")
+        self.isOpen = False
 
     def blink(self, event=None):
         side = "b"
@@ -115,6 +118,9 @@ class EnclosureEyes:
         self.writer.write("eyes.volume=" + str(volume))
 
     def reset(self, event=None):
+        if self.isOpen == False:
+            self.writer.write("OPEN")
+            self.isOpen = True
         self.writer.write("HOME")
 
     def spin(self, event=None):
