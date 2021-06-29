@@ -15,8 +15,8 @@
 
 class EnclosureEyes:
     """
-    Listens to enclosure commands for Mycroft's Eyes.
-
+    Listens to enclosure commands for Tama's Eyes
+    
     Performs the associated command on Arduino by writing on the Serial port.
     """
 
@@ -41,6 +41,7 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.spin', self.spin)
         self.bus.on('enclosure.eyes.timedspin', self.timed_spin)
         self.bus.on('enclosure.eyes.reset', self.reset)
+        self.bus.on('enclosure.eyes.yellow', self.yellow)
         self.bus.on('enclosure.eyes.setpixel', self.set_pixel)
         self.bus.on('enclosure.eyes.fill', self.fill)
 
@@ -73,8 +74,8 @@ class EnclosureEyes:
 
     def look(self, event=None):
         if event and event.data:
-            side = event.data.get("side", "")
-            self.writer.write("eyes.look=" + side)
+            side = event.data.get("data", "")
+            self.writer.write(side)
 
     def color(self, event=None):
         r, g, b = 255, 255, 255
@@ -85,6 +86,11 @@ class EnclosureEyes:
         color = (r * 65536) + (g * 256) + b
         self._current_rgb = [(r, g, b) for i in range(self._num_pixels)]
         self.writer.write("COL:" + str(r) + ":" + str(g) + ":" + str(b))
+
+    def yellow(self, event=None):
+        #self._current_rgb = [(r, g, b) for i in range(self._num_pixels)]
+        #should update these calles to use the real colour set function
+        self.writer.write("YELLOW")
 
     def set_pixel(self, event=None):
         idx = 0

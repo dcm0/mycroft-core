@@ -46,6 +46,10 @@ from mycroft.util.log import LOG
 
 from .data_structures import RollingMean, CyclicAudioBuffer
 
+#Lets see if we can dump DOA on the bus using hid - already added to requirement/requirements.txt
+import hid # https://pypi.python.org/pypi/hidapi aka https://github.com/trezor/cython-hidapi
+
+
 
 WakeWordData = namedtuple('WakeWordData',
                           ['audio', 'found', 'stopped', 'end_audio'])
@@ -132,6 +136,7 @@ class MutableMicrophone(Microphone):
                  mute=False):
         Microphone.__init__(self, device_index=device_index,
                             sample_rate=sample_rate, chunk_size=chunk_size)
+                            
         self.muted = False
         if mute:
             self.mute()
@@ -325,6 +330,14 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
 
     # Time between pocketsphinx checks for the wake word
     SEC_BETWEEN_WW_CHECKS = 0.2
+    
+    # Set up the HID driver
+    # Have to doublecheck these are the right ones
+    RESPEAKER_VENDOR_ID = 0x2886
+    RESPEAKER_PRODUCT_ID = 0x07
+    _dev = hid.device()
+    _dev.open(RESPEAKER_VENDOR_ID, RESPEAKER_PRODUCT_ID)
+        
 
     def __init__(self, wake_word_recognizer, watchdog=None):
         self._watchdog = watchdog or (lambda: None)  # Default to dummy func
@@ -397,6 +410,22 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
     def calc_energy(sound_chunk, sample_width):
         return audioop.rms(sound_chunk, sample_width)
 
+    # See if there's any auto report (VAD and voice angle), if not, return immediately with None
+    def read_auto_report():
+        # Temporarily turn off blocking, the auto report only comes in on VAD changes
+        _dev.set_nonblocking(1)
+        ret = _dev.read(9)
+        _dev.set_nonblocking(0)
+        if(len(ret)):
+            # Make sure it's the auto report register (0xFF)
+            if(ret[0] == 0xFF):
+                # Angle is two bytes
+                angle = ret[6]*256 + ret[5]
+                # VAD is 2 for speaking, 0 for not, 1 for ???
+                vad = ret[4]
+                return (angle, vad)
+        return (None, None)
+
     def _record_phrase(
         self,
         source,
@@ -466,6 +495,9 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
             if num_chunks % 10 == 0:
                 self._watchdog()
                 self.write_mic_level(energy, source)
+                #Lets do the DOA here as wlel
+                (angle, vad) = read_auto_report()
+                emitter.emit("recognizer_loop:DOA", '{"angle":'+angle+', "vad":'+vad+'}')
 
         return byte_data
 
@@ -708,6 +740,8 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
         #       speech is detected, but there is no code to actually do that.
         self.adjust_for_ambient_noise(source, 1.0)
 
+        
+        
         LOG.debug("Waiting for wake word...")
         ww_data = self._wait_until_wake_word(source, sec_per_buffer)
 

@@ -29,6 +29,7 @@ from mycroft.audio import wait_while_speaking
 from mycroft.client.enclosure.tama.arduino import EnclosureArduino
 from mycroft.client.enclosure.tama.eyes import EnclosureEyes
 from mycroft.client.enclosure.tama.mouth import EnclosureMouth
+from mycroft.client.enclosure.tama.gaze import EnclosureGaze
 from mycroft.enclosure.display_manager import \
     init_display_manager_bus_connection
 from mycroft.configuration import Configuration, LocalConf, USER_CONFIG
@@ -70,6 +71,8 @@ class EnclosureReader(Thread):
         self.serial = serial
         self.bus = bus
         self.lang = lang or 'en-us'
+        
+        
         self.start()
 
         # Notifications from mycroft-core
@@ -265,8 +268,8 @@ class EnclosureWriter(Thread):
             self.signs[1]=b'\x01'
         else:
             self.signs[1]=b'\xFF'
-        print("Movement:",self.current_pos[0], self.current_pos[1], x, y)
-        print("sign x/y:",self.signs[0],self.signs[1])
+        LOG.info("Movement:",self.current_pos[0], self.current_pos[1], x, y)
+        LOG.info("sign x/y:",self.signs[0],self.signs[1])
     
     def hsv2rgb(h,s,v):
         return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
@@ -423,7 +426,7 @@ class EnclosureWriter(Thread):
                     movement(20,0)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
-                    print("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
+                    LOG.info("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
                     self.serial.write(self.signs[0])
                     self.serial.write(self.valx.to_bytes(1, 'little'))
                     self.serial.write(self.signs[1])
@@ -435,7 +438,7 @@ class EnclosureWriter(Thread):
                     movement(-40,0)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
-                    print("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
+                    LOG.info("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
                     self.serial.write(self.signs[0])
                     self.serial.write(self.valx.to_bytes(1, 'little'))
                     self.serial.write(self.signs[1])
@@ -447,7 +450,7 @@ class EnclosureWriter(Thread):
                     movement(40,0)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
-                    print("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
+                    LOG.info("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
                     self.serial.write(self.signs[0])
                     self.serial.write(self.valx.to_bytes(1, 'little'))
                     self.serial.write(self.signs[1])
@@ -459,7 +462,7 @@ class EnclosureWriter(Thread):
                     movement(-40,0)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
-                    print("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
+                    LOG.info("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
                     self.serial.write(self.signs[0])
                     self.serial.write(self.valx.to_bytes(1, 'little'))
                     self.serial.write(self.signs[1])
@@ -471,7 +474,7 @@ class EnclosureWriter(Thread):
                     movement(20,0)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
-                    print("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
+                    LOG.info("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
                     self.serial.write(self.signs[0])
                     self.serial.write(self.valx.to_bytes(1, 'little'))
                     self.serial.write(self.signs[1])
@@ -554,20 +557,20 @@ class EnclosureWriter(Thread):
                     eye=(str)(mylist[1]) #EYE L/R
                     delta=(int)(mylist[2]) #Change in brighness
                     if eye=='L':
-                       print("L has been selected")
+                       LOG.info("L has been selected")
                        self.eye_alphas[0]=delta/100
                     else:
-                       print("R has been selected")
+                       LOG.info("R has been selected")
                        self.eye_alphas[1]=delta/100
-                    print("--------------------------------")
-                    print("L")
-                    print(self.eye_alphas[0])
-                    print((int)(self.current_col[0]*self.eye_alphas[0]))
-                    print((int)(self.current_col[1]*self.eye_alphas[0]))
-                    print((int)(self.current_col[2]*self.eye_alphas[0]))
-                    print("---------------------------------")
-                    print("R")
-                    print(self.eye_alphas[1])
+                    LOG.info("--------------------------------")
+                    LOG.info("L")
+                    LOG.info(self.eye_alphas[0])
+                    LOG.info((int)(self.current_col[0]*self.eye_alphas[0]))
+                    LOG.info((int)(self.current_col[1]*self.eye_alphas[0]))
+                    LOG.info((int)(self.current_col[2]*self.eye_alphas[0]))
+                    LOG.info("---------------------------------")
+                    LOG.info("R")
+                    LOG.info(self.eye_alphas[1])
                     self.serial.write('C'.encode())
                     self.serial.write(((int)(self.current_col[0]*self.eye_alphas[0])).to_bytes(1, 'little'))
                     self.serial.write(((int)(self.current_col[1]*self.eye_alphas[0])).to_bytes(1, 'little'))
@@ -619,8 +622,8 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.valy.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
-                    print("Current position ")
-                    print(self.current_pos)
+                    LOG.info("Current position ")
+                    LOG.info(self.current_pos)
                 if  line=='\x1b[C\n':
                     self.current_pos[0]=self.current_pos[0]+1
 
@@ -645,9 +648,9 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.valy.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
-                    print("Current position ")
-                    print(self.current_pos)
-                    print(self.valy)
+                    LOG.info("Current position ")
+                    LOG.info(self.current_pos)
+                    LOG.info(self.valy)
                 if  line=='\x1b[A\n':
                     self.current_pos[1]=self.current_pos[1]+1
 
@@ -671,8 +674,8 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.valy.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
-                    print("Current position ")
-                    print(self.current_pos)
+                    LOG.info("Current position ")
+                    LOG.info(self.current_pos)
 
                 if  line=='\x1b[B\n':
                     self.current_pos[1]=self.current_pos[1]-1
@@ -697,8 +700,8 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.valy.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
-                    print("Current position ")
-                    print(self.current_pos)
+                    LOG.info("Current position ")
+                    LOG.info(self.current_pos)
                 # Taking this from the tama_2019 tama.py file
 
                 self.commands.task_done()
@@ -754,6 +757,7 @@ class EnclosureTama(Enclosure):
         self.eyes = EnclosureEyes(self.bus, self.writer)
         self.mouth = EnclosureMouth(self.bus, self.writer)
         self.system = EnclosureArduino(self.bus, self.writer)
+        self.gaze = EnclosureGaze(self.bus, self.writer)
         self.__register_events()
         self.__reset()
         self.arduino_responded = True
