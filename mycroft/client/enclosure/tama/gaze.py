@@ -14,11 +14,18 @@
 
 from threading import Thread
 import subprocess
+import mycroft.client.enclosure.tama.hvc.p2def
+import mycroft.client.enclosure.tama.hvc.utils
+from mycroft.client.enclosure.tama.hvc.serial_connector import serial_connector
+from mycroft.client.enclosure.tama.hvc.hvc_p2_api import HVCP2Api
+from mycroft.client.enclosure.tama.hvc.hvc_tracking_result import HVCTrackingResult
+from mycroft.client.enclosure.tama.hvc.grayscale_image import GrayscaleImage
 
+class CameraManager(threading.Thread):
 
-class CameraManager:
-
-    def __init__(bus, writer, threshold_time, wake_threshold, min_angle, max_angle):
+    def __init__(self, threadID, bus, writer, threshold_time, wake_threshold, min_angle, max_angle, portinfo, baudrate):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
         self.bus = bus
         self.writer = writer
         self.wake_threshold = wake_threshold
@@ -29,48 +36,106 @@ class CameraManager:
         self.volume_dropped = False
         self.count = 0
         self.iloop = 0
+        self.cancelCounter = 0
+        self.cancelThreshold = 8
         self.threshold_time = threshold_time
+        self.portinfo = portinfo
+        self.baudrate = baudrate
+        self.other = None
+        self.detecting = False
         
-    def lookEvent(event, other):
-        command = event.data.get("data")
-        #First update the threshold counts
-        etime = time.time_ns()
-        if (etime - self.last) <= self.threshold_time:
-            self.count += 1
-        else:
-            self.count = 1
-        self.last = etime
+        self.connector = SerialConnector()
+        self.hvc_p2_api = HVCP2Api(self.connector, exec_func, p2def.USE_STB_ON)
+
+        # The 1st connection. (It should be 9600 baud.)
+        self.hvc_p2_api.connect(self.portinfo, p2def.DEFAULT_BAUD, 10)
+        _check_connection(self.hvc_p2_api)
+        self.hvc_p2_api.set_uart_baudrate(self.baudrate) # Changing to the specified baudrate
+        self.hvc_p2_api.disconnect()
+
+        # The 2nd connection in specified baudrate
+        hvc_p2_api.connect(self.portinfo, self.baudrate, 30)
+        _check_connection(self.hvc_p2_api)
+        try:
+            # Sets HVC-P2 parameters
+            _set_hvc_p2_parameters(self.hvc_p2_api)
+            # Sets STB library parameters
+            _set_stb_parameters(self.hvc_p2_api)
+            self.hvc_tracking_result = HVCTrackingResult()
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
         
-        #lets see if we have to start or claim an interaction
-        if self.iloop == 0 && self.count > self.wake_threshold:
-            self.talking = True
-            self.bus.emit(Message('recognizer_loop:wakeword'))
-        elif !other.talking && !self.talking && self.iloop < 5 && self.count > self.wake_threshold:
-            #lets claim this interaction even if we didn't start it (wakeword)
-            self.talking = True;
         
-        #Should we move the eyes:
-        #This should cover up to ouput
-        if !other.talking && self.iloop < 5:
-            self.bus.emit(Message('enclosure.eyes.look', command))
-            
-        #If we are in spoken output, just look anyway
-        if self.iloop > 4:
-            self.bus.emit(Message('enclosure.eyes.look', command))
-            
-    
-    def cancelEvent(event, other):
-        if self.talking:
-            #If we are in the recognition phase then cancel
-            if self.iloop < 5:
-                self.bus.emit(Message('mycroft.stop'))
-                self.talking = False
-                self.count = 0
+    def run(self):
+        #start = time.time()
+        (res_code, stb_status) = hvc_p2_api.execute(OUT_IMG_TYPE_NONE, self.hvc_tracking_result, None)
+        #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
+        self.detecting = True
+        while(self.detecting):
+            if len(self.hvc_tracking_result.faces) > 0:
+                for i in range(len(self.hvc_tracking_result.faces)):
+                    face = self.hvc_tracking_result.faces[i]
+                    yaw = face.gaze.gazeLR
+                    pitch = face.gaze.gazeUD
+                    if (pitch<10&&pitch>-2&&yaw<5&&yaw>-5):
+                        x = face.direction.X
+                        y = face.direction.Y
+                        (x_sign,x_m,y_sign,y_m)=getdeg(x,y)
+                        x_m = x_m - 15 #15 = camera offset angle
+                        x_m=abs(x_m)
+                        y_m=abs(y_m)
+                        
+                        etime = time.time_ns()
+                        if (etime - self.last) <= self.threshold_time:
+                            self.count += 1
+                        else:
+                            self.count = 1
+                        self.last = etime
+                        
+                        #lets see if we have to start or claim an interaction
+                        if self.iloop == 0 && self.count > self.wake_threshold:
+                            self.talking = True
+                            self.bus.emit(Message('recognizer_loop:wakeword'))
+                        elif !self.other.talking && !self.talking && self.iloop < 5 && self.count > self.wake_threshold:
+                            #lets claim this interaction even if we didn't start it (wakeword)
+                            self.talking = True;
+                        
+                        #Should we move the eyes:
+                        
+                        update_pos='MOVE:'+x_sign+":"+x_m+":"+y_sign+":"+y_m+":\n"
+                        data = '{"data":'+update_pos+'}'
+                        
+                        #This should cover up to ouput
+                        if !self.other.talking && self.iloop < 5:
+                            self.bus.emit(Message('enclosure.eyes.look', data))
+                            
+                        #If we are in spoken output, just look anyway
+                        if self.iloop > 4:
+                            self.bus.emit(Message('enclosure.eyes.look', data))
+                        
+                        
+                        self.cancelCounter = 0
+                    else:
+                        if(self.cancelCounter == self.cancelThreshold):
+                            if self.talking:
+                                #If we are in the recognition phase then cancel
+                                if self.iloop < 5:
+                                    self.bus.emit(Message('mycroft.stop'))
+                                    self.talking = False
+                                    self.count = 0
+                                else:
+                                    #If we are giving output and the ownser isn't watching?
+                                    #do we bother to check of other has gaze?
+                                    self.bus.emit(Message('mycroft.volume.decrease','{"play_sound": False}'))
+                                    self.volume_dropped = True
+                        self.cancelCounter += 1
             else:
-                #If we are giving output and the ownser isn't watching?
-                #do we bother to check of other has gaze?
-                self.bus.emit(Message('mycroft.volume.decrease','{"play_sound": False}'))
-                self.volume_dropped = True
+                self.cancelCounter +=1
+                
+        #Out of the main loop so cleanup
+        self.hvc_p2_api.set_uart_baudrate(p2def.DEFAULT_BAUD)
+        self.hvc_p2_api.disconnect()
+        
                 
     def volumeReset():
         if self.volume_dropped:
@@ -86,9 +151,9 @@ class CameraManager:
             
     def setDOA(angle):
         if angle<self.max_angle && angle>self.min_angle:
-            if other.talking && !self.talking:
+            if self.other.talking && !self.talking:
                 self.talking = True
-                other.talking = False
+                self.other.talking = False
         
 
 class EnclosureGaze:
@@ -132,16 +197,23 @@ class EnclosureGaze:
         #Camera Variables
         #Keeps trying to keep the logic in a class so my brain doesn't explode
         #with copy and paste code
-        self.cameraR = CameraManager(bus, writer, threshold_time, wake_threshold, 10, 180)
-        self.cameraL = CameraManager(bus, writer, threshold_time, wake_threshold, -10, -180)
+        #threadID, bus, writer, threshold_time, wake_threshold, min_angle, max_angle, portinfo, baudrate
+        self.cameraR = CameraManager(1, bus, writer, threshold_time, wake_threshold, 10, 180, '/dev/ttyACM0', 921600)
+        self.cameraL = CameraManager(2, bus, writer, threshold_time, wake_threshold, -10, -180, '/dev/ttyACM1', 921600)
+        
+        self.cameraR.other = self.cameraL
+        self.cameraL.other = self.cameraR
+        
+        self.cameraR.start()
+        self.cameraL.start()
         
         self.__init_events()
 
     def __init_events(self):
-        self.bus.on('enclosure.eyes.right', self.right)
-        self.bus.on('enclosure.eyes.right_cancel', self.right_cancel)
-        self.bus.on('enclosure.eyes.left', self.left)
-        self.bus.on('enclosure.eyes.left_cancel', self.left_cancel)
+        #self.bus.on('enclosure.eyes.right', self.right)
+        #self.bus.on('enclosure.eyes.right_cancel', self.right_cancel)
+        #self.bus.on('enclosure.eyes.left', self.left)
+        #self.bus.on('enclosure.eyes.left_cancel', self.left_cancel)
         self.bus.on('recognizer_loop:utterance', self.stateUpdate)
         self.bus.on('recognizer_loop:speech.recognition.unknown', self.stateUpdate)
         self.bus.on('recognizer_loop:record_begin', self.stateUpdate)
