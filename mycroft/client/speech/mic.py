@@ -47,7 +47,8 @@ from mycroft.util.log import LOG
 from .data_structures import RollingMean, CyclicAudioBuffer
 
 #Lets see if we can dump DOA on the bus using hid - already added to requirement/requirements.txt
-import hid # https://pypi.python.org/pypi/hidapi aka https://github.com/trezor/cython-hidapi
+#Commenting this out for now since I can't get it to connect
+#import hid # https://pypi.python.org/pypi/hidapi aka https://github.com/trezor/cython-hidapi
 
 
 
@@ -333,10 +334,10 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
     
     # Set up the HID driver
     # Have to doublecheck these are the right ones
-    RESPEAKER_VENDOR_ID = 0x2886
-    RESPEAKER_PRODUCT_ID = 0x07
-    _dev = hid.device()
-    _dev.open(RESPEAKER_VENDOR_ID, RESPEAKER_PRODUCT_ID)
+    #RESPEAKER_VENDOR_ID = 0x2886
+    #RESPEAKER_PRODUCT_ID = 0x07
+    #_dev = hid.device()
+    #_dev.open(RESPEAKER_VENDOR_ID, RESPEAKER_PRODUCT_ID)
         
 
     def __init__(self, wake_word_recognizer, watchdog=None):
@@ -496,8 +497,8 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
                 self._watchdog()
                 self.write_mic_level(energy, source)
                 #Lets do the DOA here as wlel
-                (angle, vad) = read_auto_report()
-                emitter.emit("recognizer_loop:DOA", '{"angle":'+angle+', "vad":'+vad+'}')
+                #(angle, vad) = read_auto_report()
+                #emitter.emit("recognizer_loop:DOA", '{"angle":'+angle+', "vad":'+vad+'}')
 
         return byte_data
 
