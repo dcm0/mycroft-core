@@ -48,21 +48,33 @@ class CameraManager(Thread):
 
         self.connector = SerialConnector()
         self.hvc_p2_api = HVCP2Api(self.connector, exec_func, p2def.USE_STB_ON)
-
+        LOG.info("Creating connections for camera "+self.threadID)
         # The 1st connection. (It should be 9600 baud.)
         self.hvc_p2_api.connect(self.portinfo, p2def.DEFAULT_BAUD, 10)
-        check_connection(self.hvc_p2_api)
+        try:
+            check_connection(self.hvc_p2_api)
+        except:
+            LOG.info("Connection check failed "+self.threadID)
+
         self.hvc_p2_api.set_uart_baudrate(self.baudrate) # Changing to the specified baudrate
         self.hvc_p2_api.disconnect()
-
+        LOG.info("Disconnecting setup event "+self.threadID)
         # The 2nd connection in specified baudrate
         self.hvc_p2_api.connect(self.portinfo, self.baudrate, 30)
-        check_connection(self.hvc_p2_api)
+        LOG.info("Main connection event "+self.threadID)
+        try:
+            check_connection(self.hvc_p2_api)
+        except:
+            LOG.info("Connection check failed "+self.threadID)
+
+
         try:
             # Sets HVC-P2 parameters
             set_hvc_p2_parameters(self.hvc_p2_api)
+            LOG.info("Parameters sent "+self.threadID)
             # Sets STB library parameters
             set_stb_parameters(self.hvc_p2_api)
+            LOG.info("Stb Sent "+self.threadID)
             self.hvc_tracking_result = HVCTrackingResult()
         except Exception as e:
             LOG.error("Unexpected error: {0}".format(e))
@@ -70,10 +82,13 @@ class CameraManager(Thread):
 
     def run(self):
         #start = time.time()
+        LOG.info("Thread started "+self.threadID)
         (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, None)
+        LOG.info("Omron thread spawnedt "+self.threadID + " - " + res_code + "  -  " + stb_status)
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
+            self.sleep(0.1)     
             if len(self.hvc_tracking_result.faces) > 0:
                 for i in range(len(self.hvc_tracking_result.faces)):
                     face = self.hvc_tracking_result.faces[i]
