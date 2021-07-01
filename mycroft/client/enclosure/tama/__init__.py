@@ -710,6 +710,11 @@ class EnclosureWriter(Thread):
                 self.commands.task_done()
             except Exception as e:
                 LOG.error("Writing error: {0}".format(e))
+                print(
+                    type(e).__name__,          # TypeError
+                    __file__,                  # /tmp/example.py
+                    e.__traceback__.tb_lineno  # 2
+                )
 
     def write(self, command):
         self.commands.put(str(command))

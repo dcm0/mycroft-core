@@ -90,13 +90,12 @@ class CameraManager(Thread):
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
-            time.sleep(0.2)
+            #time.sleep(0.2)
             (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, self.image)
             if len(self.hvc_tracking_result.faces) > 0:
                 LOG.info("Face Detected "+str(self.threadID))
                 try:
                     for i in range(len(self.hvc_tracking_result.faces)):
-                        LOG.info("Face  "+str(self.threadID))
                         face = self.hvc_tracking_result.faces[i]
                         if face.gaze is not None: 
                             yaw = face.gaze.gazeLR
@@ -113,10 +112,10 @@ class CameraManager(Thread):
                                 y_m=abs(y_m)
                                 LOG.info("x - y calculated "+str(x_m)+"/"+str(y_m)+" "+str(self.threadID))
                                 etime = time.time_ns()
-                                if (etime - self.last) <= self.threshold_time*1000000: #convert from mili to nanos
-                                    self.count += 1
+                                if (etime - self.last) <= self.threshold_time*2000000: #convert from mili to nanos
+                                    self.count += 1 
                                 else:
-                                    LOG.info("Too Slow!  "+str(etime - self.last)+" / " + str(self.threshold_time)+ " "+str(self.threadID))    
+                                    LOG.info("Too Slow!  "+str(etime - self.last)+" / " + str(self.threshold_time*2000000)+ " "+str(self.threadID))    
                                     self.count = 1
                                 self.last = etime
                                 LOG.info("count  "+str(self.count)+" "+str(self.threadID))
