@@ -14,7 +14,7 @@
 
 from threading import Thread
 import subprocess
-import mycroft.client.enclosure.tama.hvc.p2def as p2def
+import mycroft.client.enclosure.tama.hvc.p2def
 import mycroft.client.enclosure.tama.hvc.utils
 from mycroft.client.enclosure.tama.hvc.serial_connector import SerialConnector
 from mycroft.client.enclosure.tama.hvc.hvc_p2_api import HVCP2Api
@@ -45,7 +45,7 @@ class CameraManager(Thread):
         self.detecting = False
 
         self.connector = SerialConnector()
-        self.hvc_p2_api = HVCP2Api(self.connector, p2def.exec_func, p2def.USE_STB_ON)
+        self.hvc_p2_api = HVCP2Api(self.connector, utils.exec_func, p2def.USE_STB_ON)
 
         # The 1st connection. (It should be 9600 baud.)
         self.hvc_p2_api.connect(self.portinfo, p2def.DEFAULT_BAUD, 10)
