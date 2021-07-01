@@ -145,6 +145,7 @@ class EnclosureReader(Thread):
 
         if "unit.shutdown" in data:
             # Eyes to soft gray on shutdown
+            self.bus.emit(Message("enclosure.gaze.shutdown"))
             self.bus.emit(Message("enclosure.eyes.color",
                                   {'r': 70, 'g': 65, 'b': 69}))
             self.bus.emit(
