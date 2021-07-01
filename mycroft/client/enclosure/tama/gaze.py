@@ -103,8 +103,8 @@ class CameraManager(Thread):
                         LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" "+str(self.threadID))
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                             LOG.info("Look  "+str(face))
-                            x = face.direction.X
-                            y = face.direction.Y
+                            x = face.detection.X
+                            y = face.detection.Y
                             LOG.info("Calc directions  "+str(x) + " " + str(y)+ " " + str(self.threadID))
                             (x_sign,x_m,y_sign,y_m)=getdeg(x,y)
                             x_m = x_m - 15 #15 = camera offset angle
