@@ -21,7 +21,7 @@ from mycroft.client.enclosure.tama.hvc.hvc_p2_api import HVCP2Api
 from mycroft.client.enclosure.tama.hvc.hvc_tracking_result import HVCTrackingResult
 from mycroft.client.enclosure.tama.hvc.grayscale_image import GrayscaleImage
 
-class CameraManager(threading.Thread):
+class CameraManager(Thread):
 
     def __init__(self, threadID, bus, writer, threshold_time, wake_threshold, min_angle, max_angle, portinfo, baudrate):
         threading.Thread.__init__(self)
