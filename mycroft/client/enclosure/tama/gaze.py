@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from mycroft.messagebus.message import Message
 from threading import Thread
 import subprocess
 import mycroft.client.enclosure.tama.hvc.p2def as p2def
@@ -68,7 +69,7 @@ class CameraManager(Thread):
 
     def run(self):
         #start = time.time()
-        (res_code, stb_status) = hvc_p2_api.execute(OUT_IMG_TYPE_NONE, self.hvc_tracking_result, None)
+        (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, None)
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
@@ -98,7 +99,7 @@ class CameraManager(Thread):
                             self.bus.emit(Message('recognizer_loop:wakeword'))
                         elif (self.other.talking == False) and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold):
                             #lets claim this interaction even if we didn't start it (wakeword)
-                            self.talking = True;
+                            self.talking = True
 
                         #Should we move the eyes:
 
@@ -137,19 +138,19 @@ class CameraManager(Thread):
         self.hvc_p2_api.disconnect()
 
 
-    def volumeReset():
+    def volumeReset(self):
         if self.volume_dropped:
             self.bus.emit(Message('mycroft.volume.increase','{"play_sound": False}'))
             self.volume_dropped = False
 
-    def setLoop(loop):
+    def setLoop(self, loop):
         self.iloop = loop
         if self.iloop == 6:
             self.talking = False
             self.count = 0
             self.iloop = 0
 
-    def setDOA(angle):
+    def setDOA(self, angle):
         if angle<self.max_angle and angle>self.min_angle:
             if (self.other.talking == True) and (self.talking == False):
                 self.talking = True
@@ -296,7 +297,7 @@ class EnclosureGaze:
                 self.updateLoop(5)
 
             if event.msg_type == 'recognizer_loop:audio_output_end':
-                updateLoop(6)
+                self.updateLoop(6)
                 #cameras update to 0 on this, keep local consistant even if it isn't used
                 self.iloop = 0
 

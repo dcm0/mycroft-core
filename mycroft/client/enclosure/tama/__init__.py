@@ -257,7 +257,7 @@ class EnclosureWriter(Thread):
         
         self.start()
 
-    def movement(x,y):
+    def movement(self, x,y):
         self.current_pos[0]=self.current_pos[0]+x
         self.current_pos[1]=self.current_pos[1]+y
         if self.current_pos[0]<0:
@@ -393,7 +393,7 @@ class EnclosureWriter(Thread):
                     self.serial.write('M'.encode())
                     self.val1=1
                     self.val0=0
-                    movement(30,30)
+                    self.movement(30,30)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     self.serial.write(self.signs[0])
@@ -408,7 +408,7 @@ class EnclosureWriter(Thread):
                     self.serial.write('M'.encode())
                     self.val1=1
                     self.val0=0
-                    movement(-30,30)
+                    self.movement(-30,30)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     self.serial.write(self.signs[0])
@@ -423,7 +423,7 @@ class EnclosureWriter(Thread):
                     self.serial.write('M'.encode())
                     self.val1=1
                     self.val0=0
-                    movement(20,0)
+                    self.movement(20,0)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     LOG.info("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
@@ -435,7 +435,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     time.sleep(0.2)
                     self.serial.write('M'.encode())
-                    movement(-40,0)
+                    self.movement(-40,0)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     LOG.info("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
@@ -447,7 +447,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     time.sleep(0.2)
                     self.serial.write('M'.encode())
-                    movement(40,0)
+                    self.movement(40,0)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     LOG.info("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
@@ -459,7 +459,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     time.sleep(0.2)
                     self.serial.write('M'.encode())
-                    movement(-40,0)
+                    self.movement(-40,0)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     LOG.info("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
@@ -471,7 +471,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     time.sleep(0.2)
                     self.serial.write('M'.encode())
-                    movement(20,0)
+                    self.movement(20,0)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     LOG.info("Shake:",self.current_pos[0], self.current_pos[1], self.valx, self.valy, self.signs[0],self.signs[1])
@@ -486,7 +486,7 @@ class EnclosureWriter(Thread):
                     self.serial.write('M'.encode())
                     self.val1=1
                     self.val0=0
-                    movement(0,30)
+                    self.movement(0,30)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     self.serial.write(self.signs[0])
@@ -498,7 +498,7 @@ class EnclosureWriter(Thread):
                     time.sleep(0.3)
                     self.serial.write('M'.encode())
                     self.valx=1
-                    movement(0,-30)
+                    self.movement(0,-30)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     self.serial.write(self.signs[0])
@@ -510,7 +510,7 @@ class EnclosureWriter(Thread):
                     time.sleep(0.3)
                     self.serial.write('M'.encode())
                     self.valx=1
-                    movement(0,30)
+                    self.movement(0,30)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     self.serial.write(self.signs[0])
@@ -521,7 +521,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     time.sleep(0.3)
                     self.serial.write('M'.encode())
-                    movement(0,-30)
+                    self.movement(0,-30)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     self.serial.write(self.signs[0])
@@ -532,7 +532,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                 if line.find('HSV') != -1:
                     mylist = line.split(":")
-                    self.current_col = hsv2rgb((float)(mylist[1]), (float)(mylist[2]), (float)(mylist[3]))
+                    self.current_col = self.hsv2rgb((float)(mylist[1]), (float)(mylist[2]), (float)(mylist[3]))
                     self.serial.write('C'.encode())
                     self.serial.write(((int)(self.current_col[0])).to_bytes(1, 'little'))
                     self.serial.write(((int)(self.current_col[1])).to_bytes(1, 'little'))
