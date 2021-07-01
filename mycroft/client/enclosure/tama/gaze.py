@@ -116,6 +116,7 @@ class CameraManager(Thread):
                                 if (etime - self.last) <= self.threshold_time:
                                     self.count += 1
                                 else:
+                                    LOG.info("Too Slow!  "+str(etime - self.last)+" / " + str(self.threshold_time)+ " "+str(self.threadID))    
                                     self.count = 1
                                 self.last = etime
                                 LOG.info("count  "+str(self.count)+" "+str(self.threadID))
@@ -147,7 +148,7 @@ class CameraManager(Thread):
                                 self.cancelCounter = 0
                             else:
                                 if(self.cancelCounter == self.cancelThreshold):
-                                    LOG.info("Cancel threshold reached, talking: "+self.talking)
+                                    LOG.info("Cancel threshold reached, talking: "+str(self.talking))
                                     if self.talking:
                                         #If we are in the recognition phase then cancel
                                         if self.iloop < 5:

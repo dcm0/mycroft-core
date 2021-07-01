@@ -76,8 +76,8 @@ class EnclosureEyes:
 
     def look(self, event=None):
         if event and event.data:
-            side = event.data.get("data", "")
-            self.writer.write(side)
+            #side = event.data.get("data", "")
+            self.writer.write(event.data)
 
     def color(self, event=None):
         r, g, b = 255, 255, 255
