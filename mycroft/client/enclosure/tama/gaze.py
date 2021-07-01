@@ -16,7 +16,7 @@ from threading import Thread
 import subprocess
 import mycroft.client.enclosure.tama.hvc.p2def
 import mycroft.client.enclosure.tama.hvc.utils
-from mycroft.client.enclosure.tama.hvc.serial_connector import serial_connector
+from mycroft.client.enclosure.tama.hvc.serial_connector import SerialConnector
 from mycroft.client.enclosure.tama.hvc.hvc_p2_api import HVCP2Api
 from mycroft.client.enclosure.tama.hvc.hvc_tracking_result import HVCTrackingResult
 from mycroft.client.enclosure.tama.hvc.grayscale_image import GrayscaleImage
