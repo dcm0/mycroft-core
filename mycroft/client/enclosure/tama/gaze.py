@@ -48,33 +48,33 @@ class CameraManager(Thread):
 
         self.connector = SerialConnector()
         self.hvc_p2_api = HVCP2Api(self.connector, exec_func, p2def.USE_STB_ON)
-        LOG.info("Creating connections for camera "+self.threadID)
+        LOG.info("Creating connections for camera "+str(self.threadID))
         # The 1st connection. (It should be 9600 baud.)
         self.hvc_p2_api.connect(self.portinfo, p2def.DEFAULT_BAUD, 10)
         try:
             check_connection(self.hvc_p2_api)
         except:
-            LOG.info("Connection check failed "+self.threadID)
+            LOG.info("Connection check failed "+str(self.threadID))
 
         self.hvc_p2_api.set_uart_baudrate(self.baudrate) # Changing to the specified baudrate
         self.hvc_p2_api.disconnect()
-        LOG.info("Disconnecting setup event "+self.threadID)
+        LOG.info("Disconnecting setup event "+str(self.threadID))
         # The 2nd connection in specified baudrate
         self.hvc_p2_api.connect(self.portinfo, self.baudrate, 30)
-        LOG.info("Main connection event "+self.threadID)
+        LOG.info("Main connection event "+str(self.threadID))
         try:
             check_connection(self.hvc_p2_api)
         except:
-            LOG.info("Connection check failed "+self.threadID)
+            LOG.info("Connection check failed "+str(self.threadID))
 
 
         try:
             # Sets HVC-P2 parameters
             set_hvc_p2_parameters(self.hvc_p2_api)
-            LOG.info("Parameters sent "+self.threadID)
+            LOG.info("Parameters sent "+str(self.threadID))
             # Sets STB library parameters
             set_stb_parameters(self.hvc_p2_api)
-            LOG.info("Stb Sent "+self.threadID)
+            LOG.info("Stb Sent "+str(self.threadID))
             self.hvc_tracking_result = HVCTrackingResult()
         except Exception as e:
             LOG.error("Unexpected error: {0}".format(e))
@@ -82,9 +82,9 @@ class CameraManager(Thread):
 
     def run(self):
         #start = time.time()
-        LOG.info("Thread started "+self.threadID)
+        LOG.info("Thread started "+str(self.threadID))
         (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, None)
-        LOG.info("Omron thread spawnedt "+self.threadID + " - " + res_code + "  -  " + stb_status)
+        LOG.info("Omron thread spawnedt "+str(self.threadID) + " - " + str(res_code) + "  -  " + str(stb_status))
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
@@ -111,12 +111,12 @@ class CameraManager(Thread):
 
                         #lets see if we have to start or claim an interaction
                         if self.iloop == 0 and self.count > self.wake_threshold:
-                            LOG.info("Starting interaction from gaze "+self.threadID)
+                            LOG.info("Starting interaction from gaze "+str(self.threadID))
                             self.talking = True
                             self.bus.emit(Message('recognizer_loop:wakeword'))
                         elif (self.other.talking == False or self.other.cancelCounter > self.cancelThreshold/2) and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold):
                             #lets claim this interaction even if we didn't start it (wakeword)
-                            LOG.info("Claiming interaction from other/wakeword "+self.threadID)
+                            LOG.info("Claiming interaction from other/wakeword "+str(self.threadID))
                             self.talking = True
 
                         #Should we move the eyes:
@@ -126,12 +126,12 @@ class CameraManager(Thread):
 
                         #This should cover up to ouput
                         if (self.other.talking ==False) and (self.iloop < 5):
-                            LOG.info("Sending look at "+self.iloop + " "+self.threadID)
+                            LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
                             self.bus.emit(Message('enclosure.eyes.look', data))
 
                         #If we are in spoken output, just look anyway
                         if self.iloop > 4:
-                            LOG.info("Sending look at "+self.iloop + " "+self.threadID)
+                            LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
                             self.bus.emit(Message('enclosure.eyes.look', data))
 
                         self.cancelCounter = 0
@@ -141,14 +141,14 @@ class CameraManager(Thread):
                             if self.talking:
                                 #If we are in the recognition phase then cancel
                                 if self.iloop < 5:
-                                    LOG.info("Stopping" + " "+self.threadID)
+                                    LOG.info("Stopping" + " "+str(self.threadID))
                                     self.bus.emit(Message('mycroft.stop'))
                                     self.talking = False
                                     self.count = 0
                                 else:
                                     #If we are giving output and the ownser isn't watching?
                                     #do we bother to check of other has gaze?
-                                    LOG.info("Decrease Volume" + " "+self.threadID)
+                                    LOG.info("Decrease Volume" + " "+str(self.threadID))
                                     self.bus.emit(Message('mycroft.volume.decrease','{"play_sound": False}'))
                                     self.volume_dropped = True
                         self.cancelCounter += 1
@@ -162,12 +162,12 @@ class CameraManager(Thread):
 
     def volumeReset(self):
         if self.volume_dropped:
-            LOG.info("Increasing Volume" + " "+self.threadID)
+            LOG.info("Increasing Volume" + " "+str(self.threadID))
             self.bus.emit(Message('mycroft.volume.increase','{"play_sound": False}'))
             self.volume_dropped = False
 
     def setLoop(self, loop):
-        LOG.info("Interaction loop updated" + " "+self.threadID)
+        LOG.info("Interaction loop updated" + " "+str(self.threadID))
         self.iloop = loop
         if self.iloop == 6:
             self.talking = False
