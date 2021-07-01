@@ -21,6 +21,7 @@ from mycroft.client.enclosure.tama.hvc.serial_connector import SerialConnector
 from mycroft.client.enclosure.tama.hvc.hvc_p2_api import HVCP2Api
 from mycroft.client.enclosure.tama.hvc.hvc_tracking_result import HVCTrackingResult
 from mycroft.client.enclosure.tama.hvc.grayscale_image import GrayscaleImage
+from mycroft.util.log import LOG
 
 class CameraManager(Thread):
 
@@ -63,8 +64,8 @@ class CameraManager(Thread):
             # Sets STB library parameters
             set_stb_parameters(self.hvc_p2_api)
             self.hvc_tracking_result = HVCTrackingResult()
-        except:
-            print("Unexpected error:", sys.exc_info()[0])
+        except Exception as e:
+            LOG.error("Unexpected error: {0}".format(e))
 
 
     def run(self):
@@ -95,10 +96,12 @@ class CameraManager(Thread):
 
                         #lets see if we have to start or claim an interaction
                         if self.iloop == 0 and self.count > self.wake_threshold:
+                            LOG.info("Starting interaction from gaze "+self.threadID)
                             self.talking = True
                             self.bus.emit(Message('recognizer_loop:wakeword'))
                         elif (self.other.talking == False or self.other.cancelCounter > self.cancelThreshold/2) and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold):
                             #lets claim this interaction even if we didn't start it (wakeword)
+                            LOG.info("Claiming interaction from other/wakeword "+self.threadID)
                             self.talking = True
 
                         #Should we move the eyes:
@@ -108,25 +111,29 @@ class CameraManager(Thread):
 
                         #This should cover up to ouput
                         if (self.other.talking ==False) and (self.iloop < 5):
+                            LOG.info("Sending look at "+self.iloop + " "+self.threadID)
                             self.bus.emit(Message('enclosure.eyes.look', data))
 
                         #If we are in spoken output, just look anyway
                         if self.iloop > 4:
+                            LOG.info("Sending look at "+self.iloop + " "+self.threadID)
                             self.bus.emit(Message('enclosure.eyes.look', data))
-
 
                         self.cancelCounter = 0
                     else:
                         if(self.cancelCounter == self.cancelThreshold):
+                            LOG.info("Cancel threshold reached, talking: "+self.talking)
                             if self.talking:
                                 #If we are in the recognition phase then cancel
                                 if self.iloop < 5:
+                                    LOG.info("Stopping" + " "+self.threadID)
                                     self.bus.emit(Message('mycroft.stop'))
                                     self.talking = False
                                     self.count = 0
                                 else:
                                     #If we are giving output and the ownser isn't watching?
                                     #do we bother to check of other has gaze?
+                                    LOG.info("Decrease Volume" + " "+self.threadID)
                                     self.bus.emit(Message('mycroft.volume.decrease','{"play_sound": False}'))
                                     self.volume_dropped = True
                         self.cancelCounter += 1
@@ -140,10 +147,12 @@ class CameraManager(Thread):
 
     def volumeReset(self):
         if self.volume_dropped:
+            LOG.info("Increasing Volume" + " "+self.threadID)
             self.bus.emit(Message('mycroft.volume.increase','{"play_sound": False}'))
             self.volume_dropped = False
 
     def setLoop(self, loop):
+        LOG.info("Interaction loop updated" + " "+self.threadID)
         self.iloop = loop
         if self.iloop == 6:
             self.talking = False
@@ -197,13 +206,15 @@ class EnclosureGaze:
         #with copy and paste code
         #threadID, bus, writer, threshold_time, wake_threshold, min_angle, max_angle, portinfo, baudrate
         self.cameraR = CameraManager(1, self.bus, self.writer, self.threshold_time, self.wake_threshold, 10, 180, '/dev/ttyACM0', 921600)
+        LOG.info("Created R")
         self.cameraL = CameraManager(2, self.bus, self.writer, self.threshold_time, self.wake_threshold, -10, -180, '/dev/ttyACM1', 921600)
-
+        LOG.info("Created L")
         self.cameraR.other = self.cameraL
         self.cameraL.other = self.cameraR
 
         self.cameraR.start()
         self.cameraL.start()
+        LOG.info("Cameras Started")
 
         self.__init_events()
 
@@ -271,6 +282,7 @@ class EnclosureGaze:
         # 5 = playing output
         # 6 = playing output finshed
     def stateUpdate(self, event=None):
+        LOG.info("Status update "+event.msg_type)
         if event:
             if event.msg_type == 'recognizer_loop:wakeword':
                 self.resetVolume()
