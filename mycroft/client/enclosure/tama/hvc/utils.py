@@ -25,6 +25,8 @@ from mycroft.client.enclosure.tama.hvc.serial_connector import SerialConnector
 from mycroft.client.enclosure.tama.hvc.hvc_p2_api import HVCP2Api
 from mycroft.client.enclosure.tama.hvc.hvc_tracking_result import HVCTrackingResult
 from mycroft.client.enclosure.tama.hvc.grayscale_image import GrayscaleImage
+from mycroft.util.log import LOG
+
 
 ###############################################################################
 #  User Config. Please edit here if you need.                                 #
@@ -114,16 +116,21 @@ fr_min_ratio = 60       # Minimum account ratio in complete frame count.
 ###############################################################################
 
 def getdeg(x,y):
+    LOG.info("Calc  ")
     x -= 800
     y -= 600
     x_=1
     y_=1
+    LOG.info("Calc 2 ")
     x_pos = (math.atan(x * math.tan(27 * math.pi / 180) / 800)) * 180 / math.pi #HVC spec X: -27deg to 27deg
+    LOG.info("Calc  3")
     y_pos = 15-(math.atan(y * math.tan(20.5 * math.pi / 180) / 600)) * 180 / math.pi #HVC spec Y:-20.5deg to 20.5deg
+    LOG.info("Calc  4")    
     if (x<0): 
         x_=-1
     if (y<0): 
         y_=-1
+    LOG.info("Calc  5")    
     return (x_,math.round(x_pos), y_, math.round(y_pos))
 
 
