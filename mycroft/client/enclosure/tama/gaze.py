@@ -237,7 +237,7 @@ class EnclosureGaze:
             self.cameraR.lookEvent(event, self.cameraL)
             
                
-     def right_cancel(self, event=None):
+    def right_cancel(self, event=None):
         self.cameraR.cancelEvent(event, self.cameraL)
             
         
