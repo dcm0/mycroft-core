@@ -77,7 +77,7 @@ class CameraManager(threading.Thread):
                     face = self.hvc_tracking_result.faces[i]
                     yaw = face.gaze.gazeLR
                     pitch = face.gaze.gazeUD
-                    if (pitch<10&&pitch>-2&&yaw<5&&yaw>-5):
+                    if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                         x = face.direction.X
                         y = face.direction.Y
                         (x_sign,x_m,y_sign,y_m)=getdeg(x,y)
@@ -93,10 +93,10 @@ class CameraManager(threading.Thread):
                         self.last = etime
                         
                         #lets see if we have to start or claim an interaction
-                        if self.iloop == 0 && self.count > self.wake_threshold:
+                        if self.iloop == 0 and self.count > self.wake_threshold:
                             self.talking = True
                             self.bus.emit(Message('recognizer_loop:wakeword'))
-                        elif !self.other.talking && !self.talking && self.iloop < 5 && self.count > self.wake_threshold:
+                        elif !self.other.talking and !self.talking and self.iloop < 5 and self.count > self.wake_threshold:
                             #lets claim this interaction even if we didn't start it (wakeword)
                             self.talking = True;
                         
@@ -106,7 +106,7 @@ class CameraManager(threading.Thread):
                         data = '{"data":'+update_pos+'}'
                         
                         #This should cover up to ouput
-                        if !self.other.talking && self.iloop < 5:
+                        if !self.other.talking and self.iloop < 5:
                             self.bus.emit(Message('enclosure.eyes.look', data))
                             
                         #If we are in spoken output, just look anyway
@@ -150,8 +150,8 @@ class CameraManager(threading.Thread):
             self.iloop = 0
             
     def setDOA(angle):
-        if angle<self.max_angle && angle>self.min_angle:
-            if self.other.talking && !self.talking:
+        if angle<self.max_angle and angle>self.min_angle:
+            if self.other.talking and !self.talking:
                 self.talking = True
                 self.other.talking = False
         
