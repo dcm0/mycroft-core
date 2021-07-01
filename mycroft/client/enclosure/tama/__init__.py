@@ -581,8 +581,8 @@ class EnclosureWriter(Thread):
                     self.serial.write(((int)(self.current_col[2]*self.eye_alphas[1])).to_bytes(1, 'little'))
                 if line.find('MOVE') != -1:
                     mylist = line.split(":")
-                    self.valx=(int)(mylist[2])
-                    self.valy=(int)(mylist[3])
+                    self.valx=abs((int)(mylist[2]))
+                    self.valy=abs((int)(mylist[3]))
                     self.current_pos[0] = self.valx
                     self.current_pos[1] = self.valy
                     if mylist[1]=='1':
@@ -881,6 +881,12 @@ class EnclosureTama(Enclosure):
             complete.
         """
         self.bus.emit(Message("mycroft.mic.unmute"))
+
+
+    def stop(self):
+        self.writer.write("HOME")
+        self.writer.write("CLOSE")
+        self.gaze.st
 
     def _do_net_check(self):
         # TODO: This should live in the derived Enclosure, e.g. EnclosureMark1
