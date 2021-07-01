@@ -126,7 +126,7 @@ def getdeg(x,y):
 
 
 
-def _parse_arg(argv):
+def parse_arg(argv):
     argc = len(argv)
     if argc == 3 or argc == 4:
         # Gets port infomation
@@ -152,7 +152,7 @@ def check_connection(hvc_p2_api):
     else:
         raise IOError("Error: connection failure.")
 
-def _set_hvc_p2_parameters(hvc_p2_api):
+def set_hvc_p2_parameters(hvc_p2_api):
     # Sets camera angle
     res_code = hvc_p2_api.set_camera_angle(hvc_camera_angle)
     if res_code is not p2def.RESPONSE_CODE_NORMAL:
@@ -176,7 +176,7 @@ def _set_hvc_p2_parameters(hvc_p2_api):
     if res_code is not p2def.RESPONSE_CODE_NORMAL:
         raise ValueError("Error: Invalid face angle.")
 
-def _set_stb_parameters(hvc_p2_api):
+def set_stb_parameters(hvc_p2_api):
     if hvc_p2_api.use_stb is not True:
         return
 

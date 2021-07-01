@@ -54,13 +54,13 @@ class CameraManager(Thread):
         self.hvc_p2_api.disconnect()
 
         # The 2nd connection in specified baudrate
-        hvc_p2_api.connect(self.portinfo, self.baudrate, 30)
-        _check_connection(self.hvc_p2_api)
+        self.hvc_p2_api.connect(self.portinfo, self.baudrate, 30)
+        check_connection(self.hvc_p2_api)
         try:
             # Sets HVC-P2 parameters
-            _set_hvc_p2_parameters(self.hvc_p2_api)
+            set_hvc_p2_parameters(self.hvc_p2_api)
             # Sets STB library parameters
-            _set_stb_parameters(self.hvc_p2_api)
+            set_stb_parameters(self.hvc_p2_api)
             self.hvc_tracking_result = HVCTrackingResult()
         except:
             print("Unexpected error:", sys.exc_info()[0])
