@@ -275,25 +275,25 @@ class EnclosureGaze:
     def stateUpdate(self, event=None):
         if event:
             if event.msg_type == 'recognizer_loop:wakeword':
-                resetVolume(self)
-                updateLoop(self, 1)
+                self.resetVolume(self)
+                self.updateLoop(self, 1)
 
             if event.msg_type == 'recognizer_loop:record_begin':
-                updateLoop(self, 2)
+                self.updateLoop(self, 2)
 
             if event.msg_type == 'recognizer_loop:record_end':
-                updateLoop(self, 3)
+                self.updateLoop(self, 3)
 
             if event.msg_type == 'recognizer_loop:utterance':
-                updateLoop(self, 4)
+                self.updateLoop(self, 4)
 
             if event.msg_type == 'recognizer_loop:speech.recognition.unknown':
                 #recognition failed - what do?
                 #send the shake command here, or catch this in eyes?
-                updateLoop(self, 4)
+                self.updateLoop(self, 4)
 
             if event.msg_type == 'recognizer_loop:audio_output_start':
-                updateLoop(self, 5)
+                self.updateLoop(self, 5)
 
             if event.msg_type == 'recognizer_loop:audio_output_end':
                 updateLoop(self, 6)
@@ -305,4 +305,4 @@ class EnclosureGaze:
                 pass
 
             if event.msg_type == 'recognizer_loop:DOA':
-                updateDOA(self, event)
+                self.updateDOA(self, event)
