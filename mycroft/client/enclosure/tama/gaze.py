@@ -233,6 +233,7 @@ class EnclosureGaze:
         self.bus.on('recognizer_loop:audio_output_start', self.stateUpdate)
         self.bus.on('recognizer_loop:audio_output_end', self.stateUpdate)
         self.bus.on('recognizer_loop:DOA', self.stateUpdate)
+        self.bus.on('enclosure.gaze.shutdown', self.stateUpdate)
 
 
 
@@ -316,3 +317,10 @@ class EnclosureGaze:
 
             if event.msg_type == 'recognizer_loop:DOA':
                 self.updateDOA(event)
+
+            if event.msg_type == 'enclosure.gaze.shutdown':
+                self.cameraL.detecting = False
+                self.cameraR.detecting = False
+                self.cameraL.join()
+                self.cameraR.join()
+                LOG.info("Camera Threads ended")
