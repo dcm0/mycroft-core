@@ -20,11 +20,11 @@
 import sys
 import time
 import math
-import p2def
-from serial_connector import SerialConnector
-from hvc_p2_api import HVCP2Api
-from hvc_tracking_result import HVCTrackingResult
-from grayscale_image import GrayscaleImage
+import mycroft.client.enclosure.tama.hvc.p2def
+from mycroft.client.enclosure.tama.hvc.serial_connector import SerialConnector
+from mycroft.client.enclosure.tama.hvc.hvc_p2_api import HVCP2Api
+from mycroft.client.enclosure.tama.hvc.hvc_tracking_result import HVCTrackingResult
+from mycroft.client.enclosure.tama.hvc.grayscale_image import GrayscaleImage
 
 ###############################################################################
 #  User Config. Please edit here if you need.                                 #
