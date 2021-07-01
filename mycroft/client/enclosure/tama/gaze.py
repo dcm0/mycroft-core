@@ -277,32 +277,32 @@ class EnclosureGaze:
             if event.Message.msg_type == 'recognizer_loop:wakeword':
                 resetVolume(self)
                 updateLoop(self, 1)
-                
+    
             if event.Message.msg_type == 'recognizer_loop:record_begin':
                 updateLoop(self, 2)
-            
+
             if event.Message.msg_type == 'recognizer_loop:record_end':
                 updateLoop(self, 3)
-            
+
             if event.Message.msg_type == 'recognizer_loop:utterance':
                 updateLoop(self, 4)
-                
+    
             if event.Message.msg_type == 'recognizer_loop:speech.recognition.unknown':
                 #recognition failed - what do?
                 #send the shake command here, or catch this in eyes?
                 updateLoop(self, 4)
-            
+
             if event.Message.msg_type == 'recognizer_loop:audio_output_start':
                 updateLoop(self, 5)
-                
+    
             if event.Message.msg_type == 'recognizer_loop:audio_output_end':
                 updateLoop(self, 6)
                 #cameras update to 0 on this, keep local consistant even if it isn't used
                 self.iloop = 0
-                
-                
+    
+    
             if event.Message.msg_type == 'recognizer_loop:awoken':
                 #This actually should be opening head as opposed to sleep closing it
-            
+
             if event.Message.msg_type == 'recognizer_loop:DOA':
                 updateDOA(self, event)
