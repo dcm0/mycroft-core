@@ -46,6 +46,7 @@ class CameraManager(Thread):
         self.baudrate = baudrate
         self.other = None
         self.detecting = False
+        self.image = GrayscaleImage()
 
         self.connector = SerialConnector()
         self.hvc_p2_api = HVCP2Api(self.connector, exec_func, p2def.USE_STB_ON)
@@ -89,8 +90,8 @@ class CameraManager(Thread):
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
-            (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, None)
-            time.sleep(0.1)     
+            (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, self.image)
+            #time.sleep(0.1)     
             if len(self.hvc_tracking_result.faces) > 0:
                 LOG.info("Face Detected "+str(self.threadID) + " - " + str(res_code) + "  -  " + str(stb_status))
                 for i in range(len(self.hvc_tracking_result.faces)):
