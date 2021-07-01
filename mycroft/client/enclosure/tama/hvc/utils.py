@@ -131,7 +131,7 @@ def getdeg(x,y):
     if (y<0): 
         y_=-1
     LOG.info("Calc  5")    
-    return (x_,math.round(x_pos), y_, math.round(y_pos))
+    return (x_,round(x_pos), y_, round(y_pos))
 
 
 
