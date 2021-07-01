@@ -17,7 +17,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import mycroft.client.enclosure.tama.hvc.p2def
+import mycroft.client.enclosure.tama.hvc.p2def as p2def
 from mycroft.client.enclosure.tama.hvc.serial_connector import SerialConnector
 from mycroft.client.enclosure.tama.hvc.hvc_p2_wrapper import HVCP2Wrapper
 from mycroft.client.enclosure.tama.hvc.hvc_tracking_result import HVCTrackingResult
