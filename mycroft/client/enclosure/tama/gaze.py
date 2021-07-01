@@ -92,7 +92,7 @@ class CameraManager(Thread):
             (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, None)
             time.sleep(0.1)     
             if len(self.hvc_tracking_result.faces) > 0:
-                 LOG.info("Face Detected "+str(self.threadID) + " - " + str(res_code) + "  -  " + str(stb_status))
+                LOG.info("Face Detected "+str(self.threadID) + " - " + str(res_code) + "  -  " + str(stb_status))
                 for i in range(len(self.hvc_tracking_result.faces)):
                     face = self.hvc_tracking_result.faces[i]
                     yaw = face.gaze.gazeLR
