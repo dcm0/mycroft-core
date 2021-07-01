@@ -28,7 +28,7 @@ from mycroft.client.enclosure.tama.hvc.stb import STB
 from mycroft.client.enclosure.tama.hvc.grayscale_image import GrayscaleImage
 
 WINDOWS_STB_LIB_NAME = 'libSTB.dll'
-LINUX_STB_LIB_NAME = './libSTB.so'
+LINUX_STB_LIB_NAME = '/home/pi/mycroft-core/mycroft/client/enclosure/tama/hvc/libSTB.so'
 
 class HVCP2Api(object):
     """ This class provide python full API for HVC-P2(B5T-007001) with STB library.
