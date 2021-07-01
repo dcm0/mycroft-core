@@ -97,7 +97,7 @@ class CameraManager(Thread):
                         if self.iloop == 0 and self.count > self.wake_threshold:
                             self.talking = True
                             self.bus.emit(Message('recognizer_loop:wakeword'))
-                        elif (self.other.talking == False) and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold):
+                        elif (self.other.talking == False or self.other.cancelCounter > self.cancelThreshold/2) and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold):
                             #lets claim this interaction even if we didn't start it (wakeword)
                             self.talking = True
 
@@ -159,10 +159,7 @@ class CameraManager(Thread):
 
 class EnclosureGaze:
     """
-    Starts and stops the Node service connected to the gaze cameras
-    It would be nicer if this was using the Omron Python library
-    but that doens't work in Python 3 ...
-
+    
     """
 
     #def runGazeNode():
