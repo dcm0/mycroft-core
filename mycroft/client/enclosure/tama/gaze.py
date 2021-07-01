@@ -298,11 +298,11 @@ class EnclosureGaze:
             if event.Message.msg_type == 'recognizer_loop:audio_output_end':
                 updateLoop(self, 6)
                 #cameras update to 0 on this, keep local consistant even if it isn't used
-                self.iloop = 0
-    
+                self.iloop = 0    
     
             if event.Message.msg_type == 'recognizer_loop:awoken':
                 #This actually should be opening head as opposed to sleep closing it
+                pass
 
             if event.Message.msg_type == 'recognizer_loop:DOA':
                 updateDOA(self, event)
