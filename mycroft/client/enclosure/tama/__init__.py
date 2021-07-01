@@ -886,7 +886,7 @@ class EnclosureTama(Enclosure):
     def stop(self):
         self.writer.write("HOME")
         self.writer.write("CLOSE")
-        self.gaze.st
+        self.gaze.shutdown()
 
     def _do_net_check(self):
         # TODO: This should live in the derived Enclosure, e.g. EnclosureMark1
