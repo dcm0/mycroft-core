@@ -35,7 +35,7 @@ class CameraManager(Thread):
         self.min_angle = min_angle
         self.max_angle = max_angle
         self.talking = False
-        self.last = None
+        self.last = time.time_ns()
         self.volume_dropped = False
         self.count = 0
         self.iloop = 0
