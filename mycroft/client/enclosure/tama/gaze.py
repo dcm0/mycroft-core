@@ -96,7 +96,7 @@ class CameraManager(threading.Thread):
                         if self.iloop == 0 and self.count > self.wake_threshold:
                             self.talking = True
                             self.bus.emit(Message('recognizer_loop:wakeword'))
-                        elif !self.other.talking and !self.talking and self.iloop < 5 and self.count > self.wake_threshold:
+                        elif (self.other.talking == False) and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold):
                             #lets claim this interaction even if we didn't start it (wakeword)
                             self.talking = True;
                         
@@ -106,7 +106,7 @@ class CameraManager(threading.Thread):
                         data = '{"data":'+update_pos+'}'
                         
                         #This should cover up to ouput
-                        if !self.other.talking and self.iloop < 5:
+                        if (self.other.talking ==False) and (self.iloop < 5):
                             self.bus.emit(Message('enclosure.eyes.look', data))
                             
                         #If we are in spoken output, just look anyway
@@ -151,7 +151,7 @@ class CameraManager(threading.Thread):
             
     def setDOA(angle):
         if angle<self.max_angle and angle>self.min_angle:
-            if self.other.talking and !self.talking:
+            if (self.other.talking == True) and (self.talking == False):
                 self.talking = True
                 self.other.talking = False
         
