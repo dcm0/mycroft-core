@@ -103,8 +103,8 @@ class CameraManager(Thread):
                         LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" "+str(self.threadID))
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                             LOG.info("Look  "+str(face))
-                            x = face.detection.X
-                            y = face.detection.Y
+                            x = face.pos_x
+                            y = face.pos_y
                             LOG.info("Calc directions  "+str(x) + " " + str(y)+ " " + str(self.threadID))
                             (x_sign,x_m,y_sign,y_m)=getdeg(x,y)
                             x_m = x_m - 15 #15 = camera offset angle
@@ -162,8 +162,8 @@ class CameraManager(Thread):
                                         self.volume_dropped = True
                             self.cancelCounter += 1
                 except Exception as e:
-                    LOG.error("Exeption ERROR "+ e)
-                    LOG.info("Exeption "+ e)
+                    LOG.error("Exeption ERROR "+ str(e))
+                    LOG.info("Exeption "+ str(e))
             else:
                 self.cancelCounter +=1
 
