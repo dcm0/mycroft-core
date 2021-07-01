@@ -14,6 +14,7 @@
 
 from mycroft.messagebus.message import Message
 from threading import Thread
+import time
 import subprocess
 import mycroft.client.enclosure.tama.hvc.p2def as p2def
 from mycroft.client.enclosure.tama.hvc.utils import *
@@ -88,7 +89,7 @@ class CameraManager(Thread):
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
-            self.sleep(0.1)     
+            time.sleep(0.1)     
             if len(self.hvc_tracking_result.faces) > 0:
                 for i in range(len(self.hvc_tracking_result.faces)):
                     face = self.hvc_tracking_result.faces[i]
@@ -156,6 +157,7 @@ class CameraManager(Thread):
                 self.cancelCounter +=1
 
         #Out of the main loop so cleanup
+        LOG.info("Cleanup Omron" + " "+str(self.threadID))
         self.hvc_p2_api.set_uart_baudrate(p2def.DEFAULT_BAUD)
         self.hvc_p2_api.disconnect()
 
