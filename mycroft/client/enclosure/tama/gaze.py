@@ -90,8 +90,8 @@ class CameraManager(Thread):
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
-            #time.sleep(0.2)
             (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, self.image)
+            time.sleep(0.2)
             if len(self.hvc_tracking_result.faces) > 0:
                 LOG.info("Face Detected "+str(self.threadID))
                 try:
@@ -128,6 +128,9 @@ class CameraManager(Thread):
                                     #lets claim this interaction even if we didn't start it (wakeword)
                                     LOG.info("Claiming interaction from other/wakeword "+str(self.threadID))
                                     self.talking = True
+                                elif self.count > 6:
+                                    LOG.info('Not talking because C='+str(self.count)+" i="+str(self.iloop)+" t="+str(self.talking)+" o="+str(self.other.talking)+ " ct="+str(self.cancelThreshold) + " OT="+ str(self.other.cancelCounter)) 
+                                    
 
                                 #Should we move the eyes:
 
