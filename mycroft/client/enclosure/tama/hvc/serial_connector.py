@@ -18,7 +18,7 @@
 
 
 import serial
-from connector import Connector
+from mycroft.client.enclosure.tama.hvc.connector import Connector
 
 DEFALUT_TIMEOUT = 3
 

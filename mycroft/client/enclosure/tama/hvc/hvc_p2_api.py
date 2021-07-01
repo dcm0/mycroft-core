@@ -17,15 +17,15 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import p2def
-from serial_connector import SerialConnector
-from hvc_p2_wrapper import HVCP2Wrapper
-from hvc_tracking_result import HVCTrackingResult
-from hvc_tracking_result_c import C_FACE_RES35, C_BODY_RES35
-from hvc_result import HVCResult
-from hvc_result_c import C_FRAME_RESULT
-from stb import STB
-from grayscale_image import GrayscaleImage
+import mycroft.client.enclosure.tama.hvc.p2def
+from mycroft.client.enclosure.tama.hvc.serial_connector import SerialConnector
+from mycroft.client.enclosure.tama.hvc.hvc_p2_wrapper import HVCP2Wrapper
+from mycroft.client.enclosure.tama.hvc.hvc_tracking_result import HVCTrackingResult
+from mycroft.client.enclosure.tama.hvc.hvc_tracking_result_c import C_FACE_RES35, C_BODY_RES35
+from mycroft.client.enclosure.tama.hvc.hvc_result import HVCResult
+from mycroft.client.enclosure.tama.hvc.hvc_result_c import C_FRAME_RESULT
+from mycroft.client.enclosure.tama.hvc.stb import STB
+from mycroft.client.enclosure.tama.hvc.grayscale_image import GrayscaleImage
 
 WINDOWS_STB_LIB_NAME = 'libSTB.dll'
 LINUX_STB_LIB_NAME = './libSTB.so'

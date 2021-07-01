@@ -16,8 +16,8 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
-from hvc_result_c import *
-from hvc_tracking_result_c import *
+from mycroft.client.enclosure.tama.hvc.hvc_result_c import *
+from mycroft.client.enclosure.tama.hvc.hvc_tracking_result_c import *
 
 STB_EX_BODY       =   0x01
 STB_EX_FACE       =   0x04

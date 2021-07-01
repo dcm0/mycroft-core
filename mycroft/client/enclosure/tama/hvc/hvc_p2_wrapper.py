@@ -16,12 +16,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from p2def import *
+from mycroft.client.enclosure.tama.hvc.p2def import *
 from struct import *
-from hvc_result import HVCResult
-from serial_connector import SerialConnector
-from hvc_result import HVCResult
-from grayscale_image import GrayscaleImage
+from mycroft.client.enclosure.tama.hvc.hvc_result import HVCResult
+from mycroft.client.enclosure.tama.hvc.serial_connector import SerialConnector
+from mycroft.client.enclosure.tama.hvc.hvc_result import HVCResult
+from mycroft.client.enclosure.tama.hvc.grayscale_image import GrayscaleImage
 
 RESPONSE_HEADER_SIZE = 6
 SYNC_CODE = 0xFE

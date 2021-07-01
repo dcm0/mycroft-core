@@ -17,8 +17,8 @@
 # -*- coding: utf-8 -*-
 
 from struct import *
-from p2def import *
-from okao_result import *
+from mycroft.client.enclosure.tama.hvc.p2def import *
+from mycroft.client.enclosure.tama.hvc.okao_result import *
 
 
 class HVCResult(object):

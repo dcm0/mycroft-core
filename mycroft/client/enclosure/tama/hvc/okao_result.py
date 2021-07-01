@@ -16,7 +16,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from p2def import *
+from mycroft.client.enclosure.tama.hvc.p2def import *
 
 gender_dic = {GENDER_UNKNOWN:"-",\
               GENDER_FEMALE :"Female",\
