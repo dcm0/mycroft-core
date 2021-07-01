@@ -884,7 +884,7 @@ class EnclosureTama(Enclosure):
 
 
     def stop(self):
-        self.writer.write("HOME")
+        self.writer.write("NONE")
         self.writer.write("CLOSE")
         self.gaze.shutdown()
 
