@@ -145,7 +145,7 @@ def _parse_arg(argv):
         sys.exit()
     return (portinfo, baudrate, use_stb)
 
-def _check_connection(hvc_p2_api):
+def check_connection(hvc_p2_api):
     (res_code, hvc_type, major, minor, release, rev) = hvc_p2_api.get_version()
     if res_code == 0 and hvc_type.startswith(b'B5T-007001'):
         pass

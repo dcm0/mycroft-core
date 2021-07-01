@@ -49,7 +49,7 @@ class CameraManager(Thread):
 
         # The 1st connection. (It should be 9600 baud.)
         self.hvc_p2_api.connect(self.portinfo, p2def.DEFAULT_BAUD, 10)
-        _check_connection(self.hvc_p2_api)
+        check_connection(self.hvc_p2_api)
         self.hvc_p2_api.set_uart_baudrate(self.baudrate) # Changing to the specified baudrate
         self.hvc_p2_api.disconnect()
 
