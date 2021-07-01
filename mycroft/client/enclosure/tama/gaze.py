@@ -261,8 +261,8 @@ class EnclosureGaze:
 
 
     def resetVolume(self):
-        self.cameraL.resetVolume()
-        self.cameraR.resetVolume()
+        self.cameraL.volumeReset()
+        self.cameraR.volumeReset()
 
 
         #Interaction Loop
