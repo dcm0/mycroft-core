@@ -84,13 +84,15 @@ class CameraManager(Thread):
     def run(self):
         #start = time.time()
         LOG.info("Thread started "+str(self.threadID))
-        (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, None)
-        LOG.info("Omron thread spawnedt "+str(self.threadID) + " - " + str(res_code) + "  -  " + str(stb_status))
+       
+       
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
+            (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, None)
             time.sleep(0.1)     
             if len(self.hvc_tracking_result.faces) > 0:
+                 LOG.info("Face Detected "+str(self.threadID) + " - " + str(res_code) + "  -  " + str(stb_status))
                 for i in range(len(self.hvc_tracking_result.faces)):
                     face = self.hvc_tracking_result.faces[i]
                     yaw = face.gaze.gazeLR
