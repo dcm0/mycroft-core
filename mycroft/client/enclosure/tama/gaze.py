@@ -198,8 +198,8 @@ class EnclosureGaze:
         #Keeps trying to keep the logic in a class so my brain doesn't explode
         #with copy and paste code
         #threadID, bus, writer, threshold_time, wake_threshold, min_angle, max_angle, portinfo, baudrate
-        self.cameraR = CameraManager(1, bus, writer, threshold_time, wake_threshold, 10, 180, '/dev/ttyACM0', 921600)
-        self.cameraL = CameraManager(2, bus, writer, threshold_time, wake_threshold, -10, -180, '/dev/ttyACM1', 921600)
+        self.cameraR = CameraManager(1, self.bus, self.writer, self.threshold_time, self.wake_threshold, 10, 180, '/dev/ttyACM0', 921600)
+        self.cameraL = CameraManager(2, self.bus, self.writer, self.threshold_time, self.wake_threshold, -10, -180, '/dev/ttyACM1', 921600)
         
         self.cameraR.other = self.cameraL
         self.cameraL.other = self.cameraR
