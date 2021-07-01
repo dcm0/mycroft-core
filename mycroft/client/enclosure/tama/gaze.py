@@ -102,7 +102,7 @@ class CameraManager(Thread):
                         pitch = face.gaze.gazeUD
                         LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" "+str(self.threadID))
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
-                            LOG.info("Look  "+str(self.threadID))
+                            LOG.info("Look  "+str(face))
                             x = face.direction.X
                             y = face.direction.Y
                             LOG.info("Calc directions  "+str(x) + " " + str(y)+ " " + str(self.threadID))
