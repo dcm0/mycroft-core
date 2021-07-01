@@ -94,70 +94,74 @@ class CameraManager(Thread):
             (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, self.image)
             if len(self.hvc_tracking_result.faces) > 0:
                 LOG.info("Face Detected "+str(self.threadID))
-                for i in range(len(self.hvc_tracking_result.faces)):
-                    LOG.info("Face  "+str(self.threadID))
-                    face = self.hvc_tracking_result.faces[i]
-                    yaw = face.gaze.gazeLR
-                    pitch = face.gaze.gazeUD
-                    LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" "+str(self.threadID))
-                    if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
-                        x = face.direction.X
-                        y = face.direction.Y
-                        (x_sign,x_m,y_sign,y_m)=getdeg(x,y)
-                        x_m = x_m - 15 #15 = camera offset angle
-                        x_m=abs(x_m)
-                        y_m=abs(y_m)
+                try:
+                    for i in range(len(self.hvc_tracking_result.faces)):
+                        LOG.info("Face  "+str(self.threadID))
+                        face = self.hvc_tracking_result.faces[i]
+                        yaw = face.gaze.gazeLR
+                        pitch = face.gaze.gazeUD
+                        LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" "+str(self.threadID))
+                        if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
+                            x = face.direction.X
+                            y = face.direction.Y
+                            (x_sign,x_m,y_sign,y_m)=getdeg(x,y)
+                            x_m = x_m - 15 #15 = camera offset angle
+                            x_m=abs(x_m)
+                            y_m=abs(y_m)
+                            LOG.info("x - y calculated "+str(x_m)+"/"+str(y_m)+" "+str(self.threadID))
+                            etime = time.time_ns()
+                            if (etime - self.last) <= self.threshold_time:
+                                self.count += 1
+                            else:
+                                self.count = 1
+                            self.last = etime
+                            LOG.info("count  "+str(self.count)+" "+str(self.threadID))
+                            #lets see if we have to start or claim an interaction
+                            if self.iloop == 0 and self.count > self.wake_threshold:
+                                LOG.info("Starting interaction from gaze "+str(self.threadID))
+                                self.talking = True
+                                self.bus.emit(Message('recognizer_loop:wakeword'))
+                            elif (self.other.talking == False or self.other.cancelCounter > self.cancelThreshold/2) and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold):
+                                #lets claim this interaction even if we didn't start it (wakeword)
+                                LOG.info("Claiming interaction from other/wakeword "+str(self.threadID))
+                                self.talking = True
 
-                        etime = time.time_ns()
-                        if (etime - self.last) <= self.threshold_time:
-                            self.count += 1
+                            #Should we move the eyes:
+
+                            update_pos='MOVE:'+x_sign+":"+x_m+":"+y_sign+":"+y_m+":\n"
+                            data = '{"data":'+update_pos+'}'
+
+                            #This should cover up to ouput
+                            if (self.other.talking ==False) and (self.iloop < 5):
+                                LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
+                                self.bus.emit(Message('enclosure.eyes.look', data))
+
+                            #If we are in spoken output, just look anyway
+                            if self.iloop > 4:
+                                LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
+                                self.bus.emit(Message('enclosure.eyes.look', data))
+
+                            self.cancelCounter = 0
                         else:
-                            self.count = 1
-                        self.last = etime
-                        LOG.info("count  "+str(self.count)+" "+str(self.threadID))
-                        #lets see if we have to start or claim an interaction
-                        if self.iloop == 0 and self.count > self.wake_threshold:
-                            LOG.info("Starting interaction from gaze "+str(self.threadID))
-                            self.talking = True
-                            self.bus.emit(Message('recognizer_loop:wakeword'))
-                        elif (self.other.talking == False or self.other.cancelCounter > self.cancelThreshold/2) and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold):
-                            #lets claim this interaction even if we didn't start it (wakeword)
-                            LOG.info("Claiming interaction from other/wakeword "+str(self.threadID))
-                            self.talking = True
-
-                        #Should we move the eyes:
-
-                        update_pos='MOVE:'+x_sign+":"+x_m+":"+y_sign+":"+y_m+":\n"
-                        data = '{"data":'+update_pos+'}'
-
-                        #This should cover up to ouput
-                        if (self.other.talking ==False) and (self.iloop < 5):
-                            LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
-                            self.bus.emit(Message('enclosure.eyes.look', data))
-
-                        #If we are in spoken output, just look anyway
-                        if self.iloop > 4:
-                            LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
-                            self.bus.emit(Message('enclosure.eyes.look', data))
-
-                        self.cancelCounter = 0
-                    else:
-                        if(self.cancelCounter == self.cancelThreshold):
-                            LOG.info("Cancel threshold reached, talking: "+self.talking)
-                            if self.talking:
-                                #If we are in the recognition phase then cancel
-                                if self.iloop < 5:
-                                    LOG.info("Stopping" + " "+str(self.threadID))
-                                    self.bus.emit(Message('mycroft.stop'))
-                                    self.talking = False
-                                    self.count = 0
-                                else:
-                                    #If we are giving output and the ownser isn't watching?
-                                    #do we bother to check of other has gaze?
-                                    LOG.info("Decrease Volume" + " "+str(self.threadID))
-                                    self.bus.emit(Message('mycroft.volume.decrease','{"play_sound": False}'))
-                                    self.volume_dropped = True
-                        self.cancelCounter += 1
+                            if(self.cancelCounter == self.cancelThreshold):
+                                LOG.info("Cancel threshold reached, talking: "+self.talking)
+                                if self.talking:
+                                    #If we are in the recognition phase then cancel
+                                    if self.iloop < 5:
+                                        LOG.info("Stopping" + " "+str(self.threadID))
+                                        self.bus.emit(Message('mycroft.stop'))
+                                        self.talking = False
+                                        self.count = 0
+                                    else:
+                                        #If we are giving output and the ownser isn't watching?
+                                        #do we bother to check of other has gaze?
+                                        LOG.info("Decrease Volume" + " "+str(self.threadID))
+                                        self.bus.emit(Message('mycroft.volume.decrease','{"play_sound": False}'))
+                                        self.volume_dropped = True
+                            self.cancelCounter += 1
+                except Exception as e:
+                    LOG.error("Exeption ERROR "+ e)
+                    LOG.info("Exeption "+ e)
             else:
                 self.cancelCounter +=1
 

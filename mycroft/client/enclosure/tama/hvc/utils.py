@@ -114,14 +114,16 @@ fr_min_ratio = 60       # Minimum account ratio in complete frame count.
 ###############################################################################
 
 def getdeg(x,y):
-    x -= 800;
-    y -= 600;
-    x_=1;
-    y_=1;
+    x -= 800
+    y -= 600
+    x_=1
+    y_=1
     x_pos = (math.atan(x * math.tan(27 * math.pi / 180) / 800)) * 180 / math.pi #HVC spec X: -27deg to 27deg
     y_pos = 15-(math.atan(y * math.tan(20.5 * math.pi / 180) / 600)) * 180 / math.pi #HVC spec Y:-20.5deg to 20.5deg
-    if (x<0): x_=-1;
-    if (y<0): y_=-1;
+    if (x<0): 
+        x_=-1
+    if (y<0): 
+        y_=-1
     return (x_,math.round(x_pos), y_, math.round(y_pos))
 
 
