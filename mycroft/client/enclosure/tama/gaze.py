@@ -131,7 +131,7 @@ class CameraManager(Thread):
 
                                 #Should we move the eyes:
 
-                                update_pos='MOVE:'+x_sign+":"+x_m+":"+y_sign+":"+y_m+":\n"
+                                update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                                 data = '{"data":'+update_pos+'}'
 
                                 #This should cover up to ouput
