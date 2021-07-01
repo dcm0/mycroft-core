@@ -164,16 +164,16 @@ class EnclosureGaze:
     
     """
     
-    def runGazeNode():
-        self.gazeServer = subprocess.run(["node", 'gaze.js'])
-        self.bus.emit("enclosure.gaze.launched")
+    #def runGazeNode():
+    #    self.gazeServer = subprocess.run(["node", 'gaze.js'])
+    #    self.bus.emit("enclosure.gaze.launched")
 
     def __init__(self, bus, writer):
         self.bus = bus
         self.writer = writer
         
-        self.gazeServer = Thread(target=runGazeNode)
-        self.gazeServer.start()
+        #self.gazeServer = Thread(target=runGazeNode)
+        #self.gazeServer.start()
         
        
 
