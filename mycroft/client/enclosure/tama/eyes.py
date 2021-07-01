@@ -44,6 +44,8 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.yellow', self.yellow)
         self.bus.on('enclosure.eyes.setpixel', self.set_pixel)
         self.bus.on('enclosure.eyes.fill', self.fill)
+        self.bus.on('enclosure.eyes.shutdown', self.close)
+        
 
         self.bus.on('enclosure.eyes.rgb.get', self.handle_get_color)
 
@@ -91,6 +93,12 @@ class EnclosureEyes:
         #self._current_rgb = [(r, g, b) for i in range(self._num_pixels)]
         #should update these calles to use the real colour set function
         self.writer.write("YELLOW")
+
+    def close(self, event=None):   
+        #self._current_rgb = [(r, g, b) for i in range(self._num_pixels)]
+        #should update these calles to use the real colour set function
+        self.writer.write("HOME")
+        self.writer.write("CLOSE")        
 
     def set_pixel(self, event=None):
         idx = 0

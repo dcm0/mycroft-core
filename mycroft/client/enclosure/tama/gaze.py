@@ -90,8 +90,8 @@ class CameraManager(Thread):
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
+            time.sleep(0.2)
             (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, self.image)
-            #time.sleep(0.1)     
             if len(self.hvc_tracking_result.faces) > 0:
                 LOG.info("Face Detected "+str(self.threadID))
                 for i in range(len(self.hvc_tracking_result.faces)):
@@ -235,7 +235,7 @@ class EnclosureGaze:
         self.cameraL.other = self.cameraR
 
         self.cameraR.start()
-        self.cameraL.start()
+        #self.cameraL.start()
         LOG.info("Cameras Started")
 
         self.__init_events()

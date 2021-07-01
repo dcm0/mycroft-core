@@ -32,13 +32,15 @@ class EnclosureArduino:
         self.bus.on('enclosure.system.blink', self.blink)
 
     def reset(self, event=None):
-        self.writer.write("system.reset")
+        self.writer.write("HOME")
 
     def mute(self, event=None):
-        self.writer.write("system.mute")
+        self.writer.write("HOME")
+        self.writer.write("CLOSE")
 
     def unmute(self, event=None):
-        self.writer.write("system.unmute")
+        self.writer.write("OPEN")
+        self.writer.write("HOME")
 
     def blink(self, event=None):
         times = 1
