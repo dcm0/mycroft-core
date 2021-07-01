@@ -93,11 +93,13 @@ class CameraManager(Thread):
             (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, self.image)
             #time.sleep(0.1)     
             if len(self.hvc_tracking_result.faces) > 0:
-                LOG.info("Face Detected "+str(self.threadID) + " - " + str(res_code) + "  -  " + str(stb_status))
+                LOG.info("Face Detected "+str(self.threadID))
                 for i in range(len(self.hvc_tracking_result.faces)):
+                    LOG.info("Face  "+str(self.threadID))
                     face = self.hvc_tracking_result.faces[i]
                     yaw = face.gaze.gazeLR
                     pitch = face.gaze.gazeUD
+                    LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" "+str(self.threadID))
                     if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                         x = face.direction.X
                         y = face.direction.Y
@@ -112,7 +114,7 @@ class CameraManager(Thread):
                         else:
                             self.count = 1
                         self.last = etime
-
+                        LOG.info("count  "+str(self.count)+" "+str(self.threadID))
                         #lets see if we have to start or claim an interaction
                         if self.iloop == 0 and self.count > self.wake_threshold:
                             LOG.info("Starting interaction from gaze "+str(self.threadID))
