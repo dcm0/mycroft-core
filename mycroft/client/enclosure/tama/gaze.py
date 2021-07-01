@@ -113,7 +113,7 @@ class CameraManager(Thread):
                                 y_m=abs(y_m)
                                 LOG.info("x - y calculated "+str(x_m)+"/"+str(y_m)+" "+str(self.threadID))
                                 etime = time.time_ns()
-                                if (etime - self.last) <= self.threshold_time:
+                                if (etime - self.last) <= self.threshold_time*1000000: #convert from mili to nanos
                                     self.count += 1
                                 else:
                                     LOG.info("Too Slow!  "+str(etime - self.last)+" / " + str(self.threshold_time)+ " "+str(self.threadID))    

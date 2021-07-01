@@ -583,6 +583,8 @@ class EnclosureWriter(Thread):
                     mylist = line.split(":")
                     self.valx=(int)(mylist[2])
                     self.valy=(int)(mylist[3])
+                    self.current_pos[0] = self.valx
+                    self.current_pos[1] = self.valy
                     if mylist[1]=='1':
                         self.signs[0]=b'\x01'
                     else:
@@ -591,6 +593,9 @@ class EnclosureWriter(Thread):
                         self.signs[1]=b'\x01'
                     else:
                         self.signs[1]=b'\xFF'
+
+                    LOG.info("Current position ")
+                    LOG.info(self.current_pos)
                     self.serial.write('M'.encode())
                     self.val1=1
                     self.val0=0
@@ -602,9 +607,6 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                 if  line=='\x1b[D\n':
                     self.current_pos[0]=self.current_pos[0]-1
-
-                    self.valx= abs(self.current_pos[0])
-                    self.valy=abs(self.current_pos[1])
 
                     if self.current_pos[0]<0:
                         self.signs[0]=b'\x01'
