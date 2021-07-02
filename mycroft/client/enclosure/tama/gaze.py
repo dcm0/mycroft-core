@@ -48,16 +48,22 @@ class CameraManager(Thread):
         self.other = None
         self.detecting = False
         self.image = GrayscaleImage()
-
-        self.connector = SerialConnector()
-        self.hvc_p2_api = HVCP2Api(self.connector, exec_func, p2def.USE_STB_ON)
-        LOG.info("Creating connections for camera "+str(self.threadID))
-        # The 1st connection. (It should be 9600 baud.)
-        self.hvc_p2_api.connect(self.portinfo, p2def.DEFAULT_BAUD, 10)
+        
         try:
+            self.connector = SerialConnector()
+            self.hvc_p2_api = HVCP2Api(self.connector, exec_func, p2def.USE_STB_ON)
+            LOG.info("Creating connections for camera "+str(self.threadID))
+            # The 1st connection. (It should be 9600 baud.)
+            self.hvc_p2_api.connect(self.portinfo, p2def.DEFAULT_BAUD, 10)
+        
             check_connection(self.hvc_p2_api)
-        except:
+        except Exception as e:
             LOG.info("Connection check failed "+str(self.threadID))
+            print(
+                    type(e).__name__,          # TypeError
+                    __file__,                  # /tmp/example.py
+                    e.__traceback__.tb_lineno  # 2
+                )
 
         self.hvc_p2_api.set_uart_baudrate(self.baudrate) # Changing to the specified baudrate
         self.hvc_p2_api.disconnect()
@@ -67,8 +73,13 @@ class CameraManager(Thread):
         LOG.info("Main connection event "+str(self.threadID))
         try:
             check_connection(self.hvc_p2_api)
-        except:
+        except Exception as e:
             LOG.info("Connection check failed "+str(self.threadID))
+            print(
+                    type(e).__name__,          # TypeError
+                    __file__,                  # /tmp/example.py
+                    e.__traceback__.tb_lineno  # 2
+                )
 
 
         try:
@@ -81,6 +92,11 @@ class CameraManager(Thread):
             self.hvc_tracking_result = HVCTrackingResult()
         except Exception as e:
             LOG.error("Unexpected error: {0}".format(e))
+            print(
+                    type(e).__name__,          # TypeError
+                    __file__,                  # /tmp/example.py
+                    e.__traceback__.tb_lineno  # 2
+                )
 
 
     def run(self):

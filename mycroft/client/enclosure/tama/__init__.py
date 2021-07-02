@@ -725,7 +725,8 @@ class EnclosureTama(Enclosure):
         super().__init__()
 
         self.__init_serial()
-        self.reader = EnclosureReader(self.serial, self.bus, self.lang)
+        #self.reader = EnclosureReader(self.serial, self.bus, self.lang)
+        #we don't read anything from the arduino 
         self.writer = EnclosureWriter(self.serial, self.bus)
 
         # We don't have anything to check if the Arduino is happy, just
