@@ -259,9 +259,13 @@ class EnclosureWriter(Thread):
         
         self.start()
 
-    def movement(self, x,y):
-        self.current_pos[0]=self.current_pos[0]+x
-        self.current_pos[1]=self.current_pos[1]+y
+    def movement(self, x,y, point=False):
+        if point: 
+            self.current_pos[0]=x
+            self.current_pos[1]=y
+        else:
+            self.current_pos[0]=self.current_pos[0]+x
+            self.current_pos[1]=self.current_pos[1]+y
         if self.current_pos[0]<0:
             self.signs[0]=b'\x01'
         else:
@@ -623,18 +627,29 @@ class EnclosureWriter(Thread):
                 if line.find('MOVE') != -1:
                     self.av = 'N'
                     mylist = line.split(":")
-                    self.valx=abs((int)(mylist[2])) #the abs seems to kill it...
-                    self.valy=abs((int)(mylist[3]))
-                    self.current_pos[0] = self.valx
-                    self.current_pos[1] = self.valy
-                    if mylist[1]=='1':
-                        self.signs[0]=b'\x01'
-                    else:
-                        self.signs[0]=b'\xFF'
-                    if mylist[3]=='1':
-                        self.signs[1]=b'\x01'
-                    else:
-                        self.signs[1]=b'\xFF'
+                    #self.valx=abs((int)(mylist[2])) #the abs seems to kill it...
+                    #self.valy=abs((int)(mylist[3]))
+                    #self.current_pos[0] = self.valx
+                    #self.current_pos[1] = self.valy
+                    #if mylist[1]=='1':
+                    #    self.signs[0]=b'\x01'
+                    #else:
+                    #    self.signs[0]=b'\xFF'
+                    #if mylist[3]=='1':
+                    #    self.signs[1]=b'\x01'
+                    #else:
+                    #    self.signs[1]=b'\xFF'
+
+                    #Do we still need the signs for this? I'm not sure any more 
+                    self.movement((int)(mylist[2]), (int)(mylist[3], True))
+                    self.valx=abs(self.current_pos[0])
+                    self.valy=abs(self.current_pos[1])
+                    self.serial.write(self.signs[0])
+                    self.serial.write(self.valx.to_bytes(1, 'little'))
+                    self.serial.write(self.signs[1])
+                    self.serial.write(self.valy.to_bytes(1, 'little'))
+                    self.serial.write(self.val0.to_bytes(1, 'little'))
+                    self.serial.write(self.val0.to_bytes(1, 'little'))
 
                     LOG.info("Current position "+" "+ str(self.current_pos))
                     self.serial.write('M'.encode())
