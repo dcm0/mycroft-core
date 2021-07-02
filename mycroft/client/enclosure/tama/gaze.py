@@ -186,7 +186,7 @@ class CameraManager(Thread):
             self.volume_dropped = False
 
     def setLoop(self, loop):
-        LOG.info("Interaction loop updated to " + loop + " "+str(self.threadID))
+        LOG.info("Interaction loop updated to " + str(loop) + " "+str(self.threadID))
         self.iloop = loop
         if self.iloop == 6:
             self.talking = False
