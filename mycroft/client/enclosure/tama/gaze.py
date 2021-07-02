@@ -49,6 +49,9 @@ class CameraManager(Thread):
         self.detecting = False
         self.image = GrayscaleImage()
         
+
+
+    def connect(self):
         try:
             self.connector = SerialConnector()
             self.hvc_p2_api = HVCP2Api(self.connector, exec_func, p2def.USE_STB_ON)
@@ -253,7 +256,9 @@ class EnclosureGaze:
         self.cameraR.other = self.cameraL
         self.cameraL.other = self.cameraR
 
+        self.cameraR.connect()
         self.cameraR.start()
+        #self.cameraL.connect()
         #self.cameraL.start()
         LOG.info("Cameras Started")
 
