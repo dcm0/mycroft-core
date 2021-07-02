@@ -23,6 +23,7 @@ from mycroft.client.enclosure.tama.hvc.hvc_p2_api import HVCP2Api
 from mycroft.client.enclosure.tama.hvc.hvc_tracking_result import HVCTrackingResult
 from mycroft.client.enclosure.tama.hvc.grayscale_image import GrayscaleImage
 from mycroft.util.log import LOG
+from mycroft.util import play_wav, create_signal, connected, check_for_signal
 
 class CameraManager(Thread):
 
@@ -123,7 +124,7 @@ class CameraManager(Thread):
                                 if self.iloop == 0 and self.count > self.wake_threshold:
                                     LOG.info("Starting interaction from gaze "+str(self.threadID))
                                     self.talking = True
-                                    self.bus.emit(Message('recognizer_loop:wakeword'))
+                                    self.bus.emit(Message('mycroft.mic.listen'))
                                 elif (self.other.talking == False or self.other.cancelCounter > self.cancelThreshold/2) and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold):
                                     #lets claim this interaction even if we didn't start it (wakeword)
                                     LOG.info("Claiming interaction from other/wakeword "+str(self.threadID))
@@ -155,6 +156,7 @@ class CameraManager(Thread):
                                         #If we are in the recognition phase then cancel
                                         if self.iloop < 5:
                                             LOG.info("Stopping" + " "+str(self.threadID))
+                                            create_signal('buttonPress') #This seems like an out of date way to do it...
                                             self.bus.emit(Message('mycroft.stop'))
                                             self.talking = False
                                             self.count = 0
