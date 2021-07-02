@@ -28,7 +28,7 @@ from mycroft.api import has_been_paired
 from mycroft.audio import wait_while_speaking
 from mycroft.client.enclosure.tama.arduino import EnclosureArduino
 from mycroft.client.enclosure.tama.eyes import EnclosureEyes
-from mycroft.client.enclosure.tama.mouth import EnclosureMouth
+#from mycroft.client.enclosure.tama.mouth import EnclosureMouth
 from mycroft.client.enclosure.tama.gaze import EnclosureGaze
 from mycroft.enclosure.display_manager import \
     init_display_manager_bus_connection
@@ -151,7 +151,7 @@ class EnclosureReader(Thread):
             self.bus.emit(
                 Message("enclosure.eyes.timedspin",
                         {'length': 12000}))
-            self.bus.emit(Message("enclosure.mouth.reset"))
+            #self.bus.emit(Message("enclosure.mouth.reset"))
             time.sleep(0.5)  # give the system time to pass the message
             self.bus.emit(Message("system.shutdown"))
 
@@ -160,7 +160,7 @@ class EnclosureReader(Thread):
             self.bus.emit(Message("enclosure.eyes.color",
                                   {'r': 70, 'g': 65, 'b': 69}))
             self.bus.emit(Message("enclosure.eyes.spin"))
-            self.bus.emit(Message("enclosure.mouth.reset"))
+            #self.bus.emit(Message("enclosure.mouth.reset"))
             time.sleep(0.5)  # give the system time to pass the message
             self.bus.emit(Message("system.reboot"))
 
@@ -176,9 +176,9 @@ class EnclosureReader(Thread):
             self.bus.emit(Message("system.wifi.reset"))
             self.bus.emit(Message("system.ssh.disable"))
             wait_while_speaking()
-            self.bus.emit(Message("enclosure.mouth.reset"))
+            #self.bus.emit(Message("enclosure.mouth.reset"))
             self.bus.emit(Message("enclosure.eyes.spin"))
-            self.bus.emit(Message("enclosure.mouth.reset"))
+            #self.bus.emit(Message("enclosure.mouth.reset"))
             time.sleep(5)  # give the system time to process all messages
             self.bus.emit(Message("system.reboot"))
 
@@ -763,7 +763,7 @@ class EnclosureTama(Enclosure):
         # we aren't running a Mark 1 with an Arduino)
         #Timer(5, self.check_for_response).start()
         self.eyes = EnclosureEyes(self.bus, self.writer)
-        self.mouth = EnclosureMouth(self.bus, self.writer)
+        #self.mouth = EnclosureMouth(self.bus, self.writer)
         self.system = EnclosureArduino(self.bus, self.writer)
         self.gaze = EnclosureGaze(self.bus, self.writer)
         self.__register_events()
@@ -779,7 +779,7 @@ class EnclosureTama(Enclosure):
 
     def on_arduino_responded(self, event=None):
         self.eyes = EnclosureEyes(self.bus, self.writer)
-        self.mouth = EnclosureMouth(self.bus, self.writer)
+        #self.mouth = EnclosureMouth(self.bus, self.writer)
         self.system = EnclosureArduino(self.bus, self.writer)
         self.__register_events()
         self.__reset()
@@ -835,15 +835,14 @@ class EnclosureTama(Enclosure):
             raise
 
     def __register_events(self):
-        self.bus.on('enclosure.mouth.events.activate',
-                    self.__register_mouth_events)
-        self.bus.on('enclosure.mouth.events.deactivate',
-                    self.__remove_mouth_events)
-        self.bus.on('enclosure.reset',
-                    self.__reset)
-        self.__register_mouth_events()
+        #self.bus.on('enclosure.mouth.events.activate', self.__register_mouth_events)
+        #self.bus.on('enclosure.mouth.events.deactivate', self.__remove_mouth_events)
+        self.bus.on('enclosure.reset', self.__reset)
+        #self.__register_mouth_events()
 
-    def __register_mouth_events(self, event=None):
+    '''
+    #Commenting out the mouth stuff
+     def __register_mouth_events(self, event=None):
         self.bus.on('recognizer_loop:record_begin', self.mouth.listen)
         self.bus.on('recognizer_loop:record_end', self.mouth.reset)
         self.bus.on('recognizer_loop:audio_output_start', self.mouth.talk)
@@ -856,6 +855,7 @@ class EnclosureTama(Enclosure):
                         self.mouth.talk)
         self.bus.remove('recognizer_loop:audio_output_end',
                         self.mouth.reset)
+    '''
 
     def __reset(self, event=None):
         # Reset both the position and the eye colour to indicate the unit is

@@ -87,31 +87,30 @@ class CameraManager(Thread):
         #start = time.time()
         LOG.info("Thread started "+str(self.threadID))
        
-       
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
             (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, self.image)
             time.sleep(0.2)
             if len(self.hvc_tracking_result.faces) > 0:
-                LOG.info("Face Detected "+str(self.threadID))
+                #LOG.info("Face Detected "+str(self.threadID))
                 try:
                     for i in range(len(self.hvc_tracking_result.faces)):
                         face = self.hvc_tracking_result.faces[i]
                         if face.gaze is not None: 
                             yaw = face.gaze.gazeLR
                             pitch = face.gaze.gazeUD
-                            LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" "+str(self.threadID))
+                            LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" c:"+str(self.threadID))
                             if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
-                                LOG.info("Look  "+str(face))
+                                #LOG.info("Look  "+str(face))
                                 x = face.pos_x
                                 y = face.pos_y
-                                LOG.info("Calc directions  "+str(x) + " " + str(y)+ " " + str(self.threadID))
+                                #LOG.info("Calc directions  "+str(x) + " " + str(y)+ " " + str(self.threadID))
                                 (x_sign,x_m,y_sign,y_m)=getdeg(x,y)
                                 x_m = x_m - 15 #15 = camera offset angle
                                 x_m=abs(x_m)
                                 y_m=abs(y_m)
-                                LOG.info("x - y calculated "+str(x_m)+"/"+str(y_m)+" "+str(self.threadID))
+                                LOG.info("x - y calculated "+str(x) + " " + str(y)+ " to " +str(x_m)+"/"+str(y_m)+" "+str(self.threadID))
                                 etime = time.time_ns()
                                 if (etime - self.last) <= self.threshold_time*100000000: #convert from mili to nanos 100000000
                                     self.count += 1 
@@ -125,7 +124,8 @@ class CameraManager(Thread):
                                     LOG.info("Starting interaction from gaze "+str(self.threadID))
                                     self.talking = True
                                     self.bus.emit(Message('mycroft.mic.listen'))
-                                elif (self.other.talking == False or self.other.cancelCounter > self.cancelThreshold/2) and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold):
+                                elif ((self.other.talking == False or self.other.cancelCounter > self.cancelThreshold/2) 
+                                    and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold)):
                                     #lets claim this interaction even if we didn't start it (wakeword)
                                     LOG.info("Claiming interaction from other/wakeword "+str(self.threadID))
                                     self.talking = True
@@ -150,28 +150,30 @@ class CameraManager(Thread):
 
                                 self.cancelCounter = 0
                             else:
-                                if(self.cancelCounter == self.cancelThreshold):
-                                    LOG.info("Cancel threshold reached, talking: "+str(self.talking))
-                                    if self.talking:
-                                        #If we are in the recognition phase then cancel
-                                        if self.iloop < 5:
-                                            LOG.info("Stopping" + " "+str(self.threadID))
-                                            create_signal('buttonPress') #This seems like an out of date way to do it...
-                                            self.bus.emit(Message('mycroft.stop'))
-                                            self.talking = False
-                                            self.count = 0
-                                        else:
-                                            #If we are giving output and the ownser isn't watching?
-                                            #do we bother to check of other has gaze?
-                                            LOG.info("Decrease Volume" + " "+str(self.threadID))
-                                            self.bus.emit(Message('mycroft.volume.decrease','{"play_sound": False}'))
-                                            self.volume_dropped = True
                                 self.cancelCounter += 1
                 except Exception as e:
                     LOG.error("Exeption ERROR "+ str(e))
                     LOG.info("Exeption "+ str(e))
             else:
                 self.cancelCounter +=1
+
+            #Have to cancel even if we don't see a face!
+            if(self.cancelCounter == self.cancelThreshold):
+                LOG.info("Cancel threshold reached, talking: "+str(self.talking))
+                if self.talking:
+                    #If we are in the recognition phase then cancel
+                    if self.iloop < 5:
+                        LOG.info("Stopping" + " "+str(self.threadID))
+                        create_signal('buttonPress') #This seems like an out of date way to do it...
+                        self.bus.emit(Message('mycroft.stop'))
+                        self.talking = False
+                        self.count = 0
+                    else:
+                        #If we are giving output and the ownser isn't watching?
+                        #do we bother to check of other has gaze?
+                        LOG.info("Decrease Volume" + " "+str(self.threadID))
+                        self.bus.emit(Message('mycroft.volume.decrease','{"play_sound": False}'))
+                        self.volume_dropped = True
 
         #Out of the main loop so cleanup
         LOG.info("Cleanup Omron" + " "+str(self.threadID))
@@ -205,18 +207,9 @@ class EnclosureGaze:
     
     """
 
-    #def runGazeNode():
-    #    self.gazeServer = subprocess.run(["node", 'gaze.js'])
-    #    self.bus.emit("enclosure.gaze.launched")
-
     def __init__(self, bus, writer):
         self.bus = bus
         self.writer = writer
-
-        #self.gazeServer = Thread(target=runGazeNode)
-        #self.gazeServer.start()
-
-
 
         #Interaction Loop
         # 0 = waiting for wakeword
@@ -236,8 +229,6 @@ class EnclosureGaze:
         self.wake_threshold = 3
 
         #Camera Variables
-        #Keeps trying to keep the logic in a class so my brain doesn't explode
-        #with copy and paste code
         #threadID, bus, writer, threshold_time, wake_threshold, min_angle, max_angle, portinfo, baudrate
         self.cameraR = CameraManager(1, self.bus, self.writer, self.threshold_time, self.wake_threshold, 10, 180, '/dev/ttyACM0', 921600)
         LOG.info("Created R")
@@ -253,10 +244,6 @@ class EnclosureGaze:
         self.__init_events()
 
     def __init_events(self):
-        #self.bus.on('enclosure.eyes.right', self.right)
-        #self.bus.on('enclosure.eyes.right_cancel', self.right_cancel)
-        #self.bus.on('enclosure.eyes.left', self.left)
-        #self.bus.on('enclosure.eyes.left_cancel', self.left_cancel)
         self.bus.on('recognizer_loop:utterance', self.stateUpdate)
         self.bus.on('recognizer_loop:speech.recognition.unknown', self.stateUpdate)
         self.bus.on('recognizer_loop:record_begin', self.stateUpdate)
@@ -271,27 +258,8 @@ class EnclosureGaze:
 
 
 
-
     def __del__(self):
-        self.gazeServer.stop()
-
-
-    def right(self, event=None):
-        if event and event.data:
-            self.cameraR.lookEvent(event, self.cameraL)
-
-
-    def right_cancel(self, event=None):
-        self.cameraR.cancelEvent(event, self.cameraL)
-
-
-    def left(self, event=None):
-        if event and event.data:
-            self.cameraL.lookEvent(event, self.cameraR)
-
-    def left_cancel(self, event=None):
-        self.cameraL.cancelEvent(event, self.cameraR)
-
+        self.shutdown()
 
     def updateLoop(self, new_l):
         self.cameraR.setLoop(new_l)
@@ -333,7 +301,9 @@ class EnclosureGaze:
                 self.updateLoop(2)
 
             if event.msg_type == 'recognizer_loop:record_end':
-                self.updateLoop(3)
+                if(self.iloop == 2):
+                    self.updateLoop(3)
+                #Don't move to 3 if the recording has failed and went back to 0
 
             if event.msg_type == 'recognizer_loop:utterance':
                 self.updateLoop(4)

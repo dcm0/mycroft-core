@@ -78,8 +78,8 @@ max_face_size = 8192    # Maximum face detection size       [20 to 8192]
 face_angle_yaw  = p2def.HVC_FACE_ANGLE_YAW_30
                       # HVC_FACE_ANGLE_YAW_60
                       # HVC_FACE_ANGLE_YAW_90
-face_angle_roll = p2def.HVC_FACE_ANGLE_ROLL_15
-                      # HVC_FACE_ANGLE_ROLL_45
+face_angle_roll = p2def.HVC_FACE_ANGLE_ROLL_45
+                      # HVC_FACE_ANGLE_ROLL_15
 
 #-------------------------
 # STB library settings
