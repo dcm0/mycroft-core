@@ -581,7 +581,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(((int)(self.current_col[2]*self.eye_alphas[1])).to_bytes(1, 'little'))
                 if line.find('MOVE') != -1:
                     mylist = line.split(":")
-                    self.valx=abs((int)(mylist[2]))
+                    self.valx=abs((int)(mylist[2])) #the abs seems to kill it...
                     self.valy=abs((int)(mylist[3]))
                     self.current_pos[0] = self.valx
                     self.current_pos[1] = self.valy

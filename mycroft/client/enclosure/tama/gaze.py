@@ -186,7 +186,7 @@ class CameraManager(Thread):
             self.volume_dropped = False
 
     def setLoop(self, loop):
-        LOG.info("Interaction loop updated" + " "+str(self.threadID))
+        LOG.info("Interaction loop updated to " + loop + " "+str(self.threadID))
         self.iloop = loop
         if self.iloop == 6:
             self.talking = False
@@ -339,9 +339,8 @@ class EnclosureGaze:
                 self.updateLoop(4)
 
             if event.msg_type == 'recognizer_loop:speech.recognition.unknown':
-                #recognition failed - what do?
-                #send the shake command here, or catch this in eyes?
-                self.updateLoop(4)
+                #recognition failed - back to 0
+                self.updateLoop(0)
 
             if event.msg_type == 'recognizer_loop:audio_output_start':
                 self.updateLoop(5)

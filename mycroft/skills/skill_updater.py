@@ -116,7 +116,10 @@ class SkillUpdater:
         """Property representing the default skills expected to be installed"""
         default_skill_groups = dict(self.msm.repo.get_default_skill_names())
         default_skills = set(default_skill_groups['default'])
-        platform_default_skills = default_skill_groups.get(self.msm.platform)
+        if(self.msm.platform == 'tama'):
+            platform_default_skills = default_skill_groups.get('picroft')
+        else:    
+            platform_default_skills = default_skill_groups.get(self.msm.platform)
         if platform_default_skills is None:
             log_msg = 'No default skills found for platform {}'
             LOG.info(log_msg.format(self.msm.platform))

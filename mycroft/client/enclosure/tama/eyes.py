@@ -45,6 +45,7 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.setpixel', self.set_pixel)
         self.bus.on('enclosure.eyes.fill', self.fill)
         self.bus.on('enclosure.eyes.shutdown', self.close)
+        self.bus.on('recognizer_loop:speech.recognition.unknown', self.shake)
         
 
         self.bus.on('enclosure.eyes.rgb.get', self.handle_get_color)
@@ -124,6 +125,13 @@ class EnclosureEyes:
         if event and event.data:
             level = event.data.get("level", level)
         self.writer.write("eyes.level=" + str(level))
+
+    def shake(self):
+        self.writer.write("PINK")
+        self.writer.write("SHAKE")
+        self.writer.write("HOME")
+        self.writer.write("YELLOW")
+
 
     def volume(self, event=None):
         volume = 4
