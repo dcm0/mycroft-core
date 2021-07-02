@@ -46,6 +46,9 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.fill', self.fill)
         self.bus.on('enclosure.eyes.shutdown', self.close)
         self.bus.on('recognizer_loop:speech.recognition.unknown', self.shake)
+        self.bus.on('recognizer_loop:record_begin', self.listen)
+        self.bus.on('recognizer_loop:record_end', self.think)
+        self.bus.on('recognizer_loop:audio_output_start', self.talk)
         
 
         self.bus.on('enclosure.eyes.rgb.get', self.handle_get_color)
@@ -79,6 +82,16 @@ class EnclosureEyes:
         if event and event.data:
             #side = event.data.get("data", "")
             self.writer.write(event.data)
+
+    def talk(self, event=None):
+        self.writer.write("PINK")
+
+    def think(self, event=None):
+        self.writer.write("CIAN")
+        self.writer.write("AVR")
+
+    def listen(self, event=None):
+        self.writer.write("YELLOW")        
 
     def color(self, event=None):
         r, g, b = 255, 255, 255
