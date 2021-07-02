@@ -243,6 +243,7 @@ class EnclosureWriter(Thread):
         self.signs=[b'\x01', b'\x01']
         self.eye_alphas=[1.0,1.0]
         self.last_col = 'G'
+        self.av = 'N'
         
         self.base_colours = {}
         self.base_colours['R'] = [255,0,0]
@@ -376,6 +377,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.val.to_bytes(1, 'little'))
                 if line=='HOME\n':
                     #self.values = bytearray(['M',1,0,1,0,0,0])
+                    self.av = 'N'
                     self.serial.write('M'.encode())
                     self.val1=1
                     self.val0=0
@@ -391,34 +393,86 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                 if line=='AVL\n':
                     #self.values = bytearray(['M',1,0,1,0,0,0])
-                    self.serial.write('M'.encode())
-                    self.val1=1
-                    self.val0=0
-                    self.movement(30,30)
-                    self.valx=abs(self.current_pos[0])
-                    self.valy=abs(self.current_pos[1])
-                    self.serial.write(self.signs[0])
-                    self.serial.write(self.valx.to_bytes(1, 'little'))
-                    self.serial.write(self.signs[1])
-                    self.serial.write(self.valy.to_bytes(1, 'little'))
-                    self.serial.write(self.val0.to_bytes(1, 'little'))
-                    self.serial.write(self.val0.to_bytes(1, 'little'))
-                    time.sleep(0.2)
+                    if(self.av == 'N'):
+                        self.serial.write('M'.encode())
+                        self.val1=1
+                        self.val0=0
+                        self.movement(30,30)
+                        self.valx=abs(self.current_pos[0])
+                        self.valy=abs(self.current_pos[1])
+                        self.serial.write(self.signs[0])
+                        self.serial.write(self.valx.to_bytes(1, 'little'))
+                        self.serial.write(self.signs[1])
+                        self.serial.write(self.valy.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))
+                    elif(self.av == 'R'):
+                        #then should reverse the R and do L 
+                        self.serial.write('M'.encode())
+                        self.val1=1
+                        self.val0=0
+                        self.movement(30,-30)
+                        self.valx=abs(self.current_pos[0])
+                        self.valy=abs(self.current_pos[1])
+                        self.serial.write(self.signs[0])
+                        self.serial.write(self.valx.to_bytes(1, 'little'))
+                        self.serial.write(self.signs[1])
+                        self.serial.write(self.valy.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))  
+                        self.val1=1
+                        self.val0=0
+                        self.movement(30,30)
+                        self.valx=abs(self.current_pos[0])
+                        self.valy=abs(self.current_pos[1])
+                        self.serial.write(self.signs[0])
+                        self.serial.write(self.valx.to_bytes(1, 'little'))
+                        self.serial.write(self.signs[1])
+                        self.serial.write(self.valy.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))  
+                        
                 if line=='AVR\n':
                     #self.values = bytearray(['M',1,0,1,0,0,0])
-                    self.serial.write('M'.encode())
-                    self.val1=1
-                    self.val0=0
-                    self.movement(-30,30)
-                    self.valx=abs(self.current_pos[0])
-                    self.valy=abs(self.current_pos[1])
-                    self.serial.write(self.signs[0])
-                    self.serial.write(self.valx.to_bytes(1, 'little'))
-                    self.serial.write(self.signs[1])
-                    self.serial.write(self.valy.to_bytes(1, 'little'))
-                    self.serial.write(self.val0.to_bytes(1, 'little'))
-                    self.serial.write(self.val0.to_bytes(1, 'little'))
-                    time.sleep(0.2)
+                    if(self.av == 'N'):
+                        self.serial.write('M'.encode())
+                        self.val1=1
+                        self.val0=0
+                        self.movement(-30,30)
+                        self.valx=abs(self.current_pos[0])
+                        self.valy=abs(self.current_pos[1])
+                        self.serial.write(self.signs[0])
+                        self.serial.write(self.valx.to_bytes(1, 'little'))
+                        self.serial.write(self.signs[1])
+                        self.serial.write(self.valy.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))
+                    elif(self.av == 'L'):
+                        #then should reverse the L and do R
+                        self.serial.write('M'.encode())
+                        self.val1=1
+                        self.val0=0
+                        self.movement(-30,-30)
+                        self.valx=abs(self.current_pos[0])
+                        self.valy=abs(self.current_pos[1])
+                        self.serial.write(self.signs[0])
+                        self.serial.write(self.valx.to_bytes(1, 'little'))
+                        self.serial.write(self.signs[1])
+                        self.serial.write(self.valy.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))  
+                        self.val1=1
+                        self.val0=0
+                        self.movement(-30,30)
+                        self.valx=abs(self.current_pos[0])
+                        self.valy=abs(self.current_pos[1])
+                        self.serial.write(self.signs[0])
+                        self.serial.write(self.valx.to_bytes(1, 'little'))
+                        self.serial.write(self.signs[1])
+                        self.serial.write(self.valy.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))
+                        self.serial.write(self.val0.to_bytes(1, 'little'))  
+
                 if line=='SHAKE\n':
                     #self.values = bytearray(['M',1,0,1,0,0,0])
                     self.serial.write('M'.encode())
@@ -567,6 +621,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(((int)(self.current_col[1]*self.eye_alphas[1])).to_bytes(1, 'little'))
                     self.serial.write(((int)(self.current_col[2]*self.eye_alphas[1])).to_bytes(1, 'little'))
                 if line.find('MOVE') != -1:
+                    self.av = 'N'
                     mylist = line.split(":")
                     self.valx=abs((int)(mylist[2])) #the abs seems to kill it...
                     self.valy=abs((int)(mylist[3]))
