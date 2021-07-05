@@ -259,7 +259,7 @@ class EnclosureGaze:
         self.cameraR.start()
         #self.cameraL.connect()
         #self.cameraL.start()
-        self.bus.emit(Message("mycroft.debug.log", data={'level': 'DEBUG'}))
+        #self.bus.emit(Message("mycroft.debug.log", data={'level': 'DEBUG'}))
         LOG.info("Cameras Started")
 
         self.__init_events()
