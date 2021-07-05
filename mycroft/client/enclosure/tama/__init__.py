@@ -639,8 +639,8 @@ class EnclosureTama(Enclosure):
         
         self.writer = EnclosureWriter(self.serial, self.bus)
 
-        # We don't have anything to check if the Arduino is happy, just
-        # skip this checking
+        # Seem to have to set the log level to DEBUG every time :-/
+        self.bus.emit(Message("mycroft.debug.log", data={'level': 'DEBUG'}))
     
         # Prepare to receive message when the Arduino responds to the
         # following "system.version"

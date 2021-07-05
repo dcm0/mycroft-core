@@ -190,7 +190,7 @@ class CameraManager(Thread):
                         #If we are giving output and the ownser isn't watching?
                         #do we bother to check of other has gaze?
                         LOG.info("Decrease Volume" + " "+str(self.threadID))
-                        self.bus.emit(Message('mycroft.volume.decrease','{"play_sound": False}'))
+                        self.bus.emit(Message('mycroft.volume.decrease',{"play_sound": False}))
                         self.volume_dropped = True
 
         #Out of the main loop so cleanup
@@ -202,7 +202,7 @@ class CameraManager(Thread):
     def volumeReset(self):
         if self.volume_dropped:
             LOG.info("Increasing Volume" + " "+str(self.threadID))
-            self.bus.emit(Message('mycroft.volume.increase','{"play_sound": False}'))
+            self.bus.emit(Message('mycroft.volume.increase',{"play_sound": False}))
             self.volume_dropped = False
 
     def setLoop(self, loop):
