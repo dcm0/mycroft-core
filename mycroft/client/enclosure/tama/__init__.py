@@ -480,7 +480,7 @@ class EnclosureWriter(Thread):
 
                     #Do we still need the signs for this? I'm not sure any more 
                     LOG.info("Moving to " + mylist[2] + " " + mylist[3])
-                    self.movement((int)(mylist[2]), (int)(mylist[3], True))
+                    self.movement((int)(mylist[2]), (int)(mylist[3]), True)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     self.serial.write('M'.encode())
