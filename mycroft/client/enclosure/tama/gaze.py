@@ -289,7 +289,7 @@ class EnclosureGaze:
 
     def updateDOA(self, event):
         self.cameraR.setDOA(event.data.get('angle'))
-        self.cameraR.setDOA(event.data.get('angle'))
+        self.cameraL.setDOA(event.data.get('angle'))
 
 
     def resetVolume(self):
@@ -340,6 +340,8 @@ class EnclosureGaze:
                 self.updateLoop(6)
                 #cameras update to 0 on this, keep local consistant even if it isn't used
                 self.iloop = 0
+                #and reset the head 
+                self.bus.emit(Message('enclosure.eyes.reset'))
 
             if event.msg_type == 'recognizer_loop:awoken':
                 #This actually should be opening head as opposed to sleep closing it

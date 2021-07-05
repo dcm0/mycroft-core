@@ -463,7 +463,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(((int)(self.current_col[1]*self.eye_alphas[1])).to_bytes(1, 'little'))
                     self.serial.write(((int)(self.current_col[2]*self.eye_alphas[1])).to_bytes(1, 'little'))
                 if line.find('MOVE') != -1:
-                    #self.av = 'N'
+                    self.av = 'N' #Should cancel any aversion I guess
                     mylist = line.split(":")
                     #self.valx=abs((int)(mylist[2])) #the abs seems to kill it...
                     #self.valy=abs((int)(mylist[3]))
