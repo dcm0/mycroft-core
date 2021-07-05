@@ -266,10 +266,12 @@ class EnclosureWriter(Thread):
         else:
             self.current_pos[0]=self.current_pos[0]+x
             self.current_pos[1]=self.current_pos[1]+y
+
         if self.current_pos[0]<0:
             self.signs[0]=b'\x01'
         else:
             self.signs[0]=b'\xFF'
+
         if self.current_pos[1]>0:
             self.signs[1]=b'\x01'
         else:
@@ -410,6 +412,7 @@ class EnclosureWriter(Thread):
                         self.serial.write(self.valy.to_bytes(1, 'little'))
                         self.serial.write(self.val0.to_bytes(1, 'little'))
                         self.serial.write(self.val0.to_bytes(1, 'little'))
+                        self.av = 'L'
                     elif(self.av == 'R'):
                         #then should reverse the R and do L 
                         self.serial.write('M'.encode())
@@ -435,6 +438,7 @@ class EnclosureWriter(Thread):
                         self.serial.write(self.valy.to_bytes(1, 'little'))
                         self.serial.write(self.val0.to_bytes(1, 'little'))
                         self.serial.write(self.val0.to_bytes(1, 'little'))  
+                        self.av = 'L'
                         
                 if line=='AVR\n':
                     #self.values = bytearray(['M',1,0,1,0,0,0])
@@ -451,6 +455,7 @@ class EnclosureWriter(Thread):
                         self.serial.write(self.valy.to_bytes(1, 'little'))
                         self.serial.write(self.val0.to_bytes(1, 'little'))
                         self.serial.write(self.val0.to_bytes(1, 'little'))
+                        self.av = 'R'
                     elif(self.av == 'L'):
                         #then should reverse the L and do R
                         self.serial.write('M'.encode())
@@ -476,6 +481,7 @@ class EnclosureWriter(Thread):
                         self.serial.write(self.valy.to_bytes(1, 'little'))
                         self.serial.write(self.val0.to_bytes(1, 'little'))
                         self.serial.write(self.val0.to_bytes(1, 'little'))  
+                        self.av = 'R'
 
                 if line=='SHAKE\n':
                     #self.values = bytearray(['M',1,0,1,0,0,0])
@@ -645,6 +651,7 @@ class EnclosureWriter(Thread):
                     self.movement((int)(mylist[2]), (int)(mylist[3], True))
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
+                    self.serial.write('M'.encode())
                     self.serial.write(self.signs[0])
                     self.serial.write(self.valx.to_bytes(1, 'little'))
                     self.serial.write(self.signs[1])
@@ -652,16 +659,17 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
 
-                    LOG.info("Current position "+" "+ str(self.current_pos))
-                    self.serial.write('M'.encode())
-                    self.val1=1
-                    self.val0=0
-                    self.serial.write(self.signs[0])
-                    self.serial.write(self.valx.to_bytes(1, 'little'))
-                    self.serial.write(self.signs[1])
-                    self.serial.write(self.valy.to_bytes(1, 'little'))
-                    self.serial.write(self.val0.to_bytes(1, 'little'))
-                    self.serial.write(self.val0.to_bytes(1, 'little'))
+                    #LOG.info("Current position "+" "+ str(self.current_pos))
+                    #self.serial.write('M'.encode())
+                    #self.val1=1
+                    #self.val0=0
+                    #self.serial.write(self.signs[0])
+                    #self.serial.write(self.valx.to_bytes(1, 'little'))
+                    #self.serial.write(self.signs[1])
+                    #self.serial.write(self.valy.to_bytes(1, 'little'))
+                    #self.serial.write(self.val0.to_bytes(1, 'little'))
+                    #self.serial.write(self.val0.to_bytes(1, 'little'))
+
                 if  line=='\x1b[D\n':
                     self.current_pos[0]=self.current_pos[0]-1
 
