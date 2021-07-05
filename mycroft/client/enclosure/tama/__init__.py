@@ -640,7 +640,7 @@ class EnclosureTama(Enclosure):
         self.writer = EnclosureWriter(self.serial, self.bus)
 
         # Seem to have to set the log level to DEBUG every time :-/
-        self.bus.emit(Message("mycroft.debug.log", data={'level': 'DEBUG'}))
+        
     
         # Prepare to receive message when the Arduino responds to the
         # following "system.version"
@@ -661,10 +661,10 @@ class EnclosureTama(Enclosure):
         self.__register_events()
         self.__reset()
         self.arduino_responded = True
-
+        
         # Notifications from mycroft-core
         self.bus.on("enclosure.notify.no_internet", self.on_no_internet)
-
+        self.bus.emit(Message("mycroft.debug.log", data={'level': 'DEBUG'}))
         # initiates the web sockets on display manager
         # NOTE: this is a temporary place to connect the display manager
         init_display_manager_bus_connection()
