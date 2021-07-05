@@ -49,6 +49,9 @@ class EnclosureEyes:
         self.bus.on('recognizer_loop:record_begin', self.listen)
         self.bus.on('recognizer_loop:record_end', self.think)
         self.bus.on('recognizer_loop:audio_output_start', self.talk)
+        self.bus.on('recognizer_loop:audio_output_end', self.talkOver)
+        
+        
         
 
         self.bus.on('enclosure.eyes.rgb.get', self.handle_get_color)
@@ -85,6 +88,9 @@ class EnclosureEyes:
 
     def talk(self, event=None):
         self.writer.write("PINK")
+
+    def talkOver(self, event=None):
+        self.writer.write("GREEN")
 
     def think(self, event=None):
         self.writer.write("CIAN")
@@ -143,7 +149,7 @@ class EnclosureEyes:
         self.writer.write("PINK")
         self.writer.write("SHAKE")
         self.writer.write("HOME")
-        self.writer.write("YELLOW")
+        self.writer.write("GREEN")
 
 
     def volume(self, event=None):

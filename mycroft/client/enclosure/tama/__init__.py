@@ -753,7 +753,7 @@ class EnclosureTama(Enclosure):
         # Reset both the position and the eye colour to indicate the unit is
         # ready for input.
         self.writer.write("HOME")
-        self.writer.write("YELLOW")
+        self.writer.write("GREEN")
 
     def speak(self, text):
         self.bus.emit(Message("speak", {'utterance': text}))

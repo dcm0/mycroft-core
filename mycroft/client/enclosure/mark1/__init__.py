@@ -139,9 +139,9 @@ class EnclosureReader(Thread):
             subprocess.call('speaker-test -P 10 -l 0 -s 1', shell=True)
 
         if "unit.shutdown" in data:
-            # Eyes to soft gray on shutdown
+            # Eyes to soft gray on shutdown  212, 143, 138
             self.bus.emit(Message("enclosure.eyes.color",
-                                  {'r': 70, 'g': 65, 'b': 69}))
+                                  {'r': 212, 'g': 143, 'b': 138}))
             self.bus.emit(
                 Message("enclosure.eyes.timedspin",
                         {'length': 12000}))
@@ -150,9 +150,9 @@ class EnclosureReader(Thread):
             self.bus.emit(Message("system.shutdown"))
 
         if "unit.reboot" in data:
-            # Eyes to soft gray on reboot
+            # Eyes to soft gray on reboot 117, 128, 130
             self.bus.emit(Message("enclosure.eyes.color",
-                                  {'r': 70, 'g': 65, 'b': 69}))
+                                  {'r': 117, 'g': 128, 'b': 130}))
             self.bus.emit(Message("enclosure.eyes.spin"))
             self.bus.emit(Message("enclosure.mouth.reset"))
             time.sleep(0.5)  # give the system time to pass the message
