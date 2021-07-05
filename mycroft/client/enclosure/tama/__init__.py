@@ -40,176 +40,7 @@ from mycroft.util.log import LOG
 from queue import Queue
 from mycroft.util.file_utils import get_temp_path
 
-# The Mark 1 hardware consists of a Raspberry Pi main CPU which is connected
-# to an Arduino over the serial port.  A custom serial protocol sends
-# commands to control various visual elements which are controlled by the
-# Arduino (e.g. two circular rings of RGB LEDs; and four 8x8 white LEDs).
-#
-# The Arduino can also send back notifications in response to either
-# pressing or turning a rotary encoder.
-
-
-class EnclosureReader(Thread):
-    """
-    Reads data from Serial port.
-
-    Listens to all commands sent by Arduino that must be be performed on
-    Mycroft Core.
-
-    E.g. Mycroft Stop Feature
-        # . Arduino sends a Stop command after a button press on a Mycroft unit
-        # . ``EnclosureReader`` captures the Stop command
-        # . Notify all Mycroft Core processes (e.g. skills) to be stopped
-
-    Note: A command is identified by a line break
-    """
-
-    def __init__(self, serial, bus, lang=None):
-        super(EnclosureReader, self).__init__(target=self.read)
-        self.alive = True
-        self.daemon = True
-        self.serial = serial
-        self.bus = bus
-        self.lang = lang or 'en-us'
-        
-        
-        self.start()
-
-        # Notifications from mycroft-core
-        self.bus.on("mycroft.stop.handled", self.on_stop_handled)
-
-    def read(self):
-        while self.alive:
-            try:
-                data = self.serial.readline()[:-2]
-                if data:
-                    try:
-                        data_str = data.decode()
-                    except UnicodeError as e:
-                        data_str = data.decode('utf-8', errors='replace')
-                        LOG.warning('Inself.valid characters in response from '
-                                    ' enclosure: {}'.format(repr(e)))
-                    self.process(data_str)
-            except Exception as e:
-                LOG.error("Reading error: {0}".format(e))
-
-    def on_stop_handled(self, event):
-        # A skill performed a stop
-        check_for_signal('buttonPress')
-
-    def process(self, data):
-        # TODO: Look into removing this emit altogether.
-        # We need to check if any other serial bus messages
-        # are handled by other parts of the code
-        if "mycroft.stop" not in data:
-            self.bus.emit(Message(data))
-
-        if "Command: system.version" in data:
-            # This happens in response to the "system.version" message
-            # sent during the construction of Enclosure()
-            self.bus.emit(Message("enclosure.started"))
-
-        if "mycroft.stop" in data:
-            if has_been_paired():
-                create_signal('buttonPress')
-                self.bus.emit(Message("mycroft.stop"))
-
-        if "volume.up" in data:
-            self.bus.emit(Message("mycroft.volume.increase",
-                                  {'play_sound': True}))
-
-        if "volume.down" in data:
-            self.bus.emit(Message("mycroft.volume.decrease",
-                                  {'play_sound': True}))
-
-        if "system.test.begin" in data:
-            self.bus.emit(Message('recognizer_loop:sleep'))
-
-        if "system.test.end" in data:
-            self.bus.emit(Message('recognizer_loop:wake_up'))
-
-        if "mic.test" in data:
-            mixer = Mixer()
-            prev_vol = mixer.getvolume()[0]
-            mixer.setvolume(35)
-            self.bus.emit(Message("speak", {
-                'utterance': "I am testing one two three"}))
-
-            time.sleep(0.5)  # Prevents recording the loud button press
-            record(get_temp_path('test.wav', 3.0))
-            mixer.setvolume(prev_vol)
-            play_wav(get_temp_path('test.wav')).communicate()
-
-            # Test audio muting on arduino
-            subprocess.call('speaker-test -P 10 -l 0 -s 1', shell=True)
-
-        if "unit.shutdown" in data:
-            # Eyes to soft gray on shutdown
-            self.bus.emit(Message("enclosure.gaze.shutdown"))
-            self.bus.emit(Message("enclosure.eyes.color",
-                                  {'r': 70, 'g': 65, 'b': 69}))
-            self.bus.emit(
-                Message("enclosure.eyes.timedspin",
-                        {'length': 12000}))
-            #self.bus.emit(Message("enclosure.mouth.reset"))
-            time.sleep(0.5)  # give the system time to pass the message
-            self.bus.emit(Message("system.shutdown"))
-
-        if "unit.reboot" in data:
-            # Eyes to soft gray on reboot
-            self.bus.emit(Message("enclosure.eyes.color",
-                                  {'r': 70, 'g': 65, 'b': 69}))
-            self.bus.emit(Message("enclosure.eyes.spin"))
-            #self.bus.emit(Message("enclosure.mouth.reset"))
-            time.sleep(0.5)  # give the system time to pass the message
-            self.bus.emit(Message("system.reboot"))
-
-        if "unit.setwifi" in data:
-            self.bus.emit(Message("system.wifi.setup", {'lang': self.lang}))
-
-        if "unit.factory-reset" in data:
-            self.bus.emit(Message("speak", {
-                'utterance': mycroft.dialog.get("reset to factory defaults")}))
-            subprocess.call(
-                'rm ~/.mycroft/identity/identity2.json',
-                shell=True)
-            self.bus.emit(Message("system.wifi.reset"))
-            self.bus.emit(Message("system.ssh.disable"))
-            wait_while_speaking()
-            #self.bus.emit(Message("enclosure.mouth.reset"))
-            self.bus.emit(Message("enclosure.eyes.spin"))
-            #self.bus.emit(Message("enclosure.mouth.reset"))
-            time.sleep(5)  # give the system time to process all messages
-            self.bus.emit(Message("system.reboot"))
-
-        if "unit.enable-ssh" in data:
-            # This is handled by the wifi client
-            self.bus.emit(Message("system.ssh.enable"))
-            self.bus.emit(Message("speak", {
-                'utterance': mycroft.dialog.get("ssh enabled")}))
-
-        if "unit.disable-ssh" in data:
-            # This is handled by the wifi client
-            self.bus.emit(Message("system.ssh.disable"))
-            self.bus.emit(Message("speak", {
-                'utterance': mycroft.dialog.get("ssh disabled")}))
-
-        if "unit.enable-learning" in data or "unit.disable-learning" in data:
-            enable = 'enable' in data
-            word = 'enabled' if enable else 'disabled'
-
-            LOG.info("Setting opt_in to: " + word)
-            new_config = {'opt_in': enable}
-            user_config = LocalConf(USER_CONFIG)
-            user_config.merge(new_config)
-            user_config.store()
-
-            self.bus.emit(Message("speak", {
-                'utterance': mycroft.dialog.get("learning " + word)}))
-
-    def stop(self):
-        self.alive = False
-
+# The Tama writer
 
 class EnclosureWriter(Thread):
     """
@@ -442,6 +273,7 @@ class EnclosureWriter(Thread):
                         
                 if line=='AVR\n':
                     #self.values = bytearray(['M',1,0,1,0,0,0])
+                    LOG.info("AVR current av = "+self.av)
                     if(self.av == 'N'):
                         self.serial.write('M'.encode())
                         self.val1=1
@@ -631,7 +463,7 @@ class EnclosureWriter(Thread):
                     self.serial.write(((int)(self.current_col[1]*self.eye_alphas[1])).to_bytes(1, 'little'))
                     self.serial.write(((int)(self.current_col[2]*self.eye_alphas[1])).to_bytes(1, 'little'))
                 if line.find('MOVE') != -1:
-                    self.av = 'N'
+                    #self.av = 'N'
                     mylist = line.split(":")
                     #self.valx=abs((int)(mylist[2])) #the abs seems to kill it...
                     #self.valy=abs((int)(mylist[3]))
@@ -804,8 +636,7 @@ class EnclosureTama(Enclosure):
         super().__init__()
 
         self.__init_serial()
-        #self.reader = EnclosureReader(self.serial, self.bus, self.lang)
-        #we don't read anything from the arduino 
+        
         self.writer = EnclosureWriter(self.serial, self.bus)
 
         # We don't have anything to check if the Arduino is happy, just
@@ -932,7 +763,6 @@ class EnclosureTama(Enclosure):
             # There is nothing on the other end of the serial port
             # close these serial-port readers and this process
             self.writer.stop()
-            self.reader.stop()
             self.serial.close()
             self.bus.close()
 
