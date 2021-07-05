@@ -664,7 +664,6 @@ class EnclosureTama(Enclosure):
         
         # Notifications from mycroft-core
         self.bus.on("enclosure.notify.no_internet", self.on_no_internet)
-        self.bus.emit(Message("mycroft.debug.log", data={'level': 'DEBUG'}))
         # initiates the web sockets on display manager
         # NOTE: this is a temporary place to connect the display manager
         init_display_manager_bus_connection()
