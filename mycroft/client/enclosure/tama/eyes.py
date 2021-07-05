@@ -118,6 +118,7 @@ class EnclosureEyes:
         #self._current_rgb = [(r, g, b) for i in range(self._num_pixels)]
         #should update these calles to use the real colour set function
         self.writer.write("HOME")
+        self.writer.write("NONE")
         self.writer.write("CLOSE")        
 
     def set_pixel(self, event=None):
@@ -163,6 +164,7 @@ class EnclosureEyes:
             self.writer.write("OPEN")
             self.isOpen = True
         self.writer.write("HOME")
+        self.writer.write("GREEN")
 
     def spin(self, event=None):
         self.writer.write("eyes.spin")

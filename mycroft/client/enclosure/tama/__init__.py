@@ -751,8 +751,7 @@ class EnclosureTama(Enclosure):
     def __reset(self, event=None):
         # Reset both the position and the eye colour to indicate the unit is
         # ready for input.
-        self.writer.write("HOME")
-        self.writer.write("GREEN")
+        self.eyes.reset()
 
     def speak(self, text):
         self.bus.emit(Message("speak", {'utterance': text}))
@@ -774,8 +773,7 @@ class EnclosureTama(Enclosure):
 
 
     def stop(self):
-        self.writer.write("NONE")
-        self.writer.write("CLOSE")
+        self.eyes.close()
         self.gaze.shutdown()
 
     def _do_net_check(self):
