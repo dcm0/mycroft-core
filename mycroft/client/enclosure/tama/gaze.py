@@ -32,17 +32,17 @@ class CameraManager(Thread):
         self.threadID = threadID
         self.bus = bus
         self.writer = writer
-        self.wake_threshold = wake_threshold
-        self.min_angle = min_angle
-        self.max_angle = max_angle
-        self.talking = False
+        self.wakeThreshold = wake_threshold
+        self.minAngle = min_angle
+        self.maxAngle = max_angle
+        self.queryOwner = False
         self.last = time.time_ns()
-        self.volume_dropped = False
+        self.volumeDropped = False
         self.count = 0
         self.iloop = 0
         self.cancelCounter = 0
         self.cancelThreshold = 8
-        self.threshold_time = threshold_time
+        self.thresholdTime = threshold_time
         self.portinfo = portinfo
         self.baudrate = baudrate
         self.other = None
@@ -74,6 +74,7 @@ class CameraManager(Thread):
         # The 2nd connection in specified baudrate
         self.hvc_p2_api.connect(self.portinfo, self.baudrate, 30)
         LOG.info("Main connection event "+str(self.threadID))
+
         try:
             check_connection(self.hvc_p2_api)
         except Exception as e:
@@ -109,7 +110,12 @@ class CameraManager(Thread):
         #elapsed_time = str(float(time.time() - start) * 1000)[0:6]
         self.detecting = True
         while(self.detecting):
-            (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, self.image)
+
+            try: 
+                (res_code, stb_status) = self.hvc_p2_api.execute(p2def.OUT_IMG_TYPE_NONE, self.hvc_tracking_result, self.image)
+            except Exception as e:
+                LOG.error("Exeption ERROR "+ str(e))
+
             time.sleep(0.2)
             if(res_code != 0x00):
                 continue
@@ -117,95 +123,105 @@ class CameraManager(Thread):
 
             if len(self.hvc_tracking_result.faces) > 0:
                 #LOG.info("Face Detected "+str(self.threadID))
-                try:
-                    biggestLooker = None
-                    for i in range(len(self.hvc_tracking_result.faces)):
-                        face = self.hvc_tracking_result.faces[i]
-                        if face.gaze is not None: 
-                            yaw = face.gaze.gazeLR
-                            pitch = face.gaze.gazeUD
-                            LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
-                            if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
-                                #LOG.info("Found a looker")
-                                if biggestLooker:
-                                    if biggestLooker.size < face.size:
-                                        biggestLooker = face
+                biggestLooker = None
+                for i in range(len(self.hvc_tracking_result.faces)):
+                    face = self.hvc_tracking_result.faces[i]
+                    if face.gaze is not None: 
+                        yaw = face.gaze.gazeLR
+                        pitch = face.gaze.gazeUD
+                        LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
+                        if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
+                            #LOG.info("Found a looker")
+                            if biggestLooker:
+                                if biggestLooker.size < face.size:
+                                    biggestLooker = face
+                            else:
+                                biggestLooker = face
+                
 
-                    if biggestLooker:
-                        #Then we have someone looking
-                        #LOG.info("Look  "+str(face))
-                        face = biggestLooker
-                        x = face.pos_x
-                        y = face.pos_y
-                        #LOG.info("Calc directions  "+str(x) + " " + str(y)+ " " + str(self.threadID))
-                        (x_sign,x_m,y_sign,y_m)=getdeg(x,y)
-                        x_m = x_m - 15 #15 = camera offset angle
-                        x_m=abs(x_m)
-                        y_m=abs(y_m)
-                        LOG.info("x - y calculated "+str(x) + " " + str(y)+ " to " +str(x_m)+"/"+str(y_m)+" "+str(self.threadID))
-                        etime = time.time_ns()
-                        if (etime - self.last) <= self.threshold_time*100000000: #convert from mili to nanos 100000000
-                            self.count += 1 
-                        else:
-                            LOG.info("Too Slow!  "+str(etime - self.last)+" / " + str(self.threshold_time*100000000)+ " "+str(self.threadID))    
-                            self.count = 1
-                        self.last = etime
-                        LOG.info("count  "+str(self.count)+" "+str(self.threadID))
-                        #lets see if we have to start or claim an interaction
-                        if self.iloop == 0 and self.count > self.wake_threshold:
-                            LOG.info("Starting interaction from gaze "+str(self.threadID))
-                            self.talking = True
-                            self.bus.emit(Message('mycroft.mic.listen'))
-                        elif ((self.other.talking == False or self.other.cancelCounter > self.cancelThreshold/2) 
-                            and (self.talking == False) and (self.iloop < 5) and (self.count > self.wake_threshold)):
-                            #lets claim this interaction even if we didn't start it (wakeword)
-                            LOG.info("Claiming interaction from other/wakeword "+str(self.threadID))
-                            self.talking = True
-                        elif self.count > 6:
-                            LOG.info('Not talking because C='+str(self.count)+" i="+str(self.iloop)+" t="+str(self.talking)+" o="+str(self.other.talking)+ " ct="+str(self.cancelThreshold) + " OT="+ str(self.other.cancelCounter)) 
-                            
-
-                        #Should we move the eyes:
-                        update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
-                        data = '{"data":'+update_pos+'}'
-
-                        #This should cover up to ouput
-                        if (self.other.talking ==False) and (self.iloop < 5):
-                            LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
-                            self.bus.emit(Message('enclosure.eyes.look', data))
-
-                        #If we are in spoken output, just look anyway
-                        if self.iloop > 4:
-                            LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
-                            self.bus.emit(Message('enclosure.eyes.look', data))
-
-                        self.cancelCounter = 0
+                if biggestLooker:
+                    #Then we have someone looking, just process on the closest face
+                    #LOG.info("Look  "+str(face))
+                    face = biggestLooker
+                    x = face.pos_x
+                    y = face.pos_y
+                    #LOG.info("Calc directions  "+str(x) + " " + str(y)+ " " + str(self.threadID))
+                    (x_sign,x_m,y_sign,y_m)=getdeg(x,y)
+                    x_m = x_m - 15 #15 = camera offset angle
+                    x_m=abs(x_m)
+                    y_m=abs(y_m)
+                    LOG.info("x - y calculated "+str(x) + " " + str(y)+ " to " +str(x_m)+"/"+str(y_m)+" "+str(self.threadID))
+                    etime = time.time_ns()
+                    if (etime - self.last) <= self.thresholdTime*100000000: #convert from mili to nanos 100000000
+                        self.count += 1 
                     else:
-                        self.cancelCounter += 1
-                            
-                except Exception as e:
-                    LOG.error("Exeption ERROR "+ str(e))
-                    LOG.info("Exeption "+ str(e))
-            else:
-                self.cancelCounter +=1
+                        #This linear decay - should probably be fancier
+                        if (self.count >0):
+                            self.count -= 1
+                            LOG.info("Too Slow!  "+str(etime - self.last)+" / " + str(self.thresholdTime*100000000)+ " "+str(self.threadID))    
 
-            #Have to cancel even if we don't see a face!
-            if(self.cancelCounter == self.cancelThreshold):
-                LOG.info("Cancel threshold reached, talking: "+str(self.talking))
-                if self.talking:
+
+                    self.last = etime
+                    LOG.info("count  "+str(self.count)+" "+str(self.threadID))
+                    #lets see if we have to start or claim an interaction
+                    if self.iloop == 0 and self.count > self.wakeThreshold:
+                        LOG.info("Starting interaction from gaze "+str(self.threadID))
+                        self.queryOwner = True
+                        self.bus.emit(Message('mycroft.mic.listen'))
+                    elif ((self.other.queryOwner == False or self.other.cancelCounter > self.cancelThreshold/2) 
+                        and (self.queryOwner == False) and (self.iloop < 5) and (self.count > self.wakeThreshold)):
+                        #lets claim this interaction even if we didn't start it (wakeword)
+                        LOG.info("Claiming interaction from other/wakeword "+str(self.threadID))
+                        self.queryOwner = True
+                    elif self.count > self.wakeThreshold:
+                        LOG.info('Not taking ownership because C='+str(self.count)+" i="+str(self.iloop)+" t="+str(self.queryOwner)+" o="+str(self.other.queryOwner)+ " ct="+str(self.cancelThreshold) + " OT="+ str(self.other.cancelCounter)) 
+                        
+
+                    #Should we move the eyes?
+                    update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                    data = '{"data":'+update_pos+'}'
+
+                    #This should cover up to ouput
+                    if (self.other.queryOwner == False) and (self.iloop < 5):
+                        LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
+                        self.bus.emit(Message('enclosure.eyes.look', data))
+
+                    #If we are in spoken output, just look anyway
+                    if self.iloop > 4:
+                        LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
+                        self.bus.emit(Message('enclosure.eyes.look', data))
+
+                    self.cancelCounter = 0
+                else:
+                    #Found faces but none are looking, don't count cancels between wakeword and mic open, or between record and rec
+                    if (self.iloop != 1 and self.iloop !=3):
+                        self.cancelCounter += 1
+            else:
+                #If this camera sees no faces, also bump up the cancel counter and drop the normal counter
+                if (self.count >0):
+                    self.count -= 1
+
+                if (self.iloop != 1 and self.iloop !=3):
+                    self.cancelCounter +=1
+
+            
+            if(self.cancelCounter > self.cancelThreshold):
+                LOG.info("Cancel threshold reached, query owner: "+str(self.queryOwner))
+                if self.queryOwner:
                     #If we are in the recognition phase then cancel
                     if self.iloop < 5:
                         LOG.info("Stopping" + " "+str(self.threadID))
                         create_signal('buttonPress') #This seems like an out of date way to do it...
                         self.bus.emit(Message('mycroft.stop'))
-                        self.talking = False
+                        self.queryOwner = False
                         self.count = 0
+                        self.cancelCounter = 0
                     else:
                         #If we are giving output and the ownser isn't watching?
                         #do we bother to check of other has gaze?
                         LOG.info("Decrease Volume" + " "+str(self.threadID))
                         self.bus.emit(Message('mycroft.volume.decrease',{"play_sound": False}))
-                        self.volume_dropped = True
+                        self.volumeDropped = True
 
         #Out of the main loop so cleanup
         LOG.info("Cleanup Omron" + " "+str(self.threadID))
@@ -214,24 +230,24 @@ class CameraManager(Thread):
 
 
     def volumeReset(self):
-        if self.volume_dropped:
+        if self.volumeDropped:
             LOG.info("Increasing Volume" + " "+str(self.threadID))
             self.bus.emit(Message('mycroft.volume.increase',{"play_sound": False}))
-            self.volume_dropped = False
+            self.volumeDropped = False
 
     def setLoop(self, loop):
         LOG.info("Interaction loop updated to " + str(loop) + " "+str(self.threadID))
         self.iloop = loop
         if self.iloop == 6:
-            self.talking = False
+            self.queryOwner = False
             self.count = 0
             self.iloop = 0
 
     def setDOA(self, angle):
-        if angle<self.max_angle and angle>self.min_angle:
-            if (self.other.talking == True) and (self.talking == False):
-                self.talking = True
-                self.other.talking = False
+        if angle<self.maxAngle and angle>self.minAngle:
+            if (self.other.queryOwner == True) and (self.queryOwner == False):
+                self.queryOwner = True
+                self.other.queryOwner = False
 
 
 class EnclosureGaze:
@@ -257,11 +273,11 @@ class EnclosureGaze:
         #Config Variables - should put them in the config
         #time between detected gazes for them to be counted in mili-seconds
         self.threshold_time = 75
-        #number of consecutive gazes to trigger a wakeword
+        #number of consecutive(ish) gazes to trigger a wakeword
         self.wake_threshold = 3
 
         #Camera Variables
-        #threadID, bus, writer, threshold_time, wake_threshold, min_angle, max_angle, portinfo, baudrate
+        #threadID, bus, writer, threshold_time, wake_threshold, min_angle(DOA), max_angle(DOA), portinfo, baudrate  
         self.cameraR = CameraManager(1, self.bus, self.writer, self.threshold_time, self.wake_threshold, 10, 180, '/dev/ttyACM0', 921600)
         LOG.info("Created R")
         self.cameraL = CameraManager(2, self.bus, self.writer, self.threshold_time, self.wake_threshold, -10, -180, '/dev/ttyACM1', 921600)
