@@ -203,7 +203,6 @@ class EnclosureWriter(Thread):
                     self.current_col = self.base_colours[self.last_col]
                 if line=='OPEN\n':
                     #self.values = bytearray(['T',1])
-                    print ("Opening the bloody things")
                     self.serial.write('T'.encode())
                     self.val=1
                     self.serial.write(self.val.to_bytes(1, 'little'))
