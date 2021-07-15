@@ -478,8 +478,8 @@ class EnclosureWriter(Thread):
                     #    self.signs[1]=b'\xFF'
 
                     #Do we still need the signs for this? I'm not sure any more 
-                    LOG.info("Moving to " + mylist[2] + " " + mylist[3])
-                    self.movement((int)(mylist[2]), (int)(mylist[3]), True)
+                    LOG.info("Moving to " + mylist[2] + " " + mylist[4])
+                    self.movement((int)(mylist[2]), (int)(mylist[4]), True)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     self.serial.write('M'.encode())
