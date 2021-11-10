@@ -134,8 +134,8 @@ class CameraManager(Thread):
                         
                         if(self.camera_side == 'R'):
                             
-                            x_sign = 30
-                            x_m = 10
+                            x_sign = 0
+                            x_m = 45
                             y_sign = 0
                             y_m = 0
                             LOG.info("In Move ")
