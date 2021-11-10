@@ -133,14 +133,13 @@ class CameraManager(Thread):
                         LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
                         
                         if(self.camera_side == 'R'):
-                            
-                            x_sign = 0
-                            x_m = 45
-                            y_sign = 0
-                            y_m = 0
-                            LOG.info("In Move ")
-                            update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
-                            self.writer.write(update_pos) 
+                            #x_sign = 0
+                            #x_m = 45
+                            #y_sign = 0
+                            #y_m = 0
+                            #LOG.info("In Move ")
+                            #update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                            #self.writer.write(update_pos) 
                             #data = '{"data":'+update_pos+'}'
                             #self.bus.emit(Message('enclosure.eyes.look', data))
 
@@ -201,11 +200,13 @@ class CameraManager(Thread):
                     #This should cover up to ouput
                     if (self.other.queryOwner == False) and (self.iloop < 5):
                         LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
+                        self.writer.write(update_pos) 
                         #self.bus.emit(Message('enclosure.eyes.look', data))
 
                     #If we are in spoken output, just look anyway
                     if self.iloop > 4:
                         LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
+                        self.writer.write(update_pos) 
                         #self.bus.emit(Message('enclosure.eyes.look', data))
 
                     self.cancelCounter = 0
