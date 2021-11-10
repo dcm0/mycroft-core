@@ -133,13 +133,14 @@ class CameraManager(Thread):
                         LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
                         
                         if(self.camera_side == 'R'):
-                            self.writer.write("YELLOW") 
+                            
                             x_sign = 30
                             x_m = 10
                             y_sign = 0
                             y_m = 0
                             LOG.info("In Move ")
-                            update_pos='Move:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                            update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                            self.writer.write(update_pos) 
                             data = '{"data":'+update_pos+'}'
                             self.bus.emit(Message('enclosure.eyes.look', data))
 
