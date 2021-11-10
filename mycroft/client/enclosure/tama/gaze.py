@@ -199,12 +199,12 @@ class CameraManager(Thread):
                     #This should cover up to ouput
                     if (self.other.queryOwner == False) and (self.iloop < 5):
                         LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
-                        self.bus.emit(Message('enclosure.eyes.look', data))
+                        #self.bus.emit(Message('enclosure.eyes.look', data))
 
                     #If we are in spoken output, just look anyway
                     if self.iloop > 4:
                         LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
-                        self.bus.emit(Message('enclosure.eyes.look', data))
+                        #self.bus.emit(Message('enclosure.eyes.look', data))
 
                     self.cancelCounter = 0
                 else:
