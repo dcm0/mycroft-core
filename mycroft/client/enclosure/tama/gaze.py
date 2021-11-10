@@ -130,6 +130,8 @@ class CameraManager(Thread):
                         yaw = face.gaze.gazeLR
                         pitch = face.gaze.gazeUD
                         LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
+                        LOG.info("HELOOOO")
+                        
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                             #LOG.info("Found a looker")
                             if biggestLooker:
