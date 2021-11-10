@@ -133,7 +133,7 @@ class CameraManager(Thread):
                         LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
                         
                         if(self.camera_side == 'R'):
-                            x_sign = 0
+                            x_sign = 30
                             x_m = 10
                             y_sign = 0
                             y_m = 0
