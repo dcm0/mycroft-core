@@ -147,6 +147,7 @@ class CameraManager(Thread):
                     y = face.pos_y
                     #LOG.info("Calc directions  "+str(x) + " " + str(y)+ " " + str(self.threadID))
                     (x_sign,x_m,y_sign,y_m)=getdeg(x,y)
+                    LOG.info("GET DEG"+ x_sign, y_sign,y_m)
                     x_m = x_m - 15 #15 = camera offset angle
                     x_m=abs(x_m)
                     y_m=abs(y_m)
