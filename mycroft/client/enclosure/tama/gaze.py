@@ -141,8 +141,8 @@ class CameraManager(Thread):
                             LOG.info("In Move ")
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
-                            data = '{"data":'+update_pos+'}'
-                            self.bus.emit(Message('enclosure.eyes.look', data))
+                            #data = '{"data":'+update_pos+'}'
+                            #self.bus.emit(Message('enclosure.eyes.look', data))
 
 
 
