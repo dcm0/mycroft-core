@@ -132,7 +132,7 @@ class CameraManager(Thread):
                         pitch = face.gaze.gazeUD
                         LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
                         
-                        if(self.camera_side == 'R'):
+                        #if(self.camera_side == 'R'):
                             #x_sign = 0
                             #x_m = 45
                             #y_sign = 0
@@ -201,7 +201,6 @@ class CameraManager(Thread):
                     if (self.other.queryOwner == False) and (self.iloop < 5):
                         LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
                         self.writer.write(update_pos) 
-                        
                         #self.bus.emit(Message('enclosure.eyes.look', data))
 
                     #If we are in spoken output, just look anyway
