@@ -27,7 +27,7 @@ from mycroft.util import play_wav, create_signal, connected, check_for_signal
 
 class CameraManager(Thread):
 
-    def __init__(self, threadID, bus, writer, threshold_time, wake_threshold, min_angle, max_angle, portinfo, baudrate):
+    def __init__(self, threadID, bus, writer, threshold_time, wake_threshold, min_angle, max_angle, portinfo, baudrate, camera_side):
         Thread.__init__(self)
         self.threadID = threadID
         self.bus = bus
@@ -48,6 +48,7 @@ class CameraManager(Thread):
         self.other = None
         self.detecting = False
         self.image = GrayscaleImage()
+        self.camera_side = camera_side # from tama perspectives (Tama side)
         
 
 
@@ -129,9 +130,7 @@ class CameraManager(Thread):
                     if face.gaze is not None: 
                         yaw = face.gaze.gazeLR
                         pitch = face.gaze.gazeUD
-                        LOG.info("Face  p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
-                        LOG.info("HELOOOO   ")
-                        
+                        LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                             #LOG.info("Found a looker")
                             if biggestLooker:
@@ -281,9 +280,9 @@ class EnclosureGaze:
 
         #Camera Variables
         #threadID, bus, writer, threshold_time, wake_threshold, min_angle(DOA), max_angle(DOA), portinfo, baudrate  
-        self.cameraR = CameraManager(1, self.bus, self.writer, self.threshold_time, self.wake_threshold, 10, 180, '/dev/ttyACM0', 921600)
+        self.cameraR = CameraManager(1, self.bus, self.writer, self.threshold_time, self.wake_threshold, 10, 180, '/dev/ttyACM0', 921600, 'R')
         LOG.info("Created R")
-        self.cameraL = CameraManager(2, self.bus, self.writer, self.threshold_time, self.wake_threshold, -10, -180, '/dev/ttyACM1', 921600)
+        self.cameraL = CameraManager(2, self.bus, self.writer, self.threshold_time, self.wake_threshold, -10, -180, '/dev/ttyACM1', 921600, 'L')
         LOG.info("Created L")
         self.cameraR.other = self.cameraL
         self.cameraL.other = self.cameraR
