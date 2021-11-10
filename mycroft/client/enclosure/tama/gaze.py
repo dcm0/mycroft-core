@@ -137,9 +137,8 @@ class CameraManager(Thread):
                             x_m = 10
                             y_sign = 0
                             y_m = 0
-                            update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                            update_pos='TEST Move:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             data = '{"data":'+update_pos+'}'
-                            LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
                             self.bus.emit(Message('enclosure.eyes.look', data))
 
 
