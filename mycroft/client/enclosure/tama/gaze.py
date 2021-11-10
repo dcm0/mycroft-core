@@ -201,6 +201,7 @@ class CameraManager(Thread):
                     if (self.other.queryOwner == False) and (self.iloop < 5):
                         LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
                         self.writer.write(update_pos) 
+                        
                         #self.bus.emit(Message('enclosure.eyes.look', data))
 
                     #If we are in spoken output, just look anyway
