@@ -131,6 +131,19 @@ class CameraManager(Thread):
                         yaw = face.gaze.gazeLR
                         pitch = face.gaze.gazeUD
                         LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
+                        
+                        if(self.camera_side == 'R'):
+                            x_sign = 0
+                            x_m = 10
+                            y_sign = 0
+                            y_m = 0
+                            update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                            data = '{"data":'+update_pos+'}'
+                            LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
+                            self.bus.emit(Message('enclosure.eyes.look', data))
+
+
+
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                             #LOG.info("Found a looker")
                             if biggestLooker:
