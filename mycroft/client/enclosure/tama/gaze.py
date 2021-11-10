@@ -133,6 +133,7 @@ class CameraManager(Thread):
                         LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
                         
                         if(self.camera_side == 'R'):
+                            self.writer.write("YELLOW") 
                             x_sign = 30
                             x_m = 10
                             y_sign = 0
