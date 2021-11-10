@@ -48,7 +48,7 @@ class CameraManager(Thread):
         self.other = None
         self.detecting = False
         self.image = GrayscaleImage()
-        self.camera_side = camera_side # from tama perspectives (Tama side)
+        self.camera_side = camera_side # from tama perspectives (Tama side) 0:R, 1:L
         
 
 
@@ -132,7 +132,7 @@ class CameraManager(Thread):
                         pitch = face.gaze.gazeUD
                         LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
                         
-                        if(self.camera_side == 'R'):
+                        if(self.camera_side == 0):
                             x_sign = 0
                             x_m = 10
                             y_sign = 0
@@ -291,10 +291,10 @@ class EnclosureGaze:
         self.wake_threshold = 3
 
         #Camera Variables
-        #threadID, bus, writer, threshold_time, wake_threshold, min_angle(DOA), max_angle(DOA), portinfo, baudrate  
-        self.cameraR = CameraManager(1, self.bus, self.writer, self.threshold_time, self.wake_threshold, 10, 180, '/dev/ttyACM0', 921600, 'R')
+        #threadID, bus, writer, threshold_time, wake_threshold, min_angle(DOA), max_angle(DOA), portinfo, baudrate , 
+        self.cameraR = CameraManager(1, self.bus, self.writer, self.threshold_time, self.wake_threshold, 10, 180, '/dev/ttyACM0', 921600, 0)
         LOG.info("Created R")
-        self.cameraL = CameraManager(2, self.bus, self.writer, self.threshold_time, self.wake_threshold, -10, -180, '/dev/ttyACM1', 921600, 'L')
+        self.cameraL = CameraManager(2, self.bus, self.writer, self.threshold_time, self.wake_threshold, -10, -180, '/dev/ttyACM1', 921600, 1)
         LOG.info("Created L")
         self.cameraR.other = self.cameraL
         self.cameraL.other = self.cameraR
