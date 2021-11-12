@@ -143,6 +143,17 @@ class CameraManager(Thread):
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
                            
+                            time.sleep(0.1)
+
+                            x_sign = 0 
+                            x_m = -30
+                            y_sign = 0
+                            y_m = 0
+                            LOG.info("In Move ")
+                            update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                            self.writer.write(update_pos) 
+
+
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                             #LOG.info("Found a looker")
