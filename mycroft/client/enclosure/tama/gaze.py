@@ -135,6 +135,16 @@ class CameraManager(Thread):
                         
                         if(self.camera_side == 'R'):
                         
+                            x_sign = 0 
+                            x_m = 0
+                            y_sign = 0
+                            y_m = 0
+                            LOG.info("In Move head ")
+                            update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                            self.writer.write(update_pos) 
+
+                            time.sleep(2)
+
                             #sign does not affect the direction, you can add the sign to the x_m, y_m
                             x_sign = 0 
                             x_m = -30
@@ -143,6 +153,17 @@ class CameraManager(Thread):
                             LOG.info("In Move head ")
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
+
+                            time.sleep(5)
+
+                            x_sign = 0 
+                            x_m = 0
+                            y_sign = 0
+                            y_m = 0
+                            LOG.info("In Move head ")
+                            update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                            self.writer.write(update_pos)
+
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                             #LOG.info("Found a looker")
