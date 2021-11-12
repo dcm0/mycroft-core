@@ -163,6 +163,9 @@ class CameraManager(Thread):
 
                             self.writer.write('PINK') 
 
+                            time.sleep(2)
+
+
                             x_sign = 0 
                             x_m = 0
                             y_sign = 0
