@@ -134,11 +134,7 @@ class CameraManager(Thread):
                         LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
                         
                         if(self.camera_side == 'R'):
-                            self.writer.write('HOME') 
-
-                            #wait for 7 seconds
-                            time.sleep(10)
-
+                        
                             #sign does not affect the direction, you can add the sign to the x_m, y_m
                             x_sign = 0 
                             x_m = 30
@@ -147,9 +143,6 @@ class CameraManager(Thread):
                             LOG.info("In Move ")
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
-                            
-                            
-                           
                             
                             
 
