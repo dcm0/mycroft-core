@@ -165,6 +165,8 @@ class CameraManager(Thread):
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos)
                             self.writer.write('GREEN') 
+                            
+                            time.sleep(2)
 
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
