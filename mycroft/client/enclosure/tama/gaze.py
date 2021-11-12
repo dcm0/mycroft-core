@@ -137,7 +137,7 @@ class CameraManager(Thread):
                         
                             #sign does not affect the direction, you can add the sign to the x_m, y_m
                             x_sign = 0 
-                            x_m = 30
+                            x_m = -30
                             y_sign = 0
                             y_m = 0
                             LOG.info("In Move ")
