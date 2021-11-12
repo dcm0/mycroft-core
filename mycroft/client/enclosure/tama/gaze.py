@@ -153,6 +153,7 @@ class CameraManager(Thread):
                             LOG.info("In Move head ")
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
+                            self.writer.write('PINK') 
 
                             time.sleep(5)
 
