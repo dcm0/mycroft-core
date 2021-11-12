@@ -142,8 +142,9 @@ class CameraManager(Thread):
                             LOG.info("In Move ")
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
-                           
-                            time.sleep(0.1)
+                            
+                            #wait for 7 seconds
+                            time.sleep(7)
 
                             x_sign = 0 
                             x_m = -30
