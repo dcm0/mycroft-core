@@ -135,6 +135,7 @@ class CameraManager(Thread):
                         
                         if(self.camera_side == 'R'):
                             LOG.info("TEST " + face.pos_x) 
+                            
                             x_sign = 0 
                             x_m = -30
                             y_sign = 0
