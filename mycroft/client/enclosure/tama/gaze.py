@@ -390,7 +390,7 @@ class EnclosureGaze:
                 #cameras update to 0 on this, keep local consistant even if it isn't used
                 self.iloop = 0
                 #and reset the head 
-                self.bus.emit(Message('enclosure.eyes.reset'))
+                #self.bus.emit(Message('enclosure.eyes.reset'))
 
             if event.msg_type == 'recognizer_loop:awoken':
                 #This actually should be opening head as opposed to sleep closing it
