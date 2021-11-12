@@ -154,7 +154,17 @@ class CameraManager(Thread):
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
                             self.writer.write('PINK') 
-                            time.sleep(5)
+
+                            time.sleep(3)
+
+                            self.writer.write('GREEN')
+
+                            time.sleep(1.5)
+
+                            self.writer.write('PINK') 
+
+                            time.sleep(2)
+
 
                             x_sign = 0 
                             x_m = 0
@@ -164,7 +174,8 @@ class CameraManager(Thread):
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
                             self.writer.write('GREEN') 
-                            time.sleep(3)
+                           
+
 
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
