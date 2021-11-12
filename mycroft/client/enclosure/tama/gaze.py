@@ -137,7 +137,8 @@ class CameraManager(Thread):
                             LOG.info("TEST " + str(face.pos_x)) 
 
                             x_sign = 0 
-                            x_m = -30
+                            x_m = -15
+                
                             y_sign = 0
                             y_m = 0
                             LOG.info("In Move head ")
