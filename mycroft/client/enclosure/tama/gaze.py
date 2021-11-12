@@ -143,7 +143,7 @@ class CameraManager(Thread):
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
 
-                            time.sleep(2)
+                            time.sleep(3)
 
                             #sign does not affect the direction, you can add the sign to the x_m, y_m
                             x_sign = 0 
@@ -154,17 +154,7 @@ class CameraManager(Thread):
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
                             self.writer.write('PINK') 
-
-                            time.sleep(3)
-
-                            self.writer.write('GREEN')
-
-                            time.sleep(1.5)
-
-                            self.writer.write('PINK') 
-
-                            time.sleep(2)
-
+                            time.sleep(5)
 
                             x_sign = 0 
                             x_m = 0
@@ -174,7 +164,7 @@ class CameraManager(Thread):
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
                             self.writer.write('GREEN') 
-                           
+                            time.sleep(3)
 
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
