@@ -143,8 +143,6 @@ class CameraManager(Thread):
                             LOG.info("In Move head ")
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos) 
-                            
-                            
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                             #LOG.info("Found a looker")
@@ -176,7 +174,6 @@ class CameraManager(Thread):
                         if (self.count >0):
                             self.count -= 1
                             LOG.info("Too Slow!  "+str(etime - self.last)+" / " + str(self.thresholdTime*100000000)+ " "+str(self.threadID))    
-
 
                     self.last = etime
                     LOG.info("count  "+str(self.count)+" "+str(self.threadID))
@@ -390,7 +387,7 @@ class EnclosureGaze:
                 #cameras update to 0 on this, keep local consistant even if it isn't used
                 self.iloop = 0
                 #and reset the head 
-                #self.bus.emit(Message('enclosure.eyes.reset'))
+                self.bus.emit(Message('enclosure.eyes.reset'))
 
             if event.msg_type == 'recognizer_loop:awoken':
                 #This actually should be opening head as opposed to sleep closing it
