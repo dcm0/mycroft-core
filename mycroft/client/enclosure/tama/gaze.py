@@ -229,7 +229,7 @@ class CameraManager(Thread):
                     if self.iloop < 5:
                         LOG.info("Stopping" + " "+str(self.threadID))
                         create_signal('buttonPress') #This seems like an out of date way to do it...
-                        self.bus.emit(Message('mycroft.stop'))
+                        self.bus.emit(Message('mycroft.stop')) # the listner is in speech-->__main__.py
                         self.queryOwner = False
                         self.count = 0
                         self.cancelCounter = 0
@@ -387,8 +387,8 @@ class EnclosureGaze:
                 self.updateLoop(6)
                 #cameras update to 0 on this, keep local consistant even if it isn't used
                 self.iloop = 0
-                #and reset the head 
-                self.bus.emit(Message('enclosure.eyes.reset'))
+                #and reset the head
+                #self.bus.emit(Message('enclosure.eyes.reset')) # the listner in eyes.py
 
             if event.msg_type == 'recognizer_loop:awoken':
                 #This actually should be opening head as opposed to sleep closing it

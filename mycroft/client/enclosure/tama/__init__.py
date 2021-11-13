@@ -22,7 +22,7 @@ import serial
 import colorsys
 
 
-import mycroft.dialog
+import mycroft.dialog 
 from mycroft.client.enclosure.base import Enclosure
 from mycroft.api import has_been_paired
 from mycroft.audio import wait_while_speaking
