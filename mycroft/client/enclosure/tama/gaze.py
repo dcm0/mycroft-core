@@ -146,14 +146,14 @@ class CameraManager(Thread):
 
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
-                            #LOG.info("Found a looker")
+                            LOG.info("Found a looker")
                             if biggestLooker:
                                 if biggestLooker.size < face.size:
                                     biggestLooker = face
                             else:
                                 biggestLooker = face
                 
-
+                        
                 if biggestLooker:
                     #Then we have someone looking, just process on the closest face
                     #LOG.info("Look  "+str(face))
