@@ -373,26 +373,22 @@ class EnclosureGaze:
             #it is already in mic.py
             if event.msg_type == 'recognizer_loop:record_end':
                 if(self.iloop == 2):
-                    self.updateLoop(3)
+                    #self.updateLoop(3) this closes the mic, I think it causes a problem
                     LOG.info("record_end")
                 #Don't move to 3 if the recording has failed and went back to 0
 
             if event.msg_type == 'recognizer_loop:utterance':
                 self.updateLoop(4)
-                LOG.info("utterance")
 
             if event.msg_type == 'recognizer_loop:speech.recognition.unknown':
                 #recognition failed - back to 0
                 self.updateLoop(0)
-                LOG.info("recognition.unknown")
 
             if event.msg_type == 'recognizer_loop:audio_output_start':
                 self.updateLoop(5)
-                LOG.info("audio_output_start")
 
             if event.msg_type == 'recognizer_loop:audio_output_end':
                 self.updateLoop(6)
-                LOG.info("audio_output_end")
                 #cameras update to 0 on this, keep local consistant even if it isn't used
                 self.iloop = 0
                 #and reset the head
