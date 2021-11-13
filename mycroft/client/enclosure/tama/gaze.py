@@ -370,6 +370,7 @@ class EnclosureGaze:
                 self.updateLoop(2)
                 LOG.info("record_begin")
 
+            #it is already in mic.py
             #if event.msg_type == 'recognizer_loop:record_end':
                 #if(self.iloop == 2):
                     #self.updateLoop(3)

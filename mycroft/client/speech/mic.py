@@ -766,7 +766,9 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
                 ww_frames = None
 
         # Notify system of recording start
+        LOG.info("MIC: reording begins")
         emitter.emit("recognizer_loop:record_begin")
+        
 
         frame_data = self._record_phrase(
             source,
@@ -775,7 +777,9 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
             ww_frames
         )
         audio_data = self._create_audio_data(frame_data, source)
+        LOG.info("MIC: recording ends")
         emitter.emit("recognizer_loop:record_end")
+        LOG.info("MIC: reording begins")
         if self.save_utterances:
             LOG.info("Recording utterance")
             stamp = str(datetime.datetime.now())
