@@ -364,38 +364,48 @@ class EnclosureGaze:
             if event.msg_type == 'recognizer_loop:wakeword':
                 self.resetVolume()
                 self.updateLoop(1)
+                LOG.info("wakup")
 
             if event.msg_type == 'recognizer_loop:record_begin':
                 self.updateLoop(2)
+                LOG.info("record_begin")
 
             if event.msg_type == 'recognizer_loop:record_end':
                 if(self.iloop == 2):
                     self.updateLoop(3)
+                    LOG.info("record_end")
                 #Don't move to 3 if the recording has failed and went back to 0
 
             if event.msg_type == 'recognizer_loop:utterance':
                 self.updateLoop(4)
+                LOG.info("utterance")
 
             if event.msg_type == 'recognizer_loop:speech.recognition.unknown':
                 #recognition failed - back to 0
                 self.updateLoop(0)
+                LOG.info("recognition.unknown")
 
             if event.msg_type == 'recognizer_loop:audio_output_start':
                 self.updateLoop(5)
+                LOG.info("audio_output_start")
 
             if event.msg_type == 'recognizer_loop:audio_output_end':
                 self.updateLoop(6)
+                LOG.info("audio_output_end")
                 #cameras update to 0 on this, keep local consistant even if it isn't used
                 self.iloop = 0
                 #and reset the head
                 #self.bus.emit(Message('enclosure.eyes.reset')) # the listner in eyes.py
 
             if event.msg_type == 'recognizer_loop:awoken':
+                LOG.info("awoken")
                 #This actually should be opening head as opposed to sleep closing it
                 pass
 
             if event.msg_type == 'recognizer_loop:DOA':
+                LOG.info("DOA")
                 self.updateDOA(event)
 
             if event.msg_type == 'enclosure.gaze.shutdown':
+                LOG.info("shutdown")
                 self.shutdown()
