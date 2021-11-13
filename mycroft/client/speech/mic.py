@@ -779,7 +779,6 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
         audio_data = self._create_audio_data(frame_data, source)
         LOG.info("MIC: recording ends")
         emitter.emit("recognizer_loop:record_end")
-        LOG.info("MIC: reording begins")
         if self.save_utterances:
             LOG.info("Recording utterance")
             stamp = str(datetime.datetime.now())

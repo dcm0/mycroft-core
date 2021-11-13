@@ -371,10 +371,10 @@ class EnclosureGaze:
                 LOG.info("record_begin")
 
             #it is already in mic.py
-            #if event.msg_type == 'recognizer_loop:record_end':
-                #if(self.iloop == 2):
-                    #self.updateLoop(3)
-                    #LOG.info("record_end")
+            if event.msg_type == 'recognizer_loop:record_end':
+                if(self.iloop == 2):
+                    self.updateLoop(3)
+                    LOG.info("record_end")
                 #Don't move to 3 if the recording has failed and went back to 0
 
             if event.msg_type == 'recognizer_loop:utterance':
