@@ -95,8 +95,8 @@ class EnclosureEyes:
         self.writer.write("GREEN")
 
     def think(self, event=None):
-        self.writer.write("CIAN")
-        self.writer.write("AVR")
+        self.writer.write("GREEN")
+        #self.writer.write("AVR")
 
     def listen(self, event=None):
         self.writer.write("YELLOW")        
