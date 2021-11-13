@@ -60,11 +60,11 @@ class EnclosureMouth:
         self.writer.write("PINK")
 
     def think(self, event=None):
-        self.writer.write("GREEN")
+        self.writer.write("PINK")#green
         self.writer.write("AVR")
 
     def listen(self, event=None):
-        self.writer.write("YELLOW")
+        self.writer.write("PINK") #yello
 
     def smile(self, event=None):
         self.writer.write("mouth.smile")
