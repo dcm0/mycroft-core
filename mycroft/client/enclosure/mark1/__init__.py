@@ -141,7 +141,7 @@ class EnclosureReader(Thread):
         if "unit.shutdown" in data:
             # Eyes to soft gray on shutdown  212, 143, 138
             self.bus.emit(Message("enclosure.eyes.color",
-                                  {'r': 212, 'g': 143, 'b': 138}))
+                                  {'r': 0, 'g': 0, 'b': 255}))
             self.bus.emit(
                 Message("enclosure.eyes.timedspin",
                         {'length': 12000}))
@@ -152,7 +152,7 @@ class EnclosureReader(Thread):
         if "unit.reboot" in data:
             # Eyes to soft gray on reboot 117, 128, 130
             self.bus.emit(Message("enclosure.eyes.color",
-                                  {'r': 117, 'g': 128, 'b': 130}))
+                                  {'r': 0, 'g': 255, 'b': 0}))
             self.bus.emit(Message("enclosure.eyes.spin"))
             self.bus.emit(Message("enclosure.mouth.reset"))
             time.sleep(0.5)  # give the system time to pass the message
