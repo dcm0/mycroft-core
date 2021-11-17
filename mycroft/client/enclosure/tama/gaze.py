@@ -392,7 +392,7 @@ class EnclosureGaze:
                 #cameras update to 0 on this, keep local consistant even if it isn't used
                 self.iloop = 0
                 #and reset the head
-                #self.bus.emit(Message('enclosure.eyes.reset')) # the listner in eyes.py
+                self.bus.emit(Message('enclosure.eyes.reset')) # the listner in eyes.py
 
             if event.msg_type == 'recognizer_loop:awoken':
                 LOG.info("awoken")
