@@ -111,7 +111,7 @@ class EnclosureEyes:
             b = int(event.data.get("b", b))
         color = (r * 65536) + (g * 256) + b
         self._current_rgb = [(r, g, b) for i in range(self._num_pixels)]
-        LOG.info("Changing color" + str(event.data))
+        LOG.info("Changing color " + str(event.data))
         self.writer.write("COL:" + str(r) + ":" + str(g) + ":" + str(b))
 
     def yellow(self, event=None):
