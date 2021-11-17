@@ -96,8 +96,8 @@ class EnclosureEyes:
 
     #CHANGED from blu and the AVR is commented 
     def think(self, event=None):
-        self.writer.write("PINK")
-        #self.writer.write("AVR")
+        self.writer.write("BLUE")
+        self.writer.write("AVR")
 
     def listen(self, event=None):
         self.writer.write("YELLOW")        
