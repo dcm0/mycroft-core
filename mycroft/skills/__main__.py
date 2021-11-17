@@ -120,7 +120,7 @@ class DevicePrimer(object):
 
     def _display_skill_loading_notification(self):
         """Indicate to the user that skills are being loaded."""
-        self.enclosure.eyes_color(189, 183, 107)  # dark khaki
+        self.enclosure.eyes_color(255, 0, 0 )  # dark khaki
         self.enclosure.mouth_text(dialog.get("message_loading.skills"))
 
     def _ensure_device_is_paired(self):
