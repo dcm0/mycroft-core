@@ -17,6 +17,7 @@ import time
 import sys
 from alsaaudio import Mixer
 from threading import Thread, Timer
+from mycroft.client.enclosure.tama.flaskapp import create_app
 
 import serial
 import colorsys
@@ -635,7 +636,12 @@ class EnclosureTama(Enclosure):
         super().__init__()
 
         self.__init_serial()
-        
+        #create flask, flask manager and give it the bus and the writer
+        #listen to the bus and write to thte bus 
+
+        flask_app = create_app()
+        flask_app.run(debug=True)
+
         self.writer = EnclosureWriter(self.serial, self.bus)
 
         # Seem to have to set the log level to DEBUG every time :-/
