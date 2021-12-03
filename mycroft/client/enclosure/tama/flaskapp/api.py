@@ -1,3 +1,4 @@
+#launch flask and do all the control and write on the buses and listen on the buses.
 from flask import Flask, blueprints, redirect, url_for, render_template, request, Blueprint
 
 api = Blueprint('api',__name__)
@@ -17,4 +18,4 @@ def eye_update():
     return "done",201
 
 if __name__ == "__api__":
-    app.run(debug=True)
+    api.run(debug=True)
