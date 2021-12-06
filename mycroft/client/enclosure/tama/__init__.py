@@ -645,7 +645,7 @@ class EnclosureTama(Enclosure):
         #listen to the bus and write to thte bus 
         
         flask_app = create_app()
-        flask_app.run(debug=True)
+        flask_app.run(port = 3000,debug=True)
 
         # Seem to have to set the log level to DEBUG every time :-/
         
