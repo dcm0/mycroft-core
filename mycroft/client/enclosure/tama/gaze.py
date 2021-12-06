@@ -145,10 +145,10 @@ class CameraManager(Thread):
                             self.writer.write(update_pos)
 
                         elif(self.camera_side == 'L'):
-                            #f_pos= int(-0.0379*(face.pos_x) + 19.092)
-                            LOG.info("TEST " + str(face.pos_x)) 
+                            f_pos= int(-0.0368*(face.pos_x) + 40.029)
+                            LOG.info("TEST " + str(face.pos_x)+ " " + str(f_pos)) 
                             x_sign = 0 
-                            x_m = -20
+                            x_m = f_pos
                             y_sign = 0
                             y_m = 0
                             LOG.info("In Move Left")
