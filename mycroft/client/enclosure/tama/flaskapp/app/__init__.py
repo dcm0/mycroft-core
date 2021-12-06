@@ -3,7 +3,7 @@ from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 from tornado.options import define, options
 from tornado.web import Application
-from todo.views import HelloWorld
+from wozapp.views import HelloWorld
 
 # add these
 import os
