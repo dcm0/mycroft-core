@@ -40,7 +40,7 @@ from mycroft.util.log import LOG
 from queue import Queue
 from mycroft.util.file_utils import get_temp_path
 
-from mycroft.client.enclosure.tama.flask import create_app
+from mycroft.client.enclosure.tama.flaskapp import create_app
 
 # The Tama writer
 
