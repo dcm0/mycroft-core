@@ -140,7 +140,19 @@ class CameraManager(Thread):
                             x_m = f_pos
                             y_sign = 0
                             y_m = 0
-                            LOG.info("In Move ")
+                            LOG.info("In Move Right")
+                            update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                            self.writer.write(update_pos)
+
+
+                        else if(self.camera_side == 'L'):
+                            #f_pos= int(-0.0379*(face.pos_x) + 19.092)
+                            LOG.info("TEST " + str(face.pos_x) + " " + str(f_pos)) 
+                            x_sign = 0
+                            x_m = 40
+                            y_sign = 0
+                            y_m = 0
+                            LOG.info("In Move Left ")
                             update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                             self.writer.write(update_pos)
 
@@ -152,6 +164,7 @@ class CameraManager(Thread):
                                     biggestLooker = face
                             else:
                                 biggestLooker = face
+
                 
                         
                 if biggestLooker:
