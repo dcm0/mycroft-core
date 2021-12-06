@@ -638,7 +638,7 @@ class EnclosureTama(Enclosure):
         self.__init_serial()
         #create flask, flask manager and give it the bus and the writer
         #listen to the bus and write to thte bus 
-        
+
         flask_app = create_app()
         flask_app.run(debug=True)
 
