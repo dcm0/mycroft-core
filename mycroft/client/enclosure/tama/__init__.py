@@ -636,6 +636,12 @@ class EnclosureTama(Enclosure):
 
         self.__init_serial()
         
+<<<<<<< HEAD
+=======
+        flask_app = create_app()
+        #flask_app.run(debug=True)
+
+>>>>>>> parent of 7977a8a88e2 (remove flask)
         self.writer = EnclosureWriter(self.serial, self.bus)
 
         # Seem to have to set the log level to DEBUG every time :-/
