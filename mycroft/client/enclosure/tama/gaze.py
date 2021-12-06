@@ -148,7 +148,7 @@ class CameraManager(Thread):
                             #f_pos= int(-0.0379*(face.pos_x) + 19.092)
                             LOG.info("TEST " + str(face.pos_x)) 
                             x_sign = 0 
-                            x_m = 10
+                            x_m = 0
                             y_sign = 0
                             y_m = 0
                             LOG.info("In Move Left")
