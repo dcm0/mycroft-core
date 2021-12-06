@@ -145,7 +145,7 @@ class CameraManager(Thread):
                             self.writer.write(update_pos)
 
 
-                        else if(self.camera_side == 'L'):
+                        elif(self.camera_side == 'L'):
                             #f_pos= int(-0.0379*(face.pos_x) + 19.092)
                             LOG.info("TEST " + str(face.pos_x) + " " + str(f_pos)) 
                             x_sign = 0
