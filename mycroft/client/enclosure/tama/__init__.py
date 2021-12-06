@@ -40,6 +40,8 @@ from mycroft.util.log import LOG
 from queue import Queue
 from mycroft.util.file_utils import get_temp_path
 
+from mycroft.client.enclosure.tama.flask import create_app
+
 # The Tama writer
 
 class EnclosureWriter(Thread):
@@ -638,6 +640,12 @@ class EnclosureTama(Enclosure):
         
 
         self.writer = EnclosureWriter(self.serial, self.bus)
+
+        #create flask, flask manager and give it the bus and the writer
+        #listen to the bus and write to thte bus 
+        
+        flask_app = create_app()
+        flask_app.run(debug=True)
 
         # Seem to have to set the log level to DEBUG every time :-/
         
