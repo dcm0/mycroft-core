@@ -1,13 +1,25 @@
-from flask import Flask, redirect, url_for, render_template, request,Blueprint
-from flask.scaffold import F
-def create_app():
-    app = Flask(__name__)
+# __init__.py
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop
+from tornado.options import define, options
+from tornado.web import Application
+from todo.views import HelloWorld
 
-    with app.app_context():
-        from .views import view
-        from .api import api
-        app.register_blueprint(view,url_prefix='/')
-        app.register_blueprint(api,url_prefix='/api')
+# add these
+import os
+from tornado_sqlalchemy import make_session_factory
 
-    return app
-        
+define('port', default=8888, help='port to listen on')
+factory = make_session_factory(os.environ.get('DATABASE_URL', ''))
+
+def main():
+    """Construct and serve the tornado application."""
+    app = Application([
+        ('/', HelloWorld)
+    ],
+        session_factory=factory
+    )
+    http_server = HTTPServer(app)
+    http_server.listen(options.port)
+    print('Listening on http://localhost:%i' % options.port)
+    IOLoop.current().start()

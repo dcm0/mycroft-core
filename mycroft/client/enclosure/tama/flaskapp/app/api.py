@@ -1,18 +1,21 @@
-#launch flask and do all the control and write on the buses and listen on the buses.
-from flask import Flask, blueprints, redirect, url_for, render_template, request, Blueprint
+import datetime
+from tornado.gen import coroutine
+from tornado_sqlalchemy import as_future
+from todo.models import Profile, Task
 
-api = Blueprint('api',__name__)
+# the BaseView is above here
+class TaskListView(BaseView):
+    """View for reading and adding new tasks."""
+    SUPPORTED_METHODS = ("GET", "POST",)
 
-@api.route("/eyes", methods=['POST'])
-def eye_update():
-    if request.methods == "POST":
-        if request.form.get('action1'):
-            pass #do something
-        elif  request.form.get('action2'):
-            pass # do something else
-        else:
-            pass #unkown
-    elif request.methods == 'GET':
-        return render_template('main.html')
-    
-    return "done",201
+    @coroutine
+    def get(self, username):
+        """Get all tasks for an existing user."""
+        with self.make_session() as session:
+            profile = yield as_future(session.query(Profile).filter(Profile.username == username).first)
+            if profile:
+                tasks = [task.to_dict() for task in profile.tasks]
+                self.send_response({
+                    'username': profile.username,
+                    'tasks': tasks
+                })
