@@ -485,7 +485,7 @@ def create_gui_service(enclosure, config):
     LOG.info('GUI Message bus started!')
     return application
 
-class WizardWebHandler(tornado.web.RequestHandler):
+class WizardWebHandler(web.RequestHandler):
 
    def get(self):
        self.render("index.html")
