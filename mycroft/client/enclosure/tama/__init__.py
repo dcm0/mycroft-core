@@ -643,9 +643,7 @@ class EnclosureTama(Enclosure):
 
         #create flask, flask manager and give it the bus and the writer
         #listen to the bus and write to thte bus 
-        
-        flask_app = create_app()
-        flask_app.run(port = 3000,debug=True)
+    
 
         # Seem to have to set the log level to DEBUG every time :-/
         
