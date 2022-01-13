@@ -552,6 +552,9 @@ class GUIWebsocketHandler(WebSocketHandler):
             msg_type = '{}.{}'.format(msg['namespace'], 'set')
             msg_data = msg['data']
 
+        #here we need to add the messages we want to send to the bus.  
+        #elif msg.get('type') == ''enclosure.eyes.color'
+
         message = Message(msg_type, msg_data)
         LOG.info('Forwarding to bus...')
         self.application.enclosure.bus.emit(message)
