@@ -475,6 +475,8 @@ def create_gui_service(enclosure, config):
     tornado.options.parse_command_line(['--logging=None'])
 
     routes = [(config['route'], GUIWebsocketHandler)]
+    routes = [('/wizard', WizardWebHandler)]
+
     application = web.Application(routes, debug=True)
     application.enclosure = enclosure
     application.listen(config['base_port'], config['host'])
@@ -483,6 +485,11 @@ def create_gui_service(enclosure, config):
     LOG.info('GUI Message bus started!')
     return application
 
+class WizardWebHandler(tornado.web.RequestHandler):
+
+   def get(self):
+       self.render("index.html")
+    
 
 class GUIWebsocketHandler(WebSocketHandler):
     """The socket pipeline between the GUI and Mycroft."""
