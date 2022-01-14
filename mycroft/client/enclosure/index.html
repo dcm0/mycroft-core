@@ -19,9 +19,15 @@
                  
                  // Web Socket is connected, send data using send()
                  ws.send("Message to send");
-
-
+                 var msg ={
+                     type:'speak',
+                     data: 'hello wizard',
+                     end : '',
+                     context : {destination :''}
+                 };
+                 ws.send(JSON.stringify (msg))
                  alert("Message is sent...");
+
               };
                
               ws.onmessage = function (evt) { 
