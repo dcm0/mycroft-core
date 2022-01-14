@@ -49,6 +49,49 @@
      </script>
 
 
+    <script type = "text/javascript">           
+        function ChangeColor() {
+       
+            if ("WebSocket" in window) {
+             alert("WebSocket is supported by your Browser!");
+          
+            // Let us open a web socket
+            var ws = new WebSocket("ws://130.237.158.145:8181/core");
+           
+             ws.onopen = function() {
+             
+             // Web Socket is connected, send data using send()
+             ws.send("Message to send");
+
+             var msg ={
+                 type:'enclosure.eyes.color',
+                 data: {'r': 0, 'g': 255, 'b': 0},
+                 end : '',
+                 context : {destination :''}
+             };
+             ws.send(JSON.stringify (msg))
+             alert("Message is sent...");
+
+          };
+           
+          ws.onmessage = function (evt) { 
+             var received_msg = evt.data;
+             alert("Message is received..."+evt.data);
+          };
+           
+          ws.onclose = function() { 
+             
+             // websocket is closed.
+             alert("Connection is closed..."); 
+             };
+        } else {
+         
+          // The browser doesn't support WebSocket
+          alert("WebSocket NOT supported by your Browser!");
+        }
+     }
+    </script>
+
 
 
 
@@ -60,7 +103,7 @@
     <h1>Tama control station</h1>
 
     <button type="button" onClick="WebSocketTest()" >Action 1</button>
-    <button type="button">Action 2</button>
+    <button type="button" onClick="ChangeColor()" >Action 2</button>
     <button type="button">Action 3</button>
     <button type="button">Action 5</button>
     
