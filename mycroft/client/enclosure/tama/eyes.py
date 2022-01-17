@@ -183,7 +183,7 @@ class EnclosureEyes:
         self.writer.write("eyes.spin=" + str(length))
 
 
-    def move(self, event=None):
+    def move(self, event):
         #this ethod should move the head and send the data on the bus after the msg is sent from webscoket
      
         LOG.info()
