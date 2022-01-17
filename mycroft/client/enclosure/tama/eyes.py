@@ -115,7 +115,8 @@ class EnclosureEyes:
     #CHANGED from blu and the AVR is commented 
     def think(self, event=None):
         self.writer.write("BLUE")
-        self.writer.write("AVR")
+        if(self.automove):
+            self.writer.write("AVR")
 
     def listen(self, event=None):
         self.writer.write("YELLOW")        
@@ -171,7 +172,8 @@ class EnclosureEyes:
     def shake(self):
         self.writer.write("PINK")
         self.writer.write("SHAKE")
-        self.writer.write("HOME")
+        if(self.automove):
+            self.writer.write("HOME")
         self.writer.write("GREEN")
 
 
@@ -185,7 +187,8 @@ class EnclosureEyes:
         if self.isOpen == False:
             self.writer.write("OPEN")
             self.isOpen = True
-        self.writer.write("HOME")
+        if(self.automove):
+            self.writer.write("HOME")
         self.writer.write("GREEN")
 
     def spin(self, event=None):
