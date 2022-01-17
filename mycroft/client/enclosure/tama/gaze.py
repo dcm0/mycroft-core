@@ -136,7 +136,7 @@ class CameraManager(Thread):
                         #update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                         if self.rawFaces:
                             rawFace = "{side: "+ self.camera_side + ", pitch: "+str(pitch)+", yaw: "+str(yaw)+", size: "+str(face.size)+"}"
-                            data = '{"data":'+rawFace+'}'
+                            data = {"data":rawFace}
                             self.bus.emit(Message('enclosure.eyes.rawface', data))
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
@@ -217,13 +217,13 @@ class CameraManager(Thread):
                     if (self.other.queryOwner == False) and (self.iloop < 5):
                         LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
                         #self.writer.write(update_pos) 
-                        self.bus.emit(Message('enclosure.eyes.look', data))
+                        self.bus.emit(Message('enclosure.eyes.look', update_pos))
 
                     #If we are in spoken output, just look anyway
                     if self.iloop > 4:
                         LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
                         #self.writer.write(update_pos) 
-                        self.bus.emit(Message('enclosure.eyes.look', data))
+                        self.bus.emit(Message('enclosure.eyes.look', update_pos))
 
                     self.cancelCounter = 0
                 else:
