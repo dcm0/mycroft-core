@@ -104,7 +104,7 @@ class EnclosureEyes:
             data = {"data":'false'}
             
         self.bus.emit(Message('enclosure.eyes.lookstatus', data))
-        LOG.info("Toggling the autohead " + data)
+        LOG.info("Toggling the autohead " + str(data))
         
 
     def talk(self, event=None):
