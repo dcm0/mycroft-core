@@ -166,7 +166,7 @@
           ws.onmessage = function (evt) { 
             var received_msg = evt.data; // the whole json
             document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
-            document.getElementById("info").value = document.getElementById("info").value + "\n"+ evt.data.type ;
+            document.getElementById("info").value = document.getElementById("info").value + "\n"+ evt.data["type"];
             if(evt.data.type == "enclosure.eyes.lookstatus"){
                 result = JSON.parse(evt.data);
                 alert(result);
