@@ -98,9 +98,10 @@ class EnclosureEyes:
     def toggleAutoLook(self, event=None):
         self.automove = not self.automove
         if(self.automove):
-            data = "{data:'true'}"
+            data = {"data":'true'}
         else:
-            data = "{data:'false'}"
+            data = {"data":'false'}
+            
         self.bus.emit(Message('enclosure.eyes.lookstatus', data))
         LOG.info("Toggling the autohead " + data)
         
