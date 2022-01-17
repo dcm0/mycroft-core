@@ -19,7 +19,7 @@
                 result = received_msg.data["data"];
                 autoFlag = result == "true" ? true : false;
                 document.getElementById("info").checked = autoFlag;
-
+                document.getElementById("info").dispatchEvent(new Event('change'));
             }
         };
 
@@ -37,7 +37,6 @@
 
 
         function ChangeColor() {
-
             var msg = {
                 type: 'enclosure.eyes.color',
                 data: { 'r': 255, 'g': 0, 'b': 0 },
@@ -62,7 +61,6 @@
 
 
         function AutoHead() {
-
             ws.send("Message to send");
             var msg = {
                 type: 'enclosure.eyes.toggleAutolook',
