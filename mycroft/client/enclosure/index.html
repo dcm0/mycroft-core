@@ -167,6 +167,7 @@
             var received_msg = evt.data; // the whole json
             document.getElementById("info").value = document.getElementById("info").value + "\n" + event.data;
             if(evt.data.type == "enclosure.eyes.lookstatus"){
+                alert(evt.data.data);
                 autoFlag = evt.data.data=="true"?true:false;  
                 document.getElementById("autoHead").checked = autoFlag;
             }
