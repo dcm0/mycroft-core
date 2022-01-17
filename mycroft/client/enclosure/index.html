@@ -10,9 +10,7 @@
     <script type="text/javascript">
         // Let us open a web socket
         var ws = new WebSocket("ws://130.237.158.145:8181/core");
-        ws.onmessage = recieverFunction(evt);
-
-        function recieverFunction(evt) {
+        ws.onmessage = function(evt) {
             var received_msg = JSON.parse(evt.data); // the whole json
             document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
             document.getElementById("info").value = document.getElementById("info").value + "\n" + received_msg.type;
@@ -22,10 +20,8 @@
                 autoFlag = result == "true" ? true : false;
                 document.getElementById("info").checked = autoFlag;
 
-                //alert("Message is received..."+evt.data)
-
             }
-        }
+        };
 
 
         function SpeakTest() {
@@ -51,9 +47,6 @@
             ws.send(JSON.stringify(msg))
 
         }
-
-
-
 
         function ChangeHeadPos() {
 
