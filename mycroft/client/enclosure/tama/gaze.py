@@ -132,29 +132,6 @@ class CameraManager(Thread):
                         pitch = face.gaze.gazeUD
                         #print face position x, y and look at tama whne you think that tama is looking at you to do the calibration for x and do the same for y
                         LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
-                        
-                        if(self.camera_side == 'R'):
-                            f_pos= int(-0.0379*(face.pos_x) + 19.092)
-                            LOG.info("TEST " + str(face.pos_x) + " " + str(f_pos)) 
-                            x_sign = 0 
-                            x_m = f_pos
-                            y_sign = 0
-                            y_m = 0
-                            LOG.info("In Move Right")
-                            update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
-                            self.writer.write(update_pos)
-
-                        elif(self.camera_side == 'L'):
-                            f_pos= int(-0.0368*(face.pos_x) + 40.029)
-                            LOG.info("TEST " + str(face.pos_x)+ " " + str(f_pos)) 
-                            x_sign = 0 
-                            x_m = f_pos
-                            y_sign = 0
-                            y_m = 0
-                            LOG.info("In Move Left")
-                            update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
-                            self.writer.write(update_pos)
-
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                             LOG.info("Found a looker")
@@ -205,20 +182,42 @@ class CameraManager(Thread):
                         
 
                     #Should we move the eyes?
-                    update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                    if(self.camera_side == 'R'):
+                        f_pos= int(-0.0379*(face.pos_x) + 19.092)
+                        LOG.info("TEST " + str(face.pos_x) + " " + str(f_pos)) 
+                        x_sign = 0 
+                        x_m = f_pos
+                        y_sign = 0
+                        y_m = 0
+                        LOG.info("In Move Right")
+                        update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                        #self.writer.write(update_pos)
+                            
+                    elif(self.camera_side == 'L'):
+                        f_pos= int(-0.0368*(face.pos_x) + 40.029)
+                        LOG.info("TEST " + str(face.pos_x)+ " " + str(f_pos)) 
+                        x_sign = 0 
+                        x_m = f_pos
+                        y_sign = 0
+                        y_m = 0
+                        LOG.info("In Move Left")
+                        update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                        #self.writer.write(update_pos)
+                    
+                    #update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                     data = '{"data":'+update_pos+'}'
 
                     #This should cover up to ouput
                     if (self.other.queryOwner == False) and (self.iloop < 5):
                         LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
                         #self.writer.write(update_pos) 
-                        #self.bus.emit(Message('enclosure.eyes.look', data))
+                        self.bus.emit(Message('enclosure.eyes.look', data))
 
                     #If we are in spoken output, just look anyway
                     if self.iloop > 4:
                         LOG.info("Sending look at "+str(self.iloop) + " "+str(self.threadID))
                         #self.writer.write(update_pos) 
-                        #self.bus.emit(Message('enclosure.eyes.look', data))
+                        self.bus.emit(Message('enclosure.eyes.look', data))
 
                     self.cancelCounter = 0
                 else:
@@ -235,7 +234,8 @@ class CameraManager(Thread):
 
             
             if(self.cancelCounter > self.cancelThreshold):
-                LOG.info("Cancel threshold reached, query owner: "+str(self.queryOwner))
+                
+                #LOG.info("Cancel threshold reached, query owner: "+str(self.queryOwner))
                 if self.queryOwner:
                     #If we are in the recognition phase then cancel
                     if self.iloop < 5:
