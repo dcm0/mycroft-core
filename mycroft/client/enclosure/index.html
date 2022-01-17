@@ -165,7 +165,7 @@
            
           ws.onmessage = function (evt) { 
             var received_msg = evt.data; // the whole json
-            document.getElementById("message").value(document.getElementById("message").value() + "\n" + event.data);
+            document.getElementById("info").value = document.getElementById("info").value + "\n" + event.data;
             if(evt.data.type == "enclosure.eyes.lookstatus"){
                 autoFlag = evt.data.data=="true"?true:false;  
                 document.getElementById("autoHead").checked = autoFlag;
@@ -198,7 +198,7 @@
     <button type="button" onClick="ChangeColor()" >Change eye color</button>
     <button type="button" onclick="ChangeHeadPos()">Move head</button>
     <br>
-    <textarea id= "message" name = "message" rows = "10" cols = "50" ></textarea>
+    <textarea id= "info" name = "info" rows = "10" cols = "50" ></textarea>
     
 
 
