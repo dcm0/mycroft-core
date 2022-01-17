@@ -92,6 +92,7 @@ class EnclosureEyes:
     def look(self, event=None):
         if event and event.data:
             #side = event.data.get("data", "")
+            LOG.info("Trying to look at "+str(event.data))
             if(self.automove):
                 self.writer.write(event.data)
                 
