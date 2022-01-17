@@ -167,7 +167,7 @@
             var received_msg = JSON.parse(evt.data); // the whole json
             document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
             document.getElementById("info").value = document.getElementById("info").value + "\n"+ received_msg.type;
-            if(recived_msg.type == "enclosure.eyes.lookstatus"){
+            if(received_msg.type == "enclosure.eyes.lookstatus"){
                 result = received_msg.data;
                 alert(result);
                 autoFlag = result=="true"?true:false;  
