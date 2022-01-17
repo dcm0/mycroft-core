@@ -168,7 +168,8 @@
             document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
             document.getElementById("info").value = document.getElementById("info").value + "\n"+ received_msg.type;
             if(received_msg.type == "enclosure.eyes.lookstatus"){
-                alert(received_msg.data);
+                alert(received_msg.data[data]);
+                result = received_msg.data[data];
                 autoFlag = result=="true"?true:false;  
                 document.getElementById("info").checked = autoFlag;
             }
