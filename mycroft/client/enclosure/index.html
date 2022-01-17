@@ -51,6 +51,7 @@
 
     <script type = "text/javascript">           
         function ChangeColor() {
+
        
             if ("WebSocket" in window) {
              alert("WebSocket is supported by your Browser!");
@@ -64,8 +65,8 @@
              ws.send("Message to send");
 
              var msg ={
-                 type:'enclosure.eyes.yellow',
-//                 data: {'r': 255, 'g': 0, 'b': 0},
+                 type:'enclosure.eyes.color',
+                 data: {'r': 255, 'g': 0, 'b': 0},
                  end : '',
                  context : {destination :''}
              };
@@ -96,6 +97,52 @@
 
 
 
+<script type = "text/javascript">
+    function ChangeHeadPos() {
+       
+       if ("WebSocket" in window) {
+          alert("WebSocket is supported by your Browser!");
+          
+          // Let us open a web socket
+          var ws = new WebSocket("ws://130.237.158.145:8181/core");
+           
+          ws.onopen = function() {
+            //Swnd msg to the listner in eyes.py
+            //update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+            //self.writer.write(update_pos)    
+             
+             // Web Socket is connected, send data using send()
+             ws.send("Message to send");
+             var msg ={
+                 type:'speak',
+                 data: {'utterance': 'Hi my name is Tama, what is your name.'},
+                 end : '',
+                 context : {destination :''}
+             };
+             ws.send(JSON.stringify (msg))
+             alert("Message is sent...");
+
+          };
+           
+          ws.onmessage = function (evt) { 
+             var received_msg = evt.data;
+             alert("Message is received..."+evt.data);
+          };
+           
+          ws.onclose = function() { 
+             
+             // websocket is closed.
+             alert("Connection is closed..."); 
+          };
+       } else {
+         
+          // The browser doesn't support WebSocket
+          alert("WebSocket NOT supported by your Browser!");
+       }
+    }
+ </script>
+
+
 
 
 </head>
@@ -103,7 +150,7 @@
     <h1>Tama control station</h1>
 
     <button type="button" onClick="WebSocketTest()" >Speak</button>
-    <button type="button" onClick="ChangeColor()" >Change eyes color</button>
+    <button type="button" onClick="ChangeColor()" >Change eye color</button>
     <button type="button">Action 3</button>
     <button type="button">Action 5</button>
     
