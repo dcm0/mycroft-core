@@ -38,7 +38,7 @@ class CameraManager(Thread):
         self.queryOwner = False
         self.last = time.time_ns()
         self.volumeDropped = False
-        self.rawFaces = True
+        self.rawFaces = False
         self.count = 0
         self.iloop = 0
         self.cancelCounter = 0
