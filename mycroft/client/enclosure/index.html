@@ -10,7 +10,7 @@
     <script type="text/javascript">
         // Let us open a web socket
         var ws = new WebSocket("ws://130.237.158.145:8181/core");
-        ws.onmessage = recieverFunction();
+        ws.onmessage = recieverFunction(evt);
 
         function recieverFunction(evt) {
             var received_msg = JSON.parse(evt.data); // the whole json
