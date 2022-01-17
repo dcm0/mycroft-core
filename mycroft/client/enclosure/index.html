@@ -13,7 +13,6 @@
         ws.onmessage = recieverFunction();
 
         function recieverFunction(evt) {
-            var received_msg = evt.data;
             var received_msg = JSON.parse(evt.data); // the whole json
             document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
             document.getElementById("info").value = document.getElementById("info").value + "\n" + received_msg.type;
