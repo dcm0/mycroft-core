@@ -38,6 +38,7 @@ class CameraManager(Thread):
         self.queryOwner = False
         self.last = time.time_ns()
         self.volumeDropped = False
+        self.rawFaces = True
         self.count = 0
         self.iloop = 0
         self.cancelCounter = 0
@@ -131,7 +132,12 @@ class CameraManager(Thread):
                         yaw = face.gaze.gazeLR
                         pitch = face.gaze.gazeUD
                         #print face position x, y and look at tama whne you think that tama is looking at you to do the calibration for x and do the same for y
-                        LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
+                        #LOG.info("Face "+ self.camera_side + " p/y "+str(pitch)+" "+str(yaw)+" size "+str(face.size)+"  c:"+str(self.threadID))
+                        #update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
+                        if self.rawFaces:
+                            rawFace = "{side: "+ self.camera_side + ", pitch: "+str(pitch)+", yaw: "+str(yaw)+", size: "+str(face.size)+"}"
+                            data = '{"data":'+rawFace+'}'
+                            self.bus.emit(Message('enclosure.eyes.rawface', data))
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
                             LOG.info("Found a looker")

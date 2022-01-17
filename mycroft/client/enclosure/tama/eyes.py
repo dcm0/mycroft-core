@@ -99,6 +99,7 @@ class EnclosureEyes:
         self.automove = not self.automove
         data = '{"data":'+self.automove+'}'
         self.bus.emit(Message('enclosure.eyes.lookstatus', data))
+        LOG.info("Toggling the autohead " + data)
         
 
     def talk(self, event=None):
