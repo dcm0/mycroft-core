@@ -95,8 +95,6 @@
 
 
 
-
-
 <script type = "text/javascript">
     function ChangeHeadPos() {
        
@@ -106,15 +104,12 @@
           // Let us open a web socket
           var ws = new WebSocket("ws://130.237.158.145:8181/core");
            
-          ws.onopen = function() {
-            //Swnd msg to the listner in eyes.py
-            //update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
-            //self.writer.write(update_pos)    
+          ws.onopen = function() { 
              
              // Web Socket is connected, send data using send()
              ws.send("Message to send");
              var msg ={
-                 type:'speak',
+                 type:'enclosure.head.move',
                  data: {'utterance': 'Hi my name is Tama, what is your name.'},
                  end : '',
                  context : {destination :''}
@@ -151,7 +146,7 @@
 
     <button type="button" onClick="WebSocketTest()" >Speak</button>
     <button type="button" onClick="ChangeColor()" >Change eye color</button>
-    <button type="button">Action 3</button>
+    <button type="button" onclick="ChangeHeadPos()">Move head</button>
     <button type="button">Action 5</button>
     
 </body>
