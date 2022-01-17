@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from mycroft.util.log import LOG
+from mycroft.messagebus.message import Message
 
 class EnclosureEyes:
     """
@@ -25,6 +26,7 @@ class EnclosureEyes:
         self.bus = bus
         self.writer = writer
         self.isOpen = False
+        self.automove = True
 
         self._num_pixels = 1 * 2
         self._current_rgb = [(255, 255, 255) for i in range(self._num_pixels)]
@@ -36,6 +38,7 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.blink', self.blink)
         self.bus.on('enclosure.eyes.narrow', self.narrow)
         self.bus.on('enclosure.eyes.look', self.look)
+        self.bus.on('enclosure.eyes.toggleAutolook', self.toggleAutoLook)
         self.bus.on('enclosure.eyes.color', self.color)
         self.bus.on('enclosure.eyes.level', self.brightness)
         self.bus.on('enclosure.eyes.volume', self.volume)
@@ -89,7 +92,14 @@ class EnclosureEyes:
     def look(self, event=None):
         if event and event.data:
             #side = event.data.get("data", "")
-            self.writer.write(event.data)
+            if(self.automove):
+                self.writer.write(event.data)
+                
+    def toggleAutoLook(self, event=None):
+        self.automove = not self.automove
+        data = '{"data":'+self.automove+'}'
+        self.bus.emit(Message('enclosure.eyes.lookstatus', data))
+        
 
     def talk(self, event=None):
         self.writer.write("PINK")
