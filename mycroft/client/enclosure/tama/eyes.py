@@ -186,7 +186,7 @@ class EnclosureEyes:
     def move(self, event):
         #this ethod should move the head and send the data on the bus after the msg is sent from webscoket
      
-        LOG.info()
+        LOG.info(str(event.data['pos']))
         x_sign = 0 
         x_m = event.data['pos']
         y_sign = 0
