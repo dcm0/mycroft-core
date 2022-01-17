@@ -211,7 +211,7 @@ class CameraManager(Thread):
                         #self.writer.write(update_pos)
                     
                     #update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
-                    data = '{"data":'+update_pos+'}'
+                    data = {"data":update_pos}
 
                     #This should cover up to ouput
                     if (self.other.queryOwner == False) and (self.iloop < 5):
