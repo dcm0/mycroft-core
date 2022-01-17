@@ -165,7 +165,7 @@
            
           ws.onmessage = function (evt) { 
              var received_msg = evt.data;
-            // alert("Message is received..."+evt.data);
+             alert("Message is received..."+evt.data);
           };
            
           ws.onclose = function() { 
@@ -192,7 +192,6 @@
     <button type="button" onClick="WebSocketTest()" >Speak</button>
     <button type="button" onClick="ChangeColor()" >Change eye color</button>
     <button type="button" onclick="ChangeHeadPos()">Move head</button>
-    <button type="button">Action 5</button>
 
 
 
