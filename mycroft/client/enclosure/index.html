@@ -164,8 +164,14 @@
           };
            
           ws.onmessage = function (evt) { 
-             var received_msg = evt.data;
-             alert("Message is received..."+evt.data);
+             var received_msg = evt.data; // the whole json
+            
+            if(evt.data.type == "enclosure.eyes.lookstatus"){
+                alert("Message is received..."+evt.data);
+                autoFlag = evt.data.data=="true"?true:false;  
+                document.getElementById("autoHead").checked = autoFlag;
+            }
+
           };
            
           ws.onclose = function() { 
@@ -188,7 +194,7 @@
 <body>
     <h1>Tama control station</h1>
 
-    <input type="checkbox" onClick="AutoHead()">Auto head <input>
+    <input type="checkbox" onClick="AutoHead()" id = "AutoHead">Auto head <input>
     <button type="button" onClick="WebSocketTest()" >Speak</button>
     <button type="button" onClick="ChangeColor()" >Change eye color</button>
     <button type="button" onclick="ChangeHeadPos()">Move head</button>
