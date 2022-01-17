@@ -19,7 +19,7 @@
                 result = received_msg.data["data"];
                 autoFlag = result == "true" ? true : false;
                 document.getElementById("info").checked = autoFlag;
-                document.getElementById("info").dispatchEvent(new Event('change'));
+                document.getElementById("info").dispatchEvent(new Event('change',{'bubbles':true}));
             }
         };
 
