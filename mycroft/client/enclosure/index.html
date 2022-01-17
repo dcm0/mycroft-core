@@ -164,10 +164,9 @@
           };
            
           ws.onmessage = function (evt) { 
-             var received_msg = evt.data; // the whole json
-            
+            var received_msg = evt.data; // the whole json
+            alert("Message is received..."+evt.data);
             if(evt.data.type == "enclosure.eyes.lookstatus"){
-                alert("Message is received..."+evt.data);
                 autoFlag = evt.data.data=="true"?true:false;  
                 document.getElementById("autoHead").checked = autoFlag;
             }
