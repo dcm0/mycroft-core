@@ -139,14 +139,63 @@
 
 
 
+<script type = "text/javascript">
+    function AutoHead(){
+       
+       if ("WebSocket" in window) {
+          alert("WebSocket is supported by your Browser!");
+          
+          // Let us open a web socket
+          var ws = new WebSocket("ws://130.237.158.145:8181/core");
+           
+          ws.onopen = function() { 
+             
+             // Web Socket is connected, send data using send()
+             ws.send("Message to send");
+             var msg ={
+                 type:'',
+                 data: '',
+                 end : '',
+                 context : {destination :''}
+             };
+             ws.send(JSON.stringify (msg))
+             alert("Message is sent...");
+
+          };
+           
+          ws.onmessage = function (evt) { 
+             var received_msg = evt.data;
+            // alert("Message is received..."+evt.data);
+          };
+           
+          ws.onclose = function() { 
+             
+             // websocket is closed.
+             alert("Connection is closed..."); 
+          };
+       } else {
+         
+          // The browser doesn't support WebSocket
+          alert("WebSocket NOT supported by your Browser!");
+       }
+    }
+ </script>
+
+
+
+
 </head>
 <body>
     <h1>Tama control station</h1>
 
+    <input type="checkbox" onClick="AutoHead()">Auto head <input>
     <button type="button" onClick="WebSocketTest()" >Speak</button>
     <button type="button" onClick="ChangeColor()" >Change eye color</button>
     <button type="button" onclick="ChangeHeadPos()">Move head</button>
     <button type="button">Action 5</button>
+
+
+
     
 </body>
 </html>
