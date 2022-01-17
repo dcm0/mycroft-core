@@ -165,9 +165,8 @@
            
           ws.onmessage = function (evt) { 
             var received_msg = evt.data; // the whole json
-            document.getElementById("message").val(document.getElementById("message").val() + "\n" + event.data);
+            document.getElementById("message").value(document.getElementById("message").value() + "\n" + event.data);
             if(evt.data.type == "enclosure.eyes.lookstatus"){
-                alert("Message is received..."+evt.data);
                 autoFlag = evt.data.data=="true"?true:false;  
                 document.getElementById("autoHead").checked = autoFlag;
             }
