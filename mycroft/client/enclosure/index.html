@@ -168,7 +168,7 @@
             document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
             document.getElementById("info").value = document.getElementById("info").value + "\n"+ received_msg.type;
             if(received_msg.type == "enclosure.eyes.lookstatus"){
-                result = received_msg.data;
+                result = JSON.parse(received_msg.data);
                 alert(result["data"]);
                 autoFlag = result=="true"?true:false;  
                 document.getElementById("info").checked = autoFlag;
