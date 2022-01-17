@@ -165,8 +165,9 @@
            
           ws.onmessage = function (evt) { 
             var received_msg = evt.data; // the whole json
-            alert("Message is received..."+evt.data);
+            document.getElementById("message").val(document.getElementById("message").val() + "\n" + event.data);
             if(evt.data.type == "enclosure.eyes.lookstatus"){
+                alert("Message is received..."+evt.data);
                 autoFlag = evt.data.data=="true"?true:false;  
                 document.getElementById("autoHead").checked = autoFlag;
             }
@@ -197,6 +198,9 @@
     <button type="button" onClick="WebSocketTest()" >Speak</button>
     <button type="button" onClick="ChangeColor()" >Change eye color</button>
     <button type="button" onclick="ChangeHeadPos()">Move head</button>
+    <br>
+    <textarea id= "message" name = "message" rows = "10" cols = "50" ></textarea>
+    
 
 
 
