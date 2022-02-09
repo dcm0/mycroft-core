@@ -58,11 +58,6 @@ class EnclosureEyes:
         
 
 
-        
-
-        
-        
-        
 
         self.bus.on('enclosure.eyes.rgb.get', self.handle_get_color)
 
