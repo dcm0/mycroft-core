@@ -75,7 +75,7 @@
         function Repeat() {
             ws.send("Message to send");
             var msg = {
-                type: 'enclosure.eyes.toggleAutolook',
+                type: 'speak',
                 data: '',
                 end: '',
                 context: { destination: '' }
@@ -87,7 +87,7 @@
         function BingBong() {
             ws.send("Message to send");
             var msg = {
-                type: 'enclosure.eyes.toggleAutolook',
+                type: 'enclosure.eyes.bing',
                 data: '',
                 end: '',
                 context: { destination: '' }
@@ -109,12 +109,15 @@
     <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input>
     <button type="button" onClick="ChangeColor()">Change eye color</button>
     <button type="button" onclick="ChangeHeadPos()">Move head</button>
-    <button type="button" onClick="SpeakTest()">Speak</button>
+    <button type="button" onClick="SpeakTest()">Speak</button> <br>
 
-    <button type="button" onClick="Repeat()">Repeat</button>
-    <button type="button" onClick="BingBong()">BingBong</button>
+    <p>Actual Steps:</p>
+    <button type="button" onClick="Repeat()">Repeat</button><br>
+    <button type="button" onClick="BingBong()">BingBong</button><br>
 
-    
+
+
+
 
     <br>
     <textarea id="info" name="info" rows="10" cols="50"></textarea>

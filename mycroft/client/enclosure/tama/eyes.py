@@ -55,6 +55,8 @@ class EnclosureEyes:
         self.bus.on('recognizer_loop:audio_output_start', self.talk)
         self.bus.on('recognizer_loop:audio_output_end', self.talkOver)
         self.bus.on('enclosure.head.move', self.move)
+        self.bus.on('enclosure.head.bing', self.bing)
+
 
         
 
@@ -211,3 +213,9 @@ class EnclosureEyes:
         y_m = 0
         update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
         self.writer.write(update_pos)
+
+
+    def bing(self, event):
+        #this ethod should move the head and send the data on the bus after the msg is sent from webscoket
+        #LOG.info(str(event.data['pos']))
+       
