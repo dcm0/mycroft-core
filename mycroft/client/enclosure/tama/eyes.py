@@ -215,7 +215,3 @@ class EnclosureEyes:
         self.writer.write(update_pos)
 
 
-    def bing(self, event):
-        #this ethod should move the head and send the data on the bus after the msg is sent from webscoket
-        #LOG.info(str(event.data['pos']))
-       
