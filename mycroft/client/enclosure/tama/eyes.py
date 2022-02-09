@@ -55,7 +55,7 @@ class EnclosureEyes:
         self.bus.on('recognizer_loop:audio_output_start', self.talk)
         self.bus.on('recognizer_loop:audio_output_end', self.talkOver)
         self.bus.on('enclosure.head.move', self.move)
-        self.bus.on('enclosure.head.bing', self.bing)
+        
 
 
         
