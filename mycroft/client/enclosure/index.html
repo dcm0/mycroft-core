@@ -36,6 +36,18 @@
         }
 
 
+        function SpeakStep1() {
+            // Web Socket is connected, send data using send()
+            var msg = {
+                type: 'speak',
+                data: { 'utterance': 'pick up 4 green block .' },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+        }
+
+
         function ChangeColor() {
             var msg = {
                 type: 'enclosure.eyes.color',
@@ -110,11 +122,13 @@
     <button type="button" onClick="ChangeColor()">Change eye color</button>
     <button type="button" onclick="ChangeHeadPos()">Move head</button>
     <button type="button" onClick="SpeakTest()">Speak</button> <br>
+
     <button type="button" onClick="Repeat()">Repeat</button>
     <button type="button" onClick="BingBong()">BingBong</button><br>
 
     <p>Actual Steps:</p>
-    
+    <button type="button" onClick="SpeakStep1()">Pick up 4 green block</button> <br>
+
     <textarea id="info" name="info" rows="10" cols="50"></textarea>
 
 
