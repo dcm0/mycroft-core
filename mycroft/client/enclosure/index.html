@@ -140,6 +140,11 @@
         }
 
 
+        function error() {
+            speackmsg('I am sorry, I do not understand.');
+        }
+
+
     </script>
 
 
@@ -168,7 +173,8 @@
     <button type="button" onClick="back()">Back</button>
     <button onclick="next()">Next</button>
     <button type="button" onClick="repeat()">Repeat</button>
-    <button type="button" onClick="reset()">Reset</button><br><br>
+    <button type="button" onClick="reset()">Reset</button>
+    <button type="button" onClick="error()">Error</button><br><br>
 
     <label for="html">Step number:</label>
     <input type="text" id="inc" value="-1"></input><br><br>
