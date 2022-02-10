@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,7 @@
     <script type="text/javascript">
         // Let us open a web socket
         var ws = new WebSocket("ws://130.237.158.145:8181/core");
-        ws.onmessage = function(evt) {
+        ws.onmessage = function (evt) {
             var received_msg = JSON.parse(evt.data); // the whole json
             document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
             document.getElementById("info").value = document.getElementById("info").value + "\n" + received_msg.type;
@@ -19,7 +20,7 @@
                 result = received_msg.data["data"];
                 autoFlag = result == "true" ? true : false;
                 document.getElementById("info").checked = autoFlag;
-                document.getElementById("info").dispatchEvent(new Event('change',{'bubbles':true}));
+                document.getElementById("info").dispatchEvent(new Event('change', { 'bubbles': true }));
             }
         };
 
@@ -35,17 +36,6 @@
             ws.send(JSON.stringify(msg))
         }
 
-
-        function SpeakStep1() {
-            // Web Socket is connected, send data using send()
-            var msg = {
-                type: 'speak',
-                data: { 'utterance': 'Step 1 : pick up 4 green block .' },
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg))
-        }
 
 
         function ChangeColor() {
@@ -83,12 +73,30 @@
             ws.send(JSON.stringify(msg))
         }
 
+        //select trial to decide what data
+        var data = ['start', 'end'];
+        function favTrial() {
+            var mylist = document.getElementById("myList");
+            document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;
+            var trial = mylist.options[mylist.selectedIndex].text;
+            console.log(trial);
+            if (trial == "Trial 1") {
+                data = ['hi', 'Tama', 'hey'];
+                //console.log(data);
 
-        function Repeat() {
-            ws.send("Message to send");
+            } else if (trial == "Trial 2")
+                data = ['bye', 'goodbye', 'ciao'];
+
+
+        }
+
+
+        var i = -1;
+        var currentstepnum = i;
+        function speackmsg(msg) {
             var msg = {
                 type: 'speak',
-                data: '',
+                data: { 'utterance': msg },
                 end: '',
                 context: { destination: '' }
             };
@@ -96,21 +104,47 @@
         }
 
 
-        function BingBong() {
-            ws.send("Message to send");
-            var msg = {
-                type: 'enclosure.eyes.bing',
-                data: '',
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg))
+        function next() {
+            document.getElementById('inc').value = ++i;
+            currentstepnum = i;
+            document.getElementById('speechtext').value = data[i];
+            speackmsg(data[i]);
+
+        }
+
+        function back() {
+            document.getElementById('inc').value = --i;
+            currentstepnum = i;
+            document.getElementById('speechtext').value = data[i];
+            speackmsg(data[i]);
+        }
+
+        function restart() {
+            i = 0;
+            document.getElementById('inc').value = i;
+            currentstepnum = i;
+            document.getElementById('speechtext').value = '';
+            speackmsg(data[i]);
+        }
+
+        function reset() {
+            i = currentstepnum;
+            document.getElementById('inc').value = i;
+            currentstepnum = i;
+            document.getElementById('speechtext').value = data[i];
+            speackmsg(data[i]);
+        }
+
+        function repeat() {
+            i = currentstepnum;
+            document.getElementById('inc').value = i;
+            currentstepnum = i;
+            document.getElementById('speechtext').value = data[i];
+            speackmsg(data[i]);
         }
 
 
     </script>
-
-
 
 
 </head>
@@ -121,14 +155,32 @@
     <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input>
     <button type="button" onClick="ChangeColor()">Change eye color</button>
     <button type="button" onclick="ChangeHeadPos()">Move head</button>
-    <button type="button" onClick="SpeakTest()">Speak</button> <br>
+    <button type="button" onClick="SpeakTest()">Speak</button> <br><br><br>
 
-    <button type="button" onClick="Repeat()">Repeat</button>
-    <button type="button" onClick="BingBong()">BingBong</button><br>
+    <b> Select your trial using dropdown list </b>
+    <select id="myList" onchange="favTrial()">
+        <option> ---Choose trial--- </option>
+        <option> Trial 1 </option>
+        <option> Trial 2 </option>
+        <option> Trial 3 </option>
+    </select>
+    <p> Your selected trial is:
+        <input type="text" id="favourite" size="20" </p>
 
-    <p>Actual Steps:</p>
-    <button type="button" onClick="SpeakStep1()">Pick up 4 green block</button> <br>
+    <p>Steps Control:</p>
+    <button type="button" onClick="restart()">Restart</button>
+    <button type="button" onClick="back()">Back</button>
+    <button onclick="next()">Next</button>
+    <button type="button" onClick="repeat()">Repeat</button>
+    <button type="button" onClick="reset()">Reset</button><br><br>
 
+    <label for="html">Step number:</label>
+    <input type="text" id="inc" value="-1"></input><br><br>
+    <label for="html">Speech Text:</label>
+    <input type="text" id="speechtext" value=""></input><br><br>
+
+
+    <p>Message Bus:</p>
     <textarea id="info" name="info" rows="10" cols="50"></textarea>
 
 
