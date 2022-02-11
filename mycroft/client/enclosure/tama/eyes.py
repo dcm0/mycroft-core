@@ -15,7 +15,7 @@
 from mycroft.util.log import LOG
 from mycroft.util import play_audio_file
 from mycroft.messagebus.message import Message
-
+from pathlib import Path
 
 class EnclosureEyes:
     """
@@ -67,8 +67,12 @@ class EnclosureEyes:
 
 
     def playSound(self, message):
-        LOG.info("BING Error sound ")
-        play_audio_file('file://./error.mp3')
+        LOG.info("BING Error sound './error.mp3'")
+        play_audio_file('./error.mp3')
+        audiopath = Path().absolute()+'/error.mp3'
+        LOG.info("BING Error sound "+ audiopath)
+        play_audio_file(audiopath)
+
 
     def handle_get_color(self, message):
         """Get the eye RGB color for all pixels
@@ -111,6 +115,7 @@ class EnclosureEyes:
             
         self.bus.emit(Message('enclosure.eyes.lookstatus', data))
         LOG.info("Toggling the autohead " + str(data))
+        play_audio_file('file://./error.mp3')
         
 
     def talk(self, event=None):
