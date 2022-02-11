@@ -169,9 +169,10 @@
 
 
         function play() {
+            //if we need to go to specific step number then we need to -1 as the array starts from 0
             var j = document.getElementById('inc').value;
-            document.getElementById('speechtext').value = data[j];
-            speackmsg(data[j]);
+            document.getElementById('speechtext').value = data[j-1];
+            speackmsg(data[j-1]);
         }
 
 
