@@ -64,6 +64,7 @@ class EnclosureEyes:
 
 
     def playSound(self, soundString="bing"):
+        LOG.info("BING Error sound ")
         self.audio_service.play('file://./error.mp3')
 
     def handle_get_color(self, message):
