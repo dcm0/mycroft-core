@@ -50,6 +50,7 @@ class CameraManager(Thread):
         self.detecting = False
         self.image = GrayscaleImage()
         self.camera_side = camera_side # from tama perspectives (Tama side)
+        self.ignoreWake = False
         
 
 
@@ -174,10 +175,10 @@ class CameraManager(Thread):
                     self.last = etime
                     LOG.info("count  "+str(self.count)+" "+str(self.threadID))
                     #lets see if we have to start or claim an interaction
-                    if self.iloop == 0 and self.count > self.wakeThreshold:
+                    if self.ignoreWake == False and self.iloop == 0 and self.count > self.wakeThreshold:
                         LOG.info("Starting interaction from gaze "+str(self.threadID))
                         self.queryOwner = True
-                        #self.bus.emit(Message('mycroft.mic.listen'))   
+                        self.bus.emit(Message('mycroft.mic.listen'))   
                    
                     elif ((self.other.queryOwner == False or self.other.cancelCounter > self.cancelThreshold/2) 
                         and (self.queryOwner == False) and (self.iloop < 5) and (self.count > self.wakeThreshold)):
@@ -342,6 +343,8 @@ class EnclosureGaze:
         self.bus.on('recognizer_loop:audio_output_end', self.stateUpdate)
         self.bus.on('recognizer_loop:DOA', self.stateUpdate)
         self.bus.on('enclosure.gaze.shutdown', self.stateUpdate)
+        self.bus.on('enclosure.eyes.gazeWake', self.gazeWake)
+        
 
 
 
@@ -368,6 +371,15 @@ class EnclosureGaze:
         self.cameraL.join()
         self.cameraR.join()
         LOG.info("Camera Threads ended")
+
+
+    def gazeWake(self, event=None):
+        if(event.data == "true"):
+            self.cameraL.ignoreWake = True
+            self.cameraL.ignoreWake = True
+        else:  
+            self.cameraL.ignoreWake = False
+            self.cameraL.ignoreWake = False
 
         #Interaction Loop
         # 0 = waiting for wakeword

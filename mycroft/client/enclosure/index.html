@@ -18,8 +18,22 @@
                 alert(received_msg.data["data"]);
                 result = received_msg.data["data"];
                 autoFlag = result == "true" ? true : false;
-                document.getElementById("info").checked = autoFlag;
-                document.getElementById("info").dispatchEvent(new Event('change', { 'bubbles': true }));
+                document.getElementById("AutoHead").checked = autoFlag;
+                document.getElementById("AutoHead").dispatchEvent(new Event('change', { 'bubbles': true }));
+            }
+            if (received_msg.type == "enclosure.eyes.gazeWake") {
+                alert(received_msg.data["data"]);
+                result = received_msg.data["data"];
+                autoFlag = result == "true" ? true : false;
+                document.getElementById("gazeWake").checked = autoFlag;
+                document.getElementById("gazeWake").dispatchEvent(new Event('change', { 'bubbles': true }));
+            }
+            if (received_msg.type == "enclosure.eyes.voiceWake") {
+                alert(received_msg.data["data"]);
+                result = received_msg.data["data"];
+                autoFlag = result == "true" ? true : false;
+                document.getElementById("voiceWake").checked = autoFlag;
+                document.getElementById("voiceWake").dispatchEvent(new Event('change', { 'bubbles': true }));
             }
         };
 
@@ -90,6 +104,28 @@
             ws.send("Message to send");
             var msg = {
                 type: 'enclosure.eyes.toggleAutolook',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+        }
+
+        function gazeWake() {
+            ws.send("Message to send");
+            var msg = {
+                type: 'enclosure.eyes.toggleGazeWake',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+        }
+
+        function voiceWake() {
+            ws.send("Message to send");
+            var msg = {
+                type: 'enclosure.eyes.toggleVoiceWake',
                 data: '',
                 end: '',
                 context: { destination: '' }
@@ -222,6 +258,8 @@
     <button type="button" onClick="SpeakTest()">Speak</button> <br><br><br>
 
     <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br>
+    <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Wake on Gaze</input><br>
+    <input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br>
     <button type="button" onclick="ChangeHeadPos()">Move Left</button>
     <button type="button" onclick="moveHome()">Move Home</button>
     <button type="button" onclick="moveRight()">Move Right</button>

@@ -29,6 +29,8 @@ class EnclosureEyes:
         self.writer = writer
         self.isOpen = False
         self.automove = True
+        self.ignoreGazeWake = True
+        self.voiceWake = True
         
 
         self._num_pixels = 1 * 2
@@ -42,6 +44,7 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.narrow', self.narrow)
         self.bus.on('enclosure.eyes.look', self.look)
         self.bus.on('enclosure.eyes.toggleAutolook', self.toggleAutoLook)
+        self.bus.on('enclosure.eyes.toggleGazeWake', self.toggleGazeWake)
         self.bus.on('enclosure.eyes.color', self.color)
         self.bus.on('enclosure.eyes.level', self.brightness)
         self.bus.on('enclosure.eyes.volume', self.volume)
@@ -113,7 +116,29 @@ class EnclosureEyes:
             
         self.bus.emit(Message('enclosure.eyes.lookstatus', data))
         LOG.info("Toggling the autohead " + str(data))
-        play_audio_file('file://./error.mp3')
+
+    def toggleGazeWake(self, event=None):
+        self.ignoreGazeWake = not self.ignoreGazeWake
+        if(self.ignoreGazeWake):
+            data = {"data":'true'}
+        else:
+            data = {"data":'false'}
+            
+        self.bus.emit(Message('enclosure.eyes.gazeWake', data))
+        LOG.info("Toggling the gazeWake " + str(data))        
+
+    def toggleVoiceWake(self, event=None):
+        self.voiceWake = not self.voiceWake
+        if(self.voiceWake):
+            data = {"data":'true'}
+            self.bus.emit(Message('recognizer_loop:wake_up'))
+        else:
+            data = {"data":'false'}
+            self.bus.emit(Message('recognizer_loop:sleep'))
+            
+        self.bus.emit(Message('enclosure.eyes.voiceWake', data))
+        LOG.info("Toggling the voiceWake " + str(data))          
+        
         
 
     def talk(self, event=None):
