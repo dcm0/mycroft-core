@@ -385,9 +385,9 @@ class EnclosureGaze:
                 self.updateLoop(1)
                 LOG.info("wakup")
 
-            if event.msg_type == 'recognizer_loop:record_begin':
+            #if event.msg_type == 'recognizer_loop:record_begin':
                 #self.updateLoop(2)
-                LOG.info("record_begin")
+                #LOG.info("record_begin")
 
             #it is already in mic.py
             if event.msg_type == 'recognizer_loop:record_end':
