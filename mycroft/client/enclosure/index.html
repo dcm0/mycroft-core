@@ -164,7 +164,15 @@
 
 
         function error() {
-            speackmsg('I am sorry, I do not understand.');
+            var msg = {
+                type: 'enclosure.sounds.bing',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+
+           // speackmsg('I am sorry, I do not understand.');
         }
 
 
