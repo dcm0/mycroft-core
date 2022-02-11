@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -74,7 +73,7 @@
         }
 
         //select trial to decide what data
-        var data ;
+        var data;
         function favTrial() {
             var mylist = document.getElementById("myList");
             document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;
@@ -83,8 +82,34 @@
             if (trial == "Trial 1") {
                 data = ['step 1 : we  are going to build a tower ', 'step 2 : start with block 4 yellow', 'step 3 : then add block 4 green', 'step 4 : then add block 4 red'];
                 //console.log(data);
-            } else if (trial == "Trial 2")
-            data = ['step 1 : we  are going to build a house ', 'step 2 : start adding 4 blue block', 'step 3 : then add 4 blue block below', 'step 4 : then add 3 block red below'];
+            } else if (trial == "Trial 2") {
+                data = ['step 1 : we  are going to build a house ', 'step 2 : start adding 4 blue block', 'step 3 : then add 4 blue block below', 'step 4 : then add 3 block red below'];
+            } else if (trail == "Trial 3") {
+
+                data = ["step 1 place a block of type RED EIGHT",
+                    "step 2 place two YELLOW EIGHT ",
+                    "step 3 add a BLUE SIX",
+                    "step 4 place two RED SIX",
+                    "step 5 add a YELLOW SIX",
+                    "step 6 place three BLUE FOUR",
+                    "step 7 place a BLUE SIX",
+                    "step 8 add a BLUE FOUR",
+                    "step 9 place three GREEN SIX",
+                    "step 10 add a YELLOW SIX",
+                    "step 11 add a RED FOUR",
+                    "step 12 add a GREEN FOUR",
+                    "step 13 place a GREEN SIX",
+                    "step 14 place two YELLOW FOUR",
+                    "step 15 add a YELLOW SIX",
+                    "step 16 add two RED EIGHT",
+                    "step 17 add a WHITE EIGHT",
+                    "step 18 add two WHITE SIX",
+                    "step 19 place a WHITE FOUR",
+                    "step 20 add a WHITE TWO",
+                    "Tower Completed",]
+
+            }
+
         }
 
 
