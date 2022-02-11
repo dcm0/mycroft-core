@@ -85,11 +85,11 @@
             } else if (trial == "Trial 2") {
                 data = ['step 1 : we  are going to build a house ', 'step 2 : start adding 4 blue block', 'step 3 : then add 4 blue block below', 'step 4 : then add 3 block red below'];
             } else if (trial == "Trial 3") {
-                data = ["step 1 place a block of type RED    EIGHT",
-                    "step 2 place two YELLOW , EIGHT ",
-                    "step 3 add a BLUE : SIX",
-                    "step 4 place two RED   SIX",
-                    "step 5 add a YELLOW    SIX",
+                data = ["step 1 place a block of type RED EIGHT",
+                    "step 2 place two YELLOW EIGHT ",
+                    "step 3 add a BLUE SIX",
+                    "step 4 place two RED SIX",
+                    "step 5 add a YELLOW SIX",
                     "step 6 place three BLUE FOUR",
                     "step 7 place a BLUE SIX",
                     "step 8 add a BLUE FOUR",
@@ -169,9 +169,10 @@
 
 
         function play() {
+            //if we need to go to specific step number then we need to -1 as the array starts from 0
             var j = document.getElementById('inc').value;
-            document.getElementById('speechtext').value = data[j];
-            speackmsg(data[j]);
+            document.getElementById('speechtext').value = data[j-1];
+            speackmsg(data[j-1]);
         }
 
 
