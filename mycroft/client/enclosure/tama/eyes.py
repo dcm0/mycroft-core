@@ -13,8 +13,9 @@
 # limitations under the License.
 
 from mycroft.util.log import LOG
+from mycroft.util import play_audio_file
 from mycroft.messagebus.message import Message
-from mycroft.skills.audioservice import AudioService
+
 
 class EnclosureEyes:
     """
@@ -28,7 +29,7 @@ class EnclosureEyes:
         self.writer = writer
         self.isOpen = False
         self.automove = True
-        self.audio_service = AudioService(self.bus)
+        
 
         self._num_pixels = 1 * 2
         self._current_rgb = [(255, 255, 255) for i in range(self._num_pixels)]
@@ -67,7 +68,7 @@ class EnclosureEyes:
 
     def playSound(self, soundString="bing"):
         LOG.info("BING Error sound ")
-        self.audio_service.play('file://./error.mp3')
+        play_audio_file('file://./error.mp3')
 
     def handle_get_color(self, message):
         """Get the eye RGB color for all pixels
