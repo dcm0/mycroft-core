@@ -58,7 +58,7 @@ class EnclosureEyes:
         self.bus.on('recognizer_loop:audio_output_start', self.talk)
         self.bus.on('recognizer_loop:audio_output_end', self.talkOver)
         self.bus.on('enclosure.head.move', self.move)
-        self.bus.on('enclosure.sounds.bing', self.playSound("bing"))
+        self.bus.on('enclosure.sounds.bing', self.playSound)
         
 
 
@@ -66,7 +66,7 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.rgb.get', self.handle_get_color)
 
 
-    def playSound(self, soundString="bing"):
+    def playSound(self, message):
         LOG.info("BING Error sound ")
         play_audio_file('file://./error.mp3')
 
