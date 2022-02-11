@@ -61,6 +61,31 @@
         }
 
 
+        function moveHome() {
+
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 0 },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+
+        }
+
+
+        function moveRight() {
+
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 30 },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+
+        }
+
         function AutoHead() {
             ws.send("Message to send");
             var msg = {
@@ -73,7 +98,7 @@
         }
 
         //select trial to decide what data
-        var data = ['start','end'];
+        var data = ['start', 'end'];
         function favTrial() {
             var mylist = document.getElementById("myList");
             document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;
@@ -172,15 +197,15 @@
             };
             ws.send(JSON.stringify(msg))
 
-           // speackmsg('I am sorry, I do not understand.');
+            // speackmsg('I am sorry, I do not understand.');
         }
 
 
         function play() {
             //if we need to go to specific step number then we need to -1 as the array starts from 0
             var j = document.getElementById('inc').value;
-            document.getElementById('speechtext').value = data[j-1];
-            speackmsg(data[j-1]);
+            document.getElementById('speechtext').value = data[j - 1];
+            speackmsg(data[j - 1]);
         }
 
 
@@ -192,10 +217,15 @@
 <body>
     <h1>Tama control station</h1>
 
-    <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input>
     <button type="button" onClick="ChangeColor()">Change eye color</button>
     <button type="button" onclick="ChangeHeadPos()">Move head</button>
     <button type="button" onClick="SpeakTest()">Speak</button> <br><br><br>
+
+    <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br>
+    <button type="button" onclick="ChangeHeadPos()">Move Left</button>
+    <button type="button" onclick="moveHome()">Move Home</button>
+    <button type="button" onclick="moveRight()">Move Right</button>
+
 
     <b> Select your trial using dropdown list </b>
     <select id="myList" onchange="favTrial()">

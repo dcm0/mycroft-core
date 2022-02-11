@@ -174,12 +174,12 @@ class CameraManager(Thread):
                     self.last = etime
                     LOG.info("count  "+str(self.count)+" "+str(self.threadID))
                     #lets see if we have to start or claim an interaction
-                    #if self.iloop == 0 and self.count > self.wakeThreshold:
-                        #LOG.info("Starting interaction from gaze "+str(self.threadID))
-                        #self.queryOwner = True
-                        #self.bus.emit(Message('mycroft.mic.listen'))   
+                    if self.iloop == 0 and self.count > self.wakeThreshold:
+                        LOG.info("Starting interaction from gaze "+str(self.threadID))
+                        self.queryOwner = True
+                        self.bus.emit(Message('mycroft.mic.listen'))   
                    
-                    if ((self.other.queryOwner == False or self.other.cancelCounter > self.cancelThreshold/2) 
+                    elif ((self.other.queryOwner == False or self.other.cancelCounter > self.cancelThreshold/2) 
                         and (self.queryOwner == False) and (self.iloop < 5) and (self.count > self.wakeThreshold)):
                         #lets claim this interaction even if we didn't start it (wakeword)
                         LOG.info("Claiming interaction from other/wakeword "+str(self.threadID))
@@ -385,9 +385,9 @@ class EnclosureGaze:
                 self.updateLoop(1)
                 LOG.info("wakup")
 
-            #if event.msg_type == 'recognizer_loop:record_begin':
-                #self.updateLoop(2)
-                #LOG.info("record_begin")
+            if event.msg_type == 'recognizer_loop:record_begin':
+                self.updateLoop(2)
+                LOG.info("record_begin")
 
             #it is already in mic.py
             if event.msg_type == 'recognizer_loop:record_end':
