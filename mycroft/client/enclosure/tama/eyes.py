@@ -14,6 +14,7 @@
 
 from mycroft.util.log import LOG
 from mycroft.messagebus.message import Message
+from mycroft.skills.audioservice import AudioService
 
 class EnclosureEyes:
     """
@@ -27,6 +28,7 @@ class EnclosureEyes:
         self.writer = writer
         self.isOpen = False
         self.automove = True
+        self.audio_service = AudioService(self.bus)
 
         self._num_pixels = 1 * 2
         self._current_rgb = [(255, 255, 255) for i in range(self._num_pixels)]
