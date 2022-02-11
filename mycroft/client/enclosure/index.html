@@ -73,7 +73,7 @@
         }
 
         //select trial to decide what data
-        var data;
+        var data = ['start','end'];
         function favTrial() {
             var mylist = document.getElementById("myList");
             document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;
@@ -130,7 +130,6 @@
             currentstepnum = i;
             document.getElementById('speechtext').value = data[i];
             speackmsg(data[i]);
-
         }
 
         function back() {
@@ -169,6 +168,13 @@
         }
 
 
+        function play() {
+            var j = document.getElementById('inc').value;
+            document.getElementById('speechtext').value = data[j];
+            speackmsg(data[i]);
+        }
+
+
     </script>
 
 
@@ -198,6 +204,7 @@
     <button onclick="next()">Next</button>
     <button type="button" onClick="repeat()">Repeat</button>
     <button type="button" onClick="reset()">Reset</button>
+    <button type="button" onClick="play()">play the current step</button>
     <button type="button" onClick="error()">Error</button><br><br>
 
     <label for="html">Step number:</label>
