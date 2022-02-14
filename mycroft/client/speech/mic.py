@@ -373,6 +373,7 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
         # Signal statuses
         self._stop_signaled = False
         self._listen_triggered = False
+        self._listen_for_wake = True
 
         self._account_id = None
 
@@ -385,6 +386,13 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
         # when not enough noise has been detected
         self.recording_timeout_with_silence = listener_config.get(
             'recording_timeout_with_silence', 3.0)
+
+    @property
+    def listen_for_wake(self):
+        if self._listen_for_wake:
+            self._listen_for_wake = False
+        else:
+            self._listen_for_wake = True
 
     @property
     def account_id(self):
@@ -747,6 +755,9 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
         ww_data = self._wait_until_wake_word(source, sec_per_buffer)
 
         ww_frames = None
+        if not self._listen_for_wake:
+            #temp stop listening and throw away wakes
+            return
         if ww_data.found:
             # If the wakeword was heard send it
             self._send_wakeword_info(emitter)
