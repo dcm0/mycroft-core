@@ -111,9 +111,20 @@
         }
 
 
-        function headReset() {
+        function headOff() {
             var msg = {
                 type: 'enclosure.eyes.off',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+
+        }
+
+        function headOn() {
+            var msg = {
+                type: 'enclosure.eyes.on',
                 data: '',
                 end: '',
                 context: { destination: '' }
