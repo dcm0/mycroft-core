@@ -176,7 +176,7 @@ class CameraManager(Thread):
                     LOG.info("count  "+str(self.count)+" "+str(self.threadID))
                     #lets see if we have to start or claim an interaction
                     if self.ignoreWake == False and self.iloop == 0 and self.count > self.wakeThreshold:
-                        LOG.info("Starting interaction from gaze "+str(self.threadID)+ str(self.ignoreWake))
+                        LOG.info("Starting interaction from gaze "+str(self.threadID)+ "  " +str(self.ignoreWake))
                         self.queryOwner = True
                         self.bus.emit(Message('mycroft.mic.listen'))   
                    
@@ -185,6 +185,7 @@ class CameraManager(Thread):
                         #lets claim this interaction even if we didn't start it (wakeword)
                         LOG.info("Claiming interaction from other/wakeword "+str(self.threadID))
                         self.queryOwner = True
+                        
                     elif self.count > self.wakeThreshold:
                         LOG.info('Not taking ownership because C='+str(self.count)+" i="+str(self.iloop)+" t="+str(self.queryOwner)+" o="+str(self.other.queryOwner)+ " ct="+str(self.cancelThreshold) + " OT="+ str(self.other.cancelCounter)) 
                         
