@@ -186,6 +186,9 @@ def on_stopping():
 def on_error(e='Unknown'):
     LOG.error('Audio service failed to launch ({}).'.format(repr(e)))
 
+def handle_wake_toggle(event):
+    loop.responsive_recognizer.self.listen_for_wake()
+
 
 def connect_loop_events(loop):
     loop.on('recognizer_loop:utterance', handle_utterance)
@@ -212,6 +215,7 @@ def connect_bus_events(bus):
     bus.on('recognizer_loop:audio_output_start', handle_audio_start)
     bus.on('recognizer_loop:audio_output_end', handle_audio_end)
     bus.on('mycroft.stop', handle_stop)
+    bus.on('enclosure.eyes.voiceWake', handle_wake_toggle)
 
 
 def main(ready_hook=on_ready, error_hook=on_error, stopping_hook=on_stopping,
