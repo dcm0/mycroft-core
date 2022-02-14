@@ -755,9 +755,10 @@ class ResponsiveRecognizer(speech_recognition.Recognizer):
         ww_data = self._wait_until_wake_word(source, sec_per_buffer)
 
         ww_frames = None
-        if not self._listen_for_wake:
-            #temp stop listening and throw away wakes
-            return
+        
+        #temp stop listening and throw away wakes
+        return
+        
         if ww_data.found:
             # If the wakeword was heard send it
             self._send_wakeword_info(emitter)
