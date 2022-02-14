@@ -89,7 +89,6 @@
 
 
         function moveRight() {
-
             var msg = {
                 type: 'enclosure.head.move',
                 data: { 'pos': 30 },
@@ -110,6 +109,20 @@
             };
             ws.send(JSON.stringify(msg))
         }
+
+
+        function headReset() {
+            var msg = {
+                type: 'enclosure.eyes.reset',
+                data: { 'pos': 30 },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+
+        }
+
+     
 
         function gazeWake() {
             ws.send("Message to send");
@@ -263,6 +276,7 @@
     <button type="button" onclick="ChangeHeadPos()">Move Left</button>
     <button type="button" onclick="moveHome()">Move Home</button>
     <button type="button" onclick="moveRight()">Move Right</button>
+    <button type="button" onclick="headReset()">Head Reset</button><br>
 
 
     <b> Select your trial using dropdown list </b>
