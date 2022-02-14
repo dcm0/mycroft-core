@@ -394,7 +394,7 @@ class EnclosureGaze:
             if event.msg_type == 'recognizer_loop:wakeword':
                 self.resetVolume()
                 self.updateLoop(1)
-                LOG.info("wakup")
+                LOG.info("wakeup")
 
             if event.msg_type == 'recognizer_loop:record_begin':
                 self.updateLoop(2)
