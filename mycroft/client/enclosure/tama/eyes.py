@@ -45,6 +45,7 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.look', self.look)
         self.bus.on('enclosure.eyes.toggleAutolook', self.toggleAutoLook)
         self.bus.on('enclosure.eyes.toggleGazeWake', self.toggleGazeWake)
+        self.bus.on('enclosure.eyes.toggleVoiceWake', self.toggleVoiceWake)        
         self.bus.on('enclosure.eyes.color', self.color)
         self.bus.on('enclosure.eyes.level', self.brightness)
         self.bus.on('enclosure.eyes.volume', self.volume)
