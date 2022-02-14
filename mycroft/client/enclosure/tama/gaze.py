@@ -372,14 +372,13 @@ class EnclosureGaze:
         self.cameraR.join()
         LOG.info("Camera Threads ended")
 
-
     def gazeWake(self, event=None):
         if(event.data == "true"):
             self.cameraL.ignoreWake = True
-            self.cameraL.ignoreWake = True
+            self.cameraR.ignoreWake = True
         else:  
             self.cameraL.ignoreWake = False
-            self.cameraL.ignoreWake = False
+            self.cameraR.ignoreWake = False
 
         #Interaction Loop
         # 0 = waiting for wakeword
