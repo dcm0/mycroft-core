@@ -230,6 +230,7 @@ class EnclosureEyes:
         if self.isOpen == False:
             self.writer.write("OPEN")
             self.isOpen = True
+
         if(self.automove):
             self.writer.write("HOME")
         self.writer.write("GREEN")
