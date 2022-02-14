@@ -176,7 +176,7 @@ class CameraManager(Thread):
                     LOG.info("count  "+str(self.count)+" "+str(self.threadID))
                     #lets see if we have to start or claim an interaction
                     if self.ignoreWake == False and self.iloop == 0 and self.count > self.wakeThreshold:
-                        LOG.info("Starting interaction from gaze "+str(self.threadID))
+                        LOG.info("Starting interaction from gaze "+str(self.threadID)+ str(self.ignoreWake))
                         self.queryOwner = True
                         self.bus.emit(Message('mycroft.mic.listen'))   
                    
