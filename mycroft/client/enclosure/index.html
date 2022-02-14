@@ -24,15 +24,15 @@
             if (received_msg.type == "enclosure.eyes.gazeWake") {
                 alert(received_msg.data["data"]);
                 result = received_msg.data["data"];
-                autoFlag = result == "true" ? true : false;
-                document.getElementById("gazeWake").checked = autoFlag;
+                autoGaze = result == "true" ? true : false;
+                document.getElementById("gazeWake").checked = autoGaze;
                 document.getElementById("gazeWake").dispatchEvent(new Event('change', { 'bubbles': true }));
             }
             if (received_msg.type == "enclosure.eyes.voiceWake") {
                 alert(received_msg.data["data"]);
                 result = received_msg.data["data"];
-                autoFlag = result == "true" ? true : false;
-                document.getElementById("voiceWake").checked = autoFlag;
+                autoWake = result == "true" ? true : false;
+                document.getElementById("voiceWake").checked = autoWake;
                 document.getElementById("voiceWake").dispatchEvent(new Event('change', { 'bubbles': true }));
             }
         };
@@ -133,7 +133,6 @@
 
         }
 
-     
 
         function gazeWake() {
             ws.send("Message to send");
