@@ -223,6 +223,10 @@ class EnclosureEyes:
         self.writer.write("eyes.volume=" + str(volume))
 
     def reset(self, event=None):
+        if self.isOpen == True:
+            self.writer.write("CLOSE")
+            self.isOpen = False
+            
         if self.isOpen == False:
             self.writer.write("OPEN")
             self.isOpen = True
