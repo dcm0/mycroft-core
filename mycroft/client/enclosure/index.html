@@ -68,7 +68,7 @@
 
             var msg = {
                 type: 'enclosure.head.move',
-                data: { 'pos': -30 },
+                data: { 'pos': 30 },
                 end: '',
                 context: { destination: '' }
             };
@@ -93,7 +93,7 @@
         function moveRight() {
             var msg = {
                 type: 'enclosure.head.move',
-                data: { 'pos': 30 },
+                data: { 'pos': -30 },
                 end: '',
                 context: { destination: '' }
             };
@@ -267,7 +267,7 @@
         }
 
         function restart() {
-            i = 0;
+            i = -1;
             document.getElementById('inc').value = i;
             currentstepnum = i;
             document.getElementById('speechtext').value = '';
@@ -380,9 +380,9 @@
     <button type="button" onclick="endTrial()">End trial</button><br><br>
 
     <b>Head Control:</b>
-    <button type="button" onclick="ChangeHeadPos()">Move Left</button>
+    <button type="button" onclick="ChangeHeadPos()">Move Right</button>
     <button type="button" onclick="moveHome()">Move Home</button>
-    <button type="button" onclick="moveRight()">Move Right</button>
+    <button type="button" onclick="moveLeft()">Move Left</button>
     <button type="button" onclick="headOn()">Head on</button>
     <button type="button" onclick="headOff()">Head off</button><br><br>
 
