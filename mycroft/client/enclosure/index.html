@@ -166,11 +166,6 @@
             var trial = mylist.options[mylist.selectedIndex].text;
             console.log(trial);
             if (trial == "Trial 1") {
-                data = ['step 1 : we  are going to build a tower ', 'step 2 : start with block 4 yellow', 'step 3 : then add block 4 green', 'step 4 : then add block 4 red'];
-                //console.log(data);
-            } else if (trial == "Trial 2") {
-                data = ['step 1 : we  are going to build a house ', 'step 2 : start adding 4 blue block', 'step 3 : then add 4 blue block below', 'step 4 : then add 3 block red below'];
-            } else if (trial == "Trial 3") {
                 data = ["step 1 place a block of type red eight",
                     "step 2 place two yellow eight ",
                     "step 3 add a blue six",
@@ -190,10 +185,34 @@
                     "step 17 add a white eight",
                     "step 18 add two white six",
                     "step 19 place a white four",
-                    "step 20 add a white two",
+                    "step 20 add a white six",
                     "Tower Completed",]
 
-            }
+                //console.log(data);
+            } else if (trial == "Trial 2") {
+                data = ["step 1 place a block of type one blue right",
+                    "step 2 place two green eight ",
+                    "step 3 add two green four",
+                    "step 4 place a white four",
+                    "step 5 add a red six",
+                    "step 6 place a white eight",
+                    "step 7 place a red six",
+                    "step 8 add a white four",
+                    "step 9 place two yellow six",
+                    "step 10 add a yellow eight",
+                    "step 11 add two blue eight",
+                    "step 12 add one blue eight",
+                    "step 13 place two white six",
+                    "step 14 place three yellow eight",
+                    "step 15 add a green four",
+                    "step 16 add a red eight",
+                    "step 17 add two green eight",
+                    "step 18 add a white six",
+                    "step 19 place a blue six",
+                    "step 20 add two blue four",
+                    "Tower Completed",]
+            } else if (trial == "Trial 3") {
+                data = ['step 1 : we  are going to build a house ', 'step 2 : start adding 4 blue block', 'step 3 : then add 4 blue block below', 'step 4 : then add 3 block red below'];
 
         }
 
@@ -216,6 +235,16 @@
             currentstepnum = i;
             document.getElementById('speechtext').value = data[i];
             speackmsg(data[i]);
+
+            var msg = {
+                type: 'enclosure.trial.log',
+                data: 'next',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+
+
         }
 
         function back() {
@@ -279,6 +308,7 @@
             ws.send(JSON.stringify(msg))
             }, delayInMilliseconds);
             
+
 
         }
 
