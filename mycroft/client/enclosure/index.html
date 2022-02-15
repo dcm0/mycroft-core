@@ -271,7 +271,19 @@
             }, delayInMilliseconds);
 
 
-            delayInMillisecond = 70000;
+            delayInMillisecond = 50000;
+            setTimeout(function() {
+             //your code to be executed after 1 second
+            var msg = {
+                type: 'enclosure.eyes.pink',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+            }, delayInMilliseconds);
+
+            delayInMillisecond = 30000;
             setTimeout(function() {
              //your code to be executed after 1 second
             var msg = {
