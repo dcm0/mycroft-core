@@ -251,6 +251,13 @@
 
         function error() {
             var msg = {
+                type: 'enclosure.eyes.pink',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+            msg = {
                 type: 'enclosure.sounds.bing',
                 data: '',
                 end: '',
@@ -258,30 +265,6 @@
             };
             ws.send(JSON.stringify(msg))
 
-            var delayInMilliseconds = 3000; //1 second
-            setTimeout(function() {
-             //your code to be executed after 1 second
-            var msg = {
-                type: 'enclosure.eyes.pink',
-                data: '',
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg))
-            }, delayInMilliseconds);
-
-
-            delayInMillisecond = 50000;
-            setTimeout(function() {
-             //your code to be executed after 1 second
-            var msg = {
-                type: 'enclosure.eyes.pink',
-                data: '',
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg))
-            }, delayInMilliseconds);
 
             delayInMillisecond = 70000;
             setTimeout(function() {
