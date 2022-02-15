@@ -74,6 +74,9 @@ class EnclosureEyes:
         audiopath = str(Path().absolute()) +'/mycroft/client/enclosure/tama/error.mp3'
         LOG.info("BING Error sound "+ audiopath)
         play_audio_file(audiopath)
+        self.writer.write("GREEN")
+        self.writer.write("AVR")
+        self.writer.write("GREEN")
 
 
     def handle_get_color(self, message):
