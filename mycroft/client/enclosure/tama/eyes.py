@@ -185,9 +185,8 @@ class EnclosureEyes:
     def pink(self, event=None):
         self.writer.write("PINK")
 
-    def green(self, event=None):
+    def blue(self, event=None):
         self.writer.write("BLUE")
-
 
 
     def close(self, event=None):   
