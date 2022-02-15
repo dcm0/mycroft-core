@@ -266,9 +266,10 @@
             ws.send(JSON.stringify(msg))
 
 
-            delayInMillisecond = 5000;
+            var delayInMillisecond = 3000;
             setTimeout(function() {
              //your code to be executed after 1 second
+            console.log('go green');
             var msg = {
                 type: 'enclosure.eyes.green',
                 data: '',
