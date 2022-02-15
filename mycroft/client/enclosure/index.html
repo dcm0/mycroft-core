@@ -257,8 +257,6 @@
                 context: { destination: '' }
             };
             ws.send(JSON.stringify(msg))
-
-            // speackmsg('I am sorry, I do not understand.');
         }
 
 
@@ -267,6 +265,10 @@
             var j = document.getElementById('inc').value;
             document.getElementById('speechtext').value = data[j - 1];
             speackmsg(data[j - 1]);
+        }
+
+        function doNoUnderstand() {
+            speackmsg('I am Sorry, I do not understand!');
         }
 
 
@@ -312,6 +314,7 @@
     <button type="button" onClick="repeat()">Repeat</button>
     <button type="button" onClick="reset()">Reset</button>
     <button type="button" onClick="play()">play the current step</button>
+    <button type="button" onClick="doNoUnderstand()">I do not understand</button>
     <button type="button" onClick="error()">Error</button><br><br>
 
     <label for="html">Step number:</label>
