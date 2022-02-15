@@ -258,7 +258,7 @@
             };
             ws.send(JSON.stringify(msg))
 
-            var delayInMilliseconds = 5000; //1 second
+            var delayInMilliseconds = 3000; //1 second
             setTimeout(function() {
              //your code to be executed after 1 second
             var msg = {
@@ -271,7 +271,7 @@
             }, delayInMilliseconds);
 
 
-            delayInMillisecond = 20000;
+            delayInMillisecond = 70000;
             setTimeout(function() {
              //your code to be executed after 1 second
             var msg = {
@@ -282,6 +282,7 @@
             };
             ws.send(JSON.stringify(msg))
             }, delayInMilliseconds);
+            
 
         }
 
