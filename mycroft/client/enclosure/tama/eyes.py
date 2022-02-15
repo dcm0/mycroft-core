@@ -68,7 +68,7 @@ class EnclosureEyes:
         self.bus.on('enclosure.sounds.bing', self.playSound)
         self.bus.on('enclosure.trial.start', self.trialStart)
         self.bus.on('enclosure.trial.end', self.trialEnd)
-    
+        self.bus.on('enclosure.trial.log', self.trialLog)
 
         self.bus.on('enclosure.eyes.rgb.get', self.handle_get_color)
 
@@ -273,5 +273,7 @@ class EnclosureEyes:
     def trialEnd():
         LOG.info('Trial ended')
 
+    def trialLog(self, event=None):
+        LOG.info(event.data)
     
 
