@@ -211,7 +211,7 @@
                     "step 19 place a blue six",
                     "step 20 add two blue four",
                     "Tower Completed"];
-                    
+
             } else if (trial == "Trial 3") {
                 data = ['Please follow my instructions to build a tower of lego',
                 'I will call out blocks for you to use, by naming colour of the block and the number of dots on the top',
@@ -226,6 +226,7 @@
 
         }
 
+    }
 
         var i = -1;
         var currentstepnum = i;
@@ -238,6 +239,7 @@
             };
             ws.send(JSON.stringify(msg))
         }
+    
 
 
         function next() {
