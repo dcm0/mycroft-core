@@ -53,6 +53,9 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.timedspin', self.timed_spin)
         self.bus.on('enclosure.eyes.reset', self.reset)
         self.bus.on('enclosure.eyes.yellow', self.yellow)
+        self.bus.on('enclosure.eyes.green', self.green)
+        self.bus.on('enclosure.eyes.pink', self.pink)
+        self.bus.on('enclosure.eyes.blue', self.blue)
         self.bus.on('enclosure.eyes.setpixel', self.set_pixel)
         self.bus.on('enclosure.eyes.fill', self.fill)
         self.bus.on('enclosure.eyes.shutdown', self.close)
@@ -74,9 +77,6 @@ class EnclosureEyes:
         audiopath = str(Path().absolute()) +'/mycroft/client/enclosure/tama/error.mp3'
         LOG.info("BING Error sound "+ audiopath)
         play_audio_file(audiopath)
-        self.writer.write("GREEN")
-        self.writer.write("AVR")
-        self.writer.write("GREEN")
 
 
     def handle_get_color(self, message):
@@ -178,6 +178,17 @@ class EnclosureEyes:
         #self._current_rgb = [(r, g, b) for i in range(self._num_pixels)]
         #should update these calles to use the real colour set function
         self.writer.write("YELLOW")
+
+    def green(self, event=None):
+        self.writer.write("GREEN")
+
+    def pink(self, event=None):
+        self.writer.write("PINK")
+
+    def green(self, event=None):
+        self.writer.write("BLUE")
+
+
 
     def close(self, event=None):   
         #self._current_rgb = [(r, g, b) for i in range(self._num_pixels)]
