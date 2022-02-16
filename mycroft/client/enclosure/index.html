@@ -89,7 +89,7 @@
 
         }
 
-
+        // from Tama persepctives
         function moveLeft() {
             var msg = {
                 type: 'enclosure.head.move',
@@ -224,7 +224,7 @@
                     "step 20 add two blue four",
                     "Tower Completed"];
 
-            } else if (trial == "Trial 3") {
+            } else if (trial == "Trial 0") {
                 data = ['Please follow my instructions to build a tower of lego',
                 'I will call out blocks for you to use, by naming colour of the block and the number of dots on the top',
                 'I will also tell you how many to add each time', 
@@ -392,7 +392,7 @@
     <button type="button" onclick="endTrial()">End trial</button><br><br>
 
     <b>Head Control:</b>
-    <button type="button" onclick="moveRight()">Move right</button>
+    <button type="button" onclick="moveRight()">Move Right</button>
     <button type="button" onclick="moveHome()">Move Home</button>
     <button type="button" onclick="moveLeft()">Move Left</button>
     <button type="button" onclick="headOn()">Head on</button>
@@ -402,9 +402,10 @@
     <b> Select your trial using dropdown list </b>
     <select id="myList" onchange="favTrial()">
         <option> ---Choose trial--- </option>
+        <option> Trial 0 </option>
         <option> Trial 1 </option>
         <option> Trial 2 </option>
-        <option> Trial 3 </option>
+       
     </select>
     <p> Your selected trial is:
         <input type="text" id="favourite" size="20" </p><br><br>
