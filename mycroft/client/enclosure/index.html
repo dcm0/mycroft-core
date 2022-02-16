@@ -78,7 +78,7 @@
 
 
         function moveHome() {
-
+            logData('Home');
             var msg = {
                 type: 'enclosure.head.move',
                 data: { 'pos': 0 },
@@ -91,6 +91,7 @@
 
         // from Tama persepctives
         function moveLeft() {
+            logData('Left');
             var msg = {
                 type: 'enclosure.head.move',
                 data: { 'pos': 30 },
@@ -103,6 +104,7 @@
 
 
         function moveRight() {
+            logData('Right');
             var msg = {
                 type: 'enclosure.head.move',
                 data: { 'pos': -30 },
@@ -114,6 +116,7 @@
         }
 
         function AutoHead() {
+            logData('AutoHead');
             ws.send("Message to send");
             var msg = {
                 type: 'enclosure.eyes.toggleAutolook',
@@ -126,6 +129,7 @@
 
 
         function headOff() {
+            logData('Head off');
             var msg = {
                 type: 'enclosure.eyes.off',
                 data: '',
@@ -137,6 +141,7 @@
         }
 
         function headOn() {
+            logData('Head on');
             var msg = {
                 type: 'enclosure.eyes.on',
                 data: '',
@@ -149,6 +154,7 @@
 
 
         function gazeWake() {
+            logData('Gaze awake');
             ws.send("Message to send");
             var msg = {
                 type: 'enclosure.eyes.toggleGazeWake',
@@ -160,6 +166,7 @@
         }
 
         function voiceWake() {
+            logData('Voice awake');
             ws.send("Message to send");
             var msg = {
                 type: 'enclosure.eyes.toggleVoiceWake',
@@ -176,8 +183,9 @@
             var mylist = document.getElementById("myList");
             document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;
             var trial = mylist.options[mylist.selectedIndex].text;
-            console.log(trial);
+            logData(trial);
             if (trial == "Trial 1") {
+                
                 data = ["step 1 place a block of type red eight on a clean green base block",
                     "step 2 place two yellow eight ",
                     "step 3 add a blue six",
@@ -202,7 +210,7 @@
 
                 //console.log(data);
             } else if (trial == "Trial 2") {
-                data = ["step 1 place a block of type one blue right on a clean green base block",
+                data = ["step 1 place a blue eight on a clean green base block",
                     "step 2 place two green eight ",
                     "step 3 add two green four",
                     "step 4 place a white four",
@@ -257,6 +265,7 @@
         var i = -1;
         var currentstepnum = i;
         function speackmsg(msg) {
+            logData('Speak msg' + ' ' + msg);
             var msg = {
                 type: 'speak',
                 data: { 'utterance': msg },
@@ -269,23 +278,17 @@
 
 
         function next() {
+            logData('Next');
             document.getElementById('inc').value = ++i;
             currentstepnum = i;
             document.getElementById('speechtext').value = data[i];
             speackmsg(data[i]);
 
-            var msg = {
-                type: 'enclosure.trial.log',
-                data: 'next',
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg))
-
-
+        
         }
 
         function back() {
+            logData('Back');
             document.getElementById('inc').value = --i;
             currentstepnum = i;
             document.getElementById('speechtext').value = data[i];
@@ -293,6 +296,7 @@
         }
 
         function restart() {
+            logData('Restart');
             i = -1;
             document.getElementById('inc').value = i;
             currentstepnum = i;
@@ -300,6 +304,7 @@
         }
 
         function reset() {
+            logData('Reset');
             i = currentstepnum;
             document.getElementById('inc').value = i;
             currentstepnum = i;
@@ -308,6 +313,7 @@
         }
 
         function repeat() {
+            logData('Repeat');
             i = currentstepnum;
             document.getElementById('inc').value = i;
             currentstepnum = i;
@@ -317,6 +323,7 @@
 
 
         function error() {
+            logData('Error');
             var msg = {
                 type: 'enclosure.eyes.pink',
                 data: '',
@@ -352,6 +359,7 @@
 
 
         function play() {
+            logData('Play');
             //if we need to go to specific step number then we need to -1 as the array starts from 0
             var j = document.getElementById('inc').value;
             document.getElementById('speechtext').value = data[j - 1];
@@ -359,10 +367,12 @@
         }
 
         function doNoUnderstand() {
+            logData('I do not understand');
             speackmsg('I am Sorry, I do not understand!');
         }
 
         function startTrial() {
+            logData('Start trial');
             ws.send("Message to send");
             var msg = {
                 type: 'enclosure.trial.start',
@@ -374,10 +384,21 @@
         }
 
         function endTrial() {
+            logData('End trial');
             ws.send("Message to send");
             var msg = {
                 type: 'enclosure.trial.end',
                 data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+        }
+
+        function logData(logLine){
+        var msg = {
+                type: 'enclosure.trial.log',
+                data: logLine,
                 end: '',
                 context: { destination: '' }
             };
