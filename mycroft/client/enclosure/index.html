@@ -384,26 +384,10 @@
 
         function startTrial() {
             logData('Start trial');
-            ws.send("Message to send");
-            var msg = {
-                type: 'enclosure.trial.start',
-                data: '',
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg));
         }
 
         function endTrial() {
             logData('End trial');
-            ws.send("Message to send");
-            var msg = {
-                type: 'enclosure.trial.end',
-                data: '',
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg));
         }
 
         function logData(logLine){
