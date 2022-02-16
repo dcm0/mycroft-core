@@ -93,6 +93,18 @@
         function moveLeft() {
             var msg = {
                 type: 'enclosure.head.move',
+                data: { 'pos': 30 },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+
+        }
+
+
+        function moveRight() {
+            var msg = {
+                type: 'enclosure.head.move',
                 data: { 'pos': -30 },
                 end: '',
                 context: { destination: '' }
@@ -380,7 +392,7 @@
     <button type="button" onclick="endTrial()">End trial</button><br><br>
 
     <b>Head Control:</b>
-    <button type="button" onclick="ChangeHeadPos()">Move Right</button>
+    <button type="button" onclick="moveRight()">Move right</button>
     <button type="button" onclick="moveHome()">Move Home</button>
     <button type="button" onclick="moveLeft()">Move Left</button>
     <button type="button" onclick="headOn()">Head on</button>
