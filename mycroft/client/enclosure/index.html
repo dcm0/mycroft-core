@@ -55,12 +55,13 @@
 
         function ChangeColor() {
             var msg = {
-                type: 'enclosure.eyes.color',
-                data: { 'r': 255, 'g': 0, 'b': 0 },
+                type: 'enclosure.eyes.yellow',
+                data: '',
                 end: '',
                 context: { destination: '' }
             };
             ws.send(JSON.stringify(msg))
+        }
 
         }
 
@@ -357,6 +358,16 @@
 
         }
 
+
+        function changeEyeColor(color){
+            var msg = {
+                type: color,
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg))
+        }
 
         function play() {
             logData('Play');
