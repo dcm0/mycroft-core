@@ -181,7 +181,7 @@
                     "Taste the soup for the seasonings at this stage and add more if required. Turn off the flame. Transfer hot soup of vegetables into individual serving bowls and serve.",
                     "step 14 place two yellow four"];
 
-                inputRecipe(data)
+                inputRecipe(data);
                 //console.log(data);
             } else if (trial == "Recipe 2") {
                 data = ["Now, we are going to cook a vegetable soup",
@@ -374,7 +374,7 @@
             return '<li>' + e.text +  '</li>'
         }
         function inputRecipe(list){
-            var recipeHTML = list.map(createListObject());
+            var recipeHTML = list.map(createListObject(element));
             document.getElementById('recipelist').innerHTML = recipeHTML
         }
         
