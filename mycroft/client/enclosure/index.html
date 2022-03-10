@@ -376,8 +376,8 @@
            // document.getElementById('recipelist').innerHTML = recipeHTML
         }
         
-
-textId = 0;
+ var textcounter = 0;
+ var textId = "msg" + textcounter;
  function myFunction() {
 
   var x = document.createElement("INPUT");
@@ -387,9 +387,9 @@ textId = 0;
 
   var y = document.createElement("BUTTON")
   y.setAttribute("type", "");
-  y.setAttribute("value", " Speak");
+  y.setAttribute("value", "Speak");
   y.setAttribute("id", textId)
-  y.onclick = TextToSpeech(document.getElementById('textId').value);
+  //y.onclick = TextToSpeech(document.getElementById('textId').value);
 
   textId;
   document.body.appendChild(x);
