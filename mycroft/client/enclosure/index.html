@@ -342,7 +342,7 @@
             var output = "<ul>";
             for (var key in dataJson) {
                 if (dataJson.hasOwnProperty(dataJson[key])) {
-                    output += createRecipeItem(item);
+                    output += createRecipeItem(dataJson[key]);
                     console.log(output);
                     console.log("----------------");
 
