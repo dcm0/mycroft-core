@@ -377,12 +377,21 @@
         }
         
 
-        function myFunction() {
+textId = 0;
+ function myFunction() {
+
   var x = document.createElement("INPUT");
   x.setAttribute("type", "text");
   x.setAttribute("value", " ");
+  x.setAttribute("id", textId);
 
   var y = document.createElement("BUTTON")
+  y.setAttribute("type", "");
+  y.setAttribute("value", " Speak");
+  y.setAttribute("id", textId)
+  y.onclick = TextToSpeech(document.getElementById('').value);
+
+  textId;
   document.body.appendChild(x);
   document.body.appendChild(y);
 }
