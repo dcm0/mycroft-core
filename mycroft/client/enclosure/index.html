@@ -354,10 +354,12 @@
             document.getElementById("recipelist").innerHTML = output;
 
         }
-
+        
         function createRecipeItem(item){
-            htmlStringItem = "<div id=" + item.n + " >" + item.Name + "<button> press me! </button> </div>";
-            return htmlStringItem
+            console.log("item" + item)
+            //htmlStringItem = "<div id=" + item.n + " >" + item.Name + "<button> press me! </button> </div>";
+            htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
+            return htmlStringItem;
         }
 
     </script>
