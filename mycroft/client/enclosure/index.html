@@ -374,7 +374,7 @@
             return '<li>' + e.text +  '</li>'
         }
         function inputRecipe(list){
-            var recipeHTML = list.map(createListObject(element));
+            var recipeHTML = list.map(createListObject());
             document.getElementById('recipelist').innerHTML = recipeHTML
         }
         
@@ -414,6 +414,14 @@
 
     </div>
 
+        
+</div>
+
+<div id = "advice">
+ <b>List of recoomendation and advices:</b>
+
+</div>
+
     <div id= "short">
         <button type="button" onclick="startTrial()">Start trial</button>
         <button type="button" onclick="endTrial()">End trial</button><br><br>
@@ -428,14 +436,13 @@
 
     <div id= "gaze">
         <b>Head Control:</b>
-
+        <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br><
         <button type="button" onclick="moveRight()">Move Right</button>
         <button type="button" onclick="moveHome()">Move Home</button>
         <button type="button" onclick="moveLeft()">Move Left</button>
         <button type="button" onclick="headOn()">Head on</button>
         <button type="button" onclick="headOff()">Head off</button><br><br>
-        <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br><br>
-    </div>
+    
     
     <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activated</input><br>>
     <input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>
