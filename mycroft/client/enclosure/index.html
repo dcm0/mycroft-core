@@ -486,7 +486,9 @@
             var request = new XMLHttpRequest();
             request.overrideMimeType("application/json");
             //filePath = '/mycroft/client/enclosure/recipe.json'
+
             request.open('GET', dataJson );
+            console.log(dataJson);
             request.onreadystatechange = function () {
                 if ((request.readyState === 4) && (request.status === 200)) {
                     var items = JSON.parse(request.responseText);
