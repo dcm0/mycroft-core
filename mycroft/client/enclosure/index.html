@@ -334,7 +334,7 @@
 
         function createRecipeItem(item){
             console.log("item" + item.toString())
-            htmlStringItem = "<div id=" + item.n + " style='border:1px solid black'>" + item.Name + "<button onclick=\"TextToSpeech(" +item.Text+ ")\"> Speak </button> </div>";
+            htmlStringItem = "<div id=" + item.n + " style='border:1px solid black'>" + item.Name + "<button onclick=\"TextToSpeech(\"" +item.Text+ "\")\"> Speak </button> </div>";
             //htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
             return htmlStringItem;
         }
