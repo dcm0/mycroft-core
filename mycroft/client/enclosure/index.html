@@ -220,9 +220,7 @@
 
     }
 
-         function TextToSpeech() {
-
-            var text =  document.getElementById('textmsg').value
+         function TextToSpeech(text) {
             logData('Speak msg' + ' ' + text);
             var msg = {
                 type: 'speak',
@@ -413,7 +411,7 @@
 
     <b>List of recomendations:</b>
     <input type="text" id="msg1" value=""></input>
-    <button type="button" onClick="TextToSpeech(document.getElementById('msg1'))">Speak</button><br>
+    <button type="button" onClick="TextToSpeech(document.getElementById('msg1'))">run</button><br>
 
 
 
@@ -427,7 +425,7 @@
         <button type="button" onClick="error()">Error</button><br><br>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
-        <button type="button" onClick="TextToSpeech()">Speak</button><br><br>
+        <button type="button" onClick="TextToSpeech(document.getElementById('textmsg'))">Speak</button><br><br>
     </div>
 
 
