@@ -40,19 +40,6 @@
         };
 
 
-        function SpeakTest() {
-            // Web Socket is connected, send data using send()
-            var msg = {
-                type: 'speak',
-                data: { 'utterance': 'Hi my name is Tama, what is your name.' },
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg));
-        }
-
-
-
         function ChangeColor() {
             var msg = {
                 type: 'enclosure.eyes.yellow',
@@ -374,7 +361,6 @@
     <h1>Tama control station</h1>
 
     <button type="button" onClick="ChangeColor()">Change eye color</button>
-    <button type="button" onClick="SpeakTest()">Speak</button> <br><br><br>
 
     <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br><br>
     <!--<input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activated</input><br>>
