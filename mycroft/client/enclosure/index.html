@@ -384,6 +384,7 @@
   x.setAttribute("type", "text");
   x.setAttribute("value", "write a recomendation");
   x.setAttribute("id", textId);
+  document.body.appendChild(x);
 
   var btn = document.createElement("BUTTON")
   btn.setAttribute("value", "Speak");
@@ -392,7 +393,6 @@
   btn.name = "speakBtn";
   btn.onclick = TextToSpeech(document.getElementById(textId).value);
 
-  document.body.appendChild(x);
   document.body.appendChild(btn);
   counter++;
 }
