@@ -376,10 +376,10 @@
            // document.getElementById('recipelist').innerHTML = recipeHTML
         }
         
- var textcounter = 0;
- var textId = "msg" + textcounter;
+ var counter = 0;
  function myFunction() {
-
+  var textId = "msg" + counter;
+  var textcounter = String(counter);
   var x = document.createElement("INPUT");
   x.setAttribute("type", "text");
   x.setAttribute("value", " ");
@@ -387,15 +387,14 @@
 
   var btn = document.createElement("BUTTON")
   btn.setAttribute("value", "Speak");
-  btn.setAttribute("id", textId)
-
   btn.innerHTML = "Speak"; 
-btn.name = "formBtn";
-  //y.onclick = TextToSpeech(document.getElementById('textId').value);
+  btn.setAttribute("id", textcounter);
+  btn.name = "speakBtn";
+  btn.onclick = TextToSpeech(document.getElementById('msg'+this.textcounter).value);
 
-  textId;
   document.body.appendChild(x);
   document.body.appendChild(btn);
+  counter++;
 }
 
     </script>
@@ -486,7 +485,7 @@ btn.name = "formBtn";
         display: inline-block;
     }
     #gaze{
-        width: 49%;
+        width: 30%;
         background-color: beige;
         display: inline-block;
     }
