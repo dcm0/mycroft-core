@@ -8,14 +8,14 @@
     <title>Tama Page</title>
 
     <script type="text/javascript">
-         // window.location.hostname
+        // window.location.hostname
         // Let us open a web socket
-       
+
         var ws = new WebSocket("ws://130.237.158.153:8181/core");
         ws.onmessage = function (evt) {
             var received_msg = JSON.parse(evt.data); // the whole json
-           // document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
-           // document.getElementById("info").value = document.getElementById("info").value + "\n" + received_msg.type;
+            // document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
+            // document.getElementById("info").value = document.getElementById("info").value + "\n" + received_msg.type;
             if (received_msg.type == "enclosure.eyes.lookstatus") {
                 alert(received_msg.data["data"]);
                 result = received_msg.data["data"];
@@ -160,12 +160,12 @@
             // document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;
             // var trial = mylist.options[mylist.selectedIndex].text;
 
-            var trial = input.options[input.selectedIndex].text; 
+            var trial = input.options[input.selectedIndex].text;
             var value = input.value; // returns the value ie 1 / 2 / 3 etc
 
             logData(trial);
             if (trial == "Recipe 1") {
-                
+
                 data = ["We are going to cook a vegetable soup",
                     "Chop all the veggies, <break time=\"3s\"/> (carrot, cabbage, french beans, onion and garlic) into small pieces",
                     "Add 2 tablespoons cornstarch (corn flour) in a small bowl.",
@@ -181,7 +181,6 @@
                     "Taste the soup for the seasonings at this stage and add more if required. Turn off the flame. Transfer hot soup of vegetables into individual serving bowls and serve.",
                     "step 14 place two yellow four"];
 
-                inputRecipe(data);
                 //console.log(data);
             } else if (trial == "Recipe 2") {
                 data = ["Now, we are going to cook a vegetable soup",
@@ -200,27 +199,27 @@
                     "Next use a spoon or a small ice cream scoop to make the dumplings and add them to the soup. ",
                     "You want to use about 2 tablespoons of dough to make each dumpling. Once you have added all the dumplings to the soup, cover the pot and let the dumplings cook for 15-20 minutes, until they are bread-like and fully cooked."];
 
-            
-          
+
+
             } else if (trial == "Intro") {
                 data = ['Please follow my instructions to cook a vegetable soup',
-                'From now on, I will wait until you look at me to give you the next step. It may take a moment for me to detect your gaze, so please be patient. If I am not sure if you are looking or not I will make a non-speech noise like this:'
-            ];
-
-            
-        }
+                    'From now on, I will wait until you look at me to give you the next step. It may take a moment for me to detect your gaze, so please be patient. If I am not sure if you are looking or not I will make a non-speech noise like this:'
+                ];
 
 
-        else if (trial == "Trial thanks") {
+            }
+
+
+            else if (trial == "Trial thanks") {
                 data = ['Thank you being here today, it was fun to play with you ',
-                
-            ];
+
+                ];
+
+            }
 
         }
 
-    }
-
-         function TextToSpeech(text) {
+        function TextToSpeech(text) {
             logData('Speak msg' + ' ' + text);
             var msg = {
                 type: 'speak',
@@ -243,7 +242,7 @@
             };
             ws.send(JSON.stringify(msg));
         }
-    
+
 
 
         function next() {
@@ -253,7 +252,7 @@
             document.getElementById('speechtext').value = data[i];
             speackmsg(data[i]);
 
-        
+
         }
 
         function back() {
@@ -311,23 +310,23 @@
 
 
             var delayInMilliseconds = 2000;
-            setTimeout(function() {
-             //your code to be executed after 1 second
-            console.log('go green');
-            var msg = {
-                type: 'enclosure.eyes.green',
-                data: '',
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg))
+            setTimeout(function () {
+                //your code to be executed after 1 second
+                console.log('go green');
+                var msg = {
+                    type: 'enclosure.eyes.green',
+                    data: '',
+                    end: '',
+                    context: { destination: '' }
+                };
+                ws.send(JSON.stringify(msg))
             }, delayInMilliseconds);
-            
+
 
         }
 
 
-        function changeEyeColor(color){
+        function changeEyeColor(color) {
             var msg = {
                 type: color,
                 data: '',
@@ -358,8 +357,8 @@
             logData('End trial');
         }
 
-        function logData(logLine){
-        var msg = {
+        function logData(logLine) {
+            var msg = {
                 type: 'enclosure.trial.log',
                 data: logLine,
                 end: '',
@@ -368,37 +367,51 @@
             ws.send(JSON.stringify(msg));
         }
 
-        function createListObject(e){
-            return '<li>' + e.text +  '</li>'
+
+        // Adding a text and button on click
+        var counter = 0;
+        function addTxtBtn() {
+            var textId = "createdmsg" + counter;
+            //var textcounter = String(counter);
+            var txt = document.createElement("INPUT");
+            txt.setAttribute("type", "text");
+            txt.setAttribute("value", " ");
+            txt.setAttribute("id", textId);
+            document.body.appendChild(txt);
+
+            var btn = document.createElement("BUTTON")
+            btn.setAttribute("value", "Speak");
+            btn.innerHTML = "Speak";
+            btn.setAttribute("id", String(counter));
+            btn.name = "speakBtn";
+
+            btn.onclick = function () {
+                TextToSpeech(document.getElementById(textId).value);
+            };
+
+            document.body.appendChild(btn);
+            counter++;
+
         }
-        function inputRecipe(list){
-            var recipeHTML = list.map(createListObject(element));
-           // document.getElementById('recipelist').innerHTML = recipeHTML
+
+
+
+        function readTextFile(file, callback) {
+            var rawFile = new XMLHttpRequest();
+            rawFile.overrideMimeType("application/json");
+            rawFile.open("GET", file, true);
+            rawFile.onreadystatechange = function () {
+                if (rawFile.readyState === 4 && rawFile.status == "200") {
+                    callback(rawFile.responseText);
+                }
+            }
+            rawFile.send(null);
         }
-        
- var counter = 0;
- function myFunction() {
-  var textId = "createdmsg" + counter;
-  //var textcounter = String(counter);
-  var txt = document.createElement("INPUT");
-  txt.setAttribute("type", "text");
-  txt.setAttribute("value", " ");
-  txt.setAttribute("id", textId);
-  document.body.appendChild(txt);
 
-  var btn = document.createElement("BUTTON")
-  btn.setAttribute("value", "Speak");
-  btn.innerHTML = "Speak"; 
-  btn.setAttribute("id", String(counter));
-  btn.name = "speakBtn";
-
-  btn.onclick = function(){
-    TextToSpeech(document.getElementById(textId).value);
-  };
-
-  document.body.appendChild(btn);
-  counter++;
-}
+        readTextFile("/Users/ct/Desktop/example.json", function (text) {
+            var data = JSON.parse(text); //parse JSON
+            console.log(data);
+        });
 
     </script>
 
@@ -407,42 +420,43 @@
 
 <body>
     <h1>Tama control station</h1>
-    <div id= "recipe">
-    <b> Select a recipe </b>
-    <select id="myList" name = "values" onchange="favTrial(this)">
-        <option> ---Choose recipe--- </option>
-        <option value ="0"> Intro</option>
-        <option value ="1"> Recipe 1</option>
-        <option value ="2"> Recipe 2</option>
-        <div id="recipelist">
-        </div>
-    </select>
+    <div id="recipe">
+        <b> Select a recipe </b>
+        <select id="myList" name="values" onchange="favTrial(this)">
+            <option> ---Choose recipe--- </option>
+            <option value="0"> Intro</option>
+            <option value="1"> Recipe 1</option>
+            <option value="2"> Recipe 2</option>
+            <div id="recipelist">
+            </div>
+        </select>
 
-     <br><br>
+        <br><br>
 
-    <b>Steps Control:</b>
-    <button type="button" onClick="restart()">Restart</button>
-    <button type="button" onClick="back()">Back</button>
-    <button onclick="next()">Next</button>
-    <button type="button" onClick="repeat()">Repeat</button>
-    <button type="button" onClick="reset()">Reset</button>
-    <button type="button" onClick="play()">play the current step</button>
-    <input type="text" id="speechtext" value=""></input>
+        <b>Steps Control:</b>
+        <button type="button" onClick="restart()">Restart</button>
+        <button type="button" onClick="back()">Back</button>
+        <button onclick="next()">Next</button>
+        <button type="button" onClick="repeat()">Repeat</button>
+        <button type="button" onClick="reset()">Reset</button>
+        <button type="button" onClick="play()">play the current step</button>
+        <input type="text" id="speechtext" value=""></input>
 
-    <label for="html">Step number:</label>
-    <input type="text" id="inc" value="-1"></input><br><br>
+        <label for="html">Step number:</label>
+        <input type="text" id="inc" value="-1"></input><br><br>
 
-    <b>List of recomendations:</b>
-    <button onclick="myFunction()">Add a recommendation</button>
-
-
-
-</div>
+        <b>List of recommendations:</b><br>
+        <button onclick="addTxtBtn()">Add a recommendations</button>
 
 
-<div id= "short">
+
+    </div>
+
+
+    <div id="short">
         <button type="button" onclick="startTrial()">Start trial</button>
         <button type="button" onclick="endTrial()">End trial</button><br><br>
+        <b>Generic sayings:</b>
         <button type="button" onClick="doNoUnderstand()">I do not understand</button>
         <button type="button" onClick="error()">Error</button><br><br>
         <label for="html">Message:</label>
@@ -452,22 +466,22 @@
 
 
 
-    <div id= "gaze">
+    <div id="gaze">
         <b>Head Control:</b>
-        <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br><
-        <button type="button" onclick="moveRight()">Move Right</button>
-        <button type="button" onclick="moveHome()">Move Home</button>
-        <button type="button" onclick="moveLeft()">Move Left</button>
-        <button type="button" onclick="headOn()">Head on</button>
-        <button type="button" onclick="headOff()">Head off</button><br><br>
-    
-    
-    <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activated</input><br>>
-    <input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>
+        <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br>
+        < <button type="button" onclick="moveRight()">Move Right</button>
+            <button type="button" onclick="moveHome()">Move Home</button>
+            <button type="button" onclick="moveLeft()">Move Left</button>
+            <button type="button" onclick="headOn()">Head on</button>
+            <button type="button" onclick="headOff()">Head off</button><br><br>
 
 
-    <!-- <p>Message Bus:</p> -->
-    <!-- <textarea id="info" name="info" rows="10" cols="50"></textarea> -->
+            <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activated</input><br>>
+            <input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>
+
+
+            <!-- <p>Message Bus:</p> -->
+            <!-- <textarea id="info" name="info" rows="10" cols="50"></textarea> -->
 
 
 
@@ -476,20 +490,20 @@
 
 </html>
 <style>
-    #recipe{
+    #recipe {
         width: 30%;
         background-color: beige;
         display: inline-block;
     }
-    #short{
+
+    #short {
         width: 20%;
         display: inline-block;
     }
-    #gaze{
+
+    #gaze {
         width: 40%;
         background-color: beige;
         display: inline-block;
     }
-
-
 </style>
