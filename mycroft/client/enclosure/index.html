@@ -65,18 +65,6 @@
 
 
 
-        function ChangeHeadPos() {
-
-            var msg = {
-                type: 'enclosure.head.move',
-                data: { 'pos': 30 },
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg));
-
-        }
-
 
         function moveHome() {
             logData('Home');
@@ -188,10 +176,10 @@
             if (trial == "Recipe 1") {
                 
                 data = ["We are going to cook a vegetable soup",
-                    ". Chop all the veggies, <break time=\"3s\"/> (carrot, cabbage, french beans, onion and garlic) into small pieces",
-                    ". Add 2 tablespoons cornstarch (corn flour) in a small bowl.",
-                    ". Add 3 tablespoons water and mix well.",
-                    ". Heat 1/2 tablespoon oil or butter in a large, heavy bottomed stockpot over medium flame. Add chopped onion and garlic. ",
+                    "Chop all the veggies, <break time=\"3s\"/> (carrot, cabbage, french beans, onion and garlic) into small pieces",
+                    "Add 2 tablespoons cornstarch (corn flour) in a small bowl.",
+                    "Add 3 tablespoons water and mix well.",
+                    "Heat 1/2 tablespoon oil or butter in a large, heavy bottomed stockpot over medium flame. Add chopped onion and garlic. ",
                     "Sauté for 1-2 minutes.",
                     "Add carrots, cabbage, sweet corn kernels, french beans and salt (only for veggies).",
                     "Stir and cook for 3-4 minutes.",
@@ -386,7 +374,6 @@
     <h1>Tama control station</h1>
 
     <button type="button" onClick="ChangeColor()">Change eye color</button>
-    <button type="button" onclick="ChangeHeadPos()">Move head</button>
     <button type="button" onClick="SpeakTest()">Speak</button> <br><br><br>
 
     <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br><br>
