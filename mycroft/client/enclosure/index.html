@@ -153,71 +153,6 @@
             ws.send(JSON.stringify(msg));
         }
 
-        //select trial to decide what data
-        var data = ['start', 'end'];
-        function favTrial(input) {
-            // var mylist = document.getElementById("myList");
-            // document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;
-            // var trial = mylist.options[mylist.selectedIndex].text;
-
-            var trial = input.options[input.selectedIndex].text;
-            var value = input.value; // returns the value ie 1 / 2 / 3 etc
-
-            logData(trial);
-            if (trial == "Recipe 1") {
-
-                data = ["We are going to cook a vegetable soup",
-                    "Chop all the veggies, <break time=\"3s\"/> (carrot, cabbage, french beans, onion and garlic) into small pieces",
-                    "Add 2 tablespoons cornstarch (corn flour) in a small bowl.",
-                    "Add 3 tablespoons water and mix well.",
-                    "Heat 1/2 tablespoon oil or butter in a large, heavy bottomed stockpot over medium flame. Add chopped onion and garlic. ",
-                    "Sauté for 1-2 minutes.",
-                    "Add carrots, cabbage, sweet corn kernels, french beans and salt (only for veggies).",
-                    "Stir and cook for 3-4 minutes.",
-                    "Add 2½ cups water or vegetable stock. Stir well and bring the mixture to a boil. When it starts boiling, add salt (add as required as we have already added salt for veggies).",
-                    "Add black pepper powder.",
-                    "Add cornstarch-water mixture and stir continuously for a minute to prevent lump formation.",
-                    "Stir and cook until mixture turns thick and no raw smell of cornstarch. It will take around 7-8 minutes. Add vinegar and mix well.",
-                    "Taste the soup for the seasonings at this stage and add more if required. Turn off the flame. Transfer hot soup of vegetables into individual serving bowls and serve.",
-                    "step 14 place two yellow four"];
-
-                //console.log(data);
-            } else if (trial == "Recipe 2") {
-                data = ["Now, we are going to cook a vegetable soup",
-                    "Heat the olive oil in a large pot over medium heat",
-                    "Add the onions and season with salt and pepper",
-                    "Let simmer for 3 minutes, then add the garlic, carrot, celery, and zucchini",
-                    "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently.",
-                    "You want the vegetables to pick up just a little color.",
-                    "If you want a thicker soup, drain and rinse the cannellini beans and then either puree or mash half of them.",
-                    "Add the cannellini beans, bell pepper, tomatoes, and oregano to the pot and let simmer for 3-4 minutes. ",
-                    "Pour the broth into the pot and bring to a slow boil.",
-                    "While you are waiting for the broth to come to a boil, mix up the dough for your dumplings.",
-                    "In a medium bowl, mix the flour, baking powder, and salt together. Pour the olive oil and warm water into the bowl and mix with a fork. ",
-                    "Then add the Parmesan and dried basil and mix until evenly incorporated in the dough. ",
-                    "Once the broth is slowly bubbling, add the swiss chard.",
-                    "Next use a spoon or a small ice cream scoop to make the dumplings and add them to the soup. ",
-                    "You want to use about 2 tablespoons of dough to make each dumpling. Once you have added all the dumplings to the soup, cover the pot and let the dumplings cook for 15-20 minutes, until they are bread-like and fully cooked."];
-
-
-
-            } else if (trial == "Intro") {
-                data = ['Please follow my instructions to cook a vegetable soup',
-                    'From now on, I will wait until you look at me to give you the next step. It may take a moment for me to detect your gaze, so please be patient. If I am not sure if you are looking or not I will make a non-speech noise like this:'
-                ];
-
-
-            }
-
-
-            else if (trial == "Trial thanks") {
-                data = ['Thank you being here today, it was fun to play with you ',
-
-                ];
-
-            }
-
-        }
 
         function TextToSpeech(text) {
             logData('Speak msg' + ' ' + text);
@@ -406,8 +341,8 @@
             //console.log(items);
             var output = "<ul>";
             for (var key in dataJson) {
-                if (dataJson.hasOwnProperty(key)) {
-                    output += "<li id=" + key.toString() + " >" + dataJson[key].Name + "</li>";
+                if (dataJson.hasOwnProperty(dataJson[key])) {
+                    output += createRecipeItem(item);
                     console.log(output);
                     console.log("----------------");
 
@@ -420,6 +355,11 @@
 
         }
 
+        function createRecipeItem(item){
+            htmlStringItem = "<div id=" + item.n + " >" + item.Name + "<button> press me! </button> </div>";
+            return htmlStringItem
+        }
+
     </script>
 
 
@@ -428,14 +368,7 @@
 <body>
     <h1>Tama control station</h1>
     <div id="recipe">
-        <b> Select a recipe </b>
-        <select id="myList" name="values" onchange="favTrial(this)">
-            <option> ---Choose recipe--- </option>
-            <option value="0"> Intro</option>
-            <option value="1"> Recipe 1</option>
-            <option value="2"> Recipe 2</option>
-
-        </select>
+   
         <div id="recipelist">
         </div>
         <br><br>
