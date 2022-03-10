@@ -417,7 +417,8 @@
       function readTextFile() {
             var request = new XMLHttpRequest();
             request.overrideMimeType("application/json");
-            filePath = String(Path().absolute()) +'/mycroft/client/enclosure/recipe.json'
+            const path = require('path')
+            filePath = String(path.absolute()) +'/mycroft/client/enclosure/recipe.json'
             request.open('GET', filePath);
             request.onreadystatechange = function () {
                 if ((request.readyState === 4) && (request.status === 200)) {
