@@ -373,7 +373,7 @@
 <body>
     <h1>Tama control station</h1>
     <div id= "recipe">
-    <b> Select a recipe using dropdown list </b>
+    <b> Select a recipe </b>
     <select id="myList" name = "values" onchange="favTrial(this)">
         <option> ---Choose recipe--- </option>
         <option value ="0"> Intro</option>
@@ -387,8 +387,6 @@
         <button type="button" onClick="repeat()">Repeat</button>
         <button type="button" onClick="reset()">Reset</button>
         <button type="button" onClick="play()">play the current step</button>
-        <button type="button" onClick="doNoUnderstand()">I do not understand</button>
-        <button type="button" onClick="error()">Error</button><br><br>
     
         <label for="html">Step number:</label>
         <input type="text" id="inc" value="-1"></input><br><br>
@@ -401,10 +399,15 @@
     </select>
 
     </div>
+
     <div id= "short">
         <button type="button" onclick="startTrial()">Start trial</button>
         <button type="button" onclick="endTrial()">End trial</button><br><br>
+        <button type="button" onClick="doNoUnderstand()">I do not understand</button>
+        <button type="button" onClick="error()">Error</button><br><br>
     </div>
+
+
     <div id= "gaze">
         <b>Head Control:</b>
 
@@ -420,11 +423,8 @@
     <!--<input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>-->
 
 
-
-
-
-    <p>Message Bus:</p>
-    <textarea id="info" name="info" rows="10" cols="50"></textarea>
+    <!-- <p>Message Bus:</p>
+    <textarea id="info" name="info" rows="10" cols="50"></textarea> -->
 
 
 
