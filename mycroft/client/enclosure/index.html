@@ -377,6 +377,13 @@
         }
         
 
+        function myFunction() {
+  var x = document.createElement("INPUT");
+  x.setAttribute("type", "text");
+  x.setAttribute("value", "Hello World!");
+  document.body.appendChild(x);
+}
+
     </script>
 
 
@@ -412,6 +419,8 @@
     <b>List of recomendations:</b>
     <input type="text" id="msg1" value=""></input>
     <button type="button" onClick="TextToSpeech(document.getElementById('msg1').value)">run</button><br>
+
+    <button onclick="myFunction()">Try it</button>
 
 
 
