@@ -220,6 +220,19 @@
 
     }
 
+         function TesxtToSpeech() {
+
+            var text =  document.getElementById('textmsg').value
+            logData('Speak msg' + ' ' + text);
+            var msg = {
+                type: 'speak',
+                data: { 'utterance': text },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
         var i = -1;
         var currentstepnum = i;
         function speackmsg(msg) {
@@ -380,24 +393,23 @@
         <option value ="0"> Intro</option>
         <option value ="1"> Recipe 1</option>
         <option value ="2"> Recipe 2</option>
-        
-        <b>Steps Control:</b>
-        <button type="button" onClick="restart()">Restart</button>
-        <button type="button" onClick="back()">Back</button>
-        <button onclick="next()">Next</button>
-        <button type="button" onClick="repeat()">Repeat</button>
-        <button type="button" onClick="reset()">Reset</button>
-        <button type="button" onClick="play()">play the current step</button>
-    
-        <label for="html">Step number:</label>
-        <input type="text" id="inc" value="-1"></input><br><br>
-        <label for="html">Speech Text:</label>
-        <input type="text" id="speechtext" value=""></input><br><br>
-
         <div id="recipelist">
-
         </div>
     </select>
+
+
+    <b>Steps Control:</b>
+    <button type="button" onClick="restart()">Restart</button>
+    <button type="button" onClick="back()">Back</button>
+    <button onclick="next()">Next</button>
+    <button type="button" onClick="repeat()">Repeat</button>
+    <button type="button" onClick="reset()">Reset</button>
+    <button type="button" onClick="play()">play the current step</button>
+    <input type="text" id="speechtext" value=""></input>
+
+    <label for="html">Step number:</label>
+    <input type="text" id="inc" value="-1"></input><br><br>
+
 
     </div>
 
@@ -406,7 +418,11 @@
         <button type="button" onclick="endTrial()">End trial</button><br><br>
         <button type="button" onClick="doNoUnderstand()">I do not understand</button>
         <button type="button" onClick="error()">Error</button><br><br>
+        <label for="html">Message:</label>
+        <input type="text" id="textmsg" value=""></input>
+        <button type="button" onClick="TesxtToSpeech()">Speak</button><br><br>
     </div>
+
 
 
     <div id= "gaze">
