@@ -385,15 +385,17 @@
   x.setAttribute("value", " ");
   x.setAttribute("id", textId);
 
-  var y = document.createElement("BUTTON")
-  y.setAttribute("type", "");
-  y.setAttribute("value", "Speak");
-  y.setAttribute("id", textId)
+  var btn = document.createElement("BUTTON")
+  btn.setAttribute("value", "Speak");
+  btn.setAttribute("id", textId)
+
+  btn.innerHTML = "Speak"; d
+btn.name = "formBtn";
   //y.onclick = TextToSpeech(document.getElementById('textId').value);
 
   textId;
   document.body.appendChild(x);
-  document.body.appendChild(y);
+  document.body.appendChild(btn);
 }
 
     </script>
@@ -430,7 +432,7 @@
 
     <b>List of recomendations:</b>
     <input type="text" id="msg1" value=""></input>
-    <button type="button" onClick="TextToSpeech(document.getElementById('msg1').value)">run</button><br>
+    <button type="button" onClick="TextToSpeech(document.getElementById('msg1').value)">Speak</button><br>
 
     <button onclick="myFunction()">Add a recommendation</button>
 
