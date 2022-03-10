@@ -379,7 +379,7 @@
  var counter = 0;
  function myFunction() {
   var textId = "msg" + counter;
-  var textcounter = String(counter);
+  //var textcounter = String(counter);
   var x = document.createElement("INPUT");
   x.setAttribute("type", "text");
   x.setAttribute("value", "write a recomendation");
@@ -388,9 +388,9 @@
   var btn = document.createElement("BUTTON")
   btn.setAttribute("value", "Speak");
   btn.innerHTML = "Speak"; 
-  btn.setAttribute("id", textcounter);
+  btn.setAttribute("id", String(counter));
   btn.name = "speakBtn";
-  btn.onclick = TextToSpeech(document.getElementById('msg'+this.textcounter).value);
+  btn.onclick = TextToSpeech(document.getElementById('msg'+this.id).value);
 
   document.body.appendChild(x);
   document.body.appendChild(btn);
@@ -468,8 +468,7 @@
 
     <p>Message Bus:</p>
     <textarea id="info" name="info" rows="10" cols="50"></textarea>
-    
-    </div>
+
 
 
 
