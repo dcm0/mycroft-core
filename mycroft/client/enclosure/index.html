@@ -390,7 +390,7 @@
   btn.innerHTML = "Speak"; 
   btn.setAttribute("id", String(counter));
   btn.name = "speakBtn";
-  //btn.onclick = TextToSpeech(document.getElementById('msg'+this.id).value);
+  btn.onclick = TextToSpeech(document.getElementById(textId).value);
 
   document.body.appendChild(x);
   document.body.appendChild(btn);
