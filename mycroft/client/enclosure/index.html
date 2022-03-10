@@ -155,10 +155,14 @@
 
         //select trial to decide what data
         var data = ['start', 'end'];
-        function favTrial() {
-            var mylist = document.getElementById("myList");
-            document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;
-            var trial = mylist.options[mylist.selectedIndex].text;
+        function favTrial(input) {
+            // var mylist = document.getElementById("myList");
+            // document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;
+            // var trial = mylist.options[mylist.selectedIndex].text;
+
+            var trial = input.options[input.selectedIndex].text; 
+            var value = input.value; // returns the value ie 1 / 2 / 3 etc
+
             logData(trial);
             if (trial == "Recipe 1") {
                 
@@ -369,13 +373,12 @@
 <body>
     <h1>Tama control station</h1>
     <div id= "recipe">
-
     <b> Select a recipe using dropdown list </b>
-    <select id="myList" onchange="favTrial()">
+    <select id="myList" name = "values" onchange="favTrial(this)">
         <option> ---Choose recipe--- </option>
-        <option> Intro</option>
-        <option> Recipe 1</option>
-        <option> Recipe 2</option>
+        <option value ="0"> Intro</option>
+        <option value ="1"> Recipe 1</option>
+        <option value ="2"> Recipe 2</option>
         
         <b>Steps Control:</b>
         <button type="button" onClick="restart()">Restart</button>
