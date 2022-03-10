@@ -334,8 +334,8 @@
 
         function createRecipeItem(item){
             console.log("item" + item.toString())
-            //htmlStringItem = "<div id=" + item.n + " >" + item.Name + "<button> press me! </button> </div>";
-            htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
+            htmlStringItem = "<div id=" + item.n + " style='border:1px solid black'>" + item.Name + "<button onclick= \"TextToSpeech(" +item.Text+ ");\"> Speak </button> </div>";
+            //htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
             return htmlStringItem;
         }
 
@@ -347,15 +347,14 @@
             //console.log(items);
             var output = "<ul>";
             for (var key in dataJson) {
+                item = dataJson[key]
+                console.log(item);
                 console.log(key);
-                if (dataJson.hasOwnProperty(dataJson[key])) {
-                    console.log(key);
-                    console.log(dataJson[key]);
-                    output += createRecipeItem(dataJson[key]);
-                    console.log(output);
-                    console.log("----------------");
+                console.log(dataJson[key]);
+                output += createRecipeItem(dataJson[key]);
+                console.log(output);
+                console.log("----------------");
 
-                }
 
             }
 
