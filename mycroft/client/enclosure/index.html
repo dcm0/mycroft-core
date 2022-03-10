@@ -407,7 +407,7 @@
             var output = "<ul>";
             for (var key in dataJson) {
                 if (dataJson.hasOwnProperty(key)) {
-                    output += "<li id=" + key + " >" + dataJson[key].Name + "</li>";
+                    output += "<li id=" + key.toString() + " >" + dataJson[key].Name + "</li>";
                     console.log(output);
                     console.log("----------------");
 
@@ -415,8 +415,8 @@
 
             }
 
-            //output += "</ul>";
-            //document.getElementById("update").innerHTML = output;
+            output += "</ul>";
+            document.getElementById("recipelist").innerHTML = output;
 
         }
 
@@ -434,10 +434,10 @@
             <option value="0"> Intro</option>
             <option value="1"> Recipe 1</option>
             <option value="2"> Recipe 2</option>
-            <div id="recipelist">
-            </div>
-        </select>
 
+        </select>
+        <div id="recipelist">
+        </div>
         <br><br>
 
         <b>Steps Control:</b>
