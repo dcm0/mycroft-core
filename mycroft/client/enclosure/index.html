@@ -395,24 +395,6 @@
         }
 
 
-        // function readTextFile(file, callback) {
-        //     var rawFile = new XMLHttpRequest();
-        //     rawFile.overrideMimeType("application/json");
-        //     rawFile.open("GET", file, true);
-        //     rawFile.onreadystatechange = function () {
-        //         if (rawFile.readyState === 4 && rawFile.status == "200") {
-        //             callback(rawFile.responseText);
-        //         }
-        //     }
-        //     rawFile.send(null);
-        // }
-
-        // readTextFile("recipe.json", function (text) {
-        //     var data = JSON.parse(text); //parse JSON
-        //     console.log(data);
-        // });
-
-
         dataJson = { "1": { "n": "1", "Name": "Now, soup", "Text": "Now, we are going to cook a vegetable soup" }, "2": { "n": "2", "Name": "Olive oil", "Text": "Heat the olive oil in a large pot over medium heat" }, "2.1": { "n": "2.1", "Name": "Interject", "Text": "If you don\'t have olive oil, you can use butter" }, "2.2": { "n": "2.2", "Name": "Abrupt", "Text": "Replacing olive oil with butter, remembert to ..." }, "3": { "n": "3", "Name": "Onions", "Text": "Add the onions and season with salt and pepper" }, "4": { "n": "4", "Name": "Simmer, and add veg", "Text": "Let simmer for 3 minutes, then add the garlic, carrot, celery, and zucchini" }, "5": { "n": "5", "Name": "Season and simmer", "Text": "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently." }, "6": { "n": "6", "Name": "color", "Text": "You want the vegetables to pick up just a little color." }, "7": { "n": "7", "Name": "If thicker", "Text": "If you want a thicker soup, drain and rinse the cannellini beans and then either puree or mash half of them." }, "8": { "n": "8", "Name": "Add cannellini et al", "Text": "Add the cannellini beans, bell pepper, tomatoes, and oregano to the pot and let simmer for 3-4 minutes. " }, "9": { "n": "9", "Name": "Broth", "Text": "Pour the broth into the pot and bring to a slow boil." }, "10": { "n": "10", "Name": "swiss chard", "Text": "Once the broth is slowly bubbling, add the swiss chard." }, "11": { "n": "11", "Name": "Cook for 15", "Text": "Cover the pot and let the soup cook for 15-20 minutes." } };
 
 
@@ -426,12 +408,12 @@
             for (var key in dataJson) {
                 if (dataJson.hasOwnProperty(key)) {
                     output += "<li id=" + key + " >" + dataJson[key].Name + "</li>";
+                    console.log(output);
+                    console.log("----------------");
 
                 }
 
             }
-
-                console.log(output);
 
             //output += "</ul>";
             //document.getElementById("update").innerHTML = output;
@@ -510,9 +492,6 @@
 
             <!-- <p>Message Bus:</p> -->
             <!-- <textarea id="info" name="info" rows="10" cols="50"></textarea> -->
-
-
-
 
 </body>
 
