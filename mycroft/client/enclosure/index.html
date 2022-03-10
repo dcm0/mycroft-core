@@ -220,7 +220,7 @@
 
     }
 
-         function TesxtToSpeech() {
+         function TextToSpeech() {
 
             var text =  document.getElementById('textmsg').value
             logData('Speak msg' + ' ' + text);
@@ -375,7 +375,7 @@
         }
         function inputRecipe(list){
             var recipeHTML = list.map(createListObject(element));
-            document.getElementById('recipelist').innerHTML = recipeHTML
+           // document.getElementById('recipelist').innerHTML = recipeHTML
         }
         
 
@@ -411,6 +411,11 @@
     <label for="html">Step number:</label>
     <input type="text" id="inc" value="-1"></input><br><br>
 
+    <b>List of recomendations:</b>
+    <input type="text" id="msg1" value=""></input>
+    <button type="button" onClick="TextToSpeech(document.getElementById('msg1'))">Speak</button><br>
+
+
 
 </div>
 
@@ -422,7 +427,7 @@
         <button type="button" onClick="error()">Error</button><br><br>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
-        <button type="button" onClick="TesxtToSpeech()">Speak</button><br><br>
+        <button type="button" onClick="TextToSpeech()">Speak</button><br><br>
     </div>
 
 
