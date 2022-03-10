@@ -195,12 +195,14 @@
                     "Next use a spoon or a small ice cream scoop to make the dumplings and add them to the soup. ",
                     "You want to use about 2 tablespoons of dough to make each dumpling. Once you have added all the dumplings to the soup, cover the pot and let the dumplings cook for 15-20 minutes, until they are bread-like and fully cooked."];
 
+                    inputRecipe(data);
+          
             } else if (trial == "Intro") {
                 data = ['Please follow my instructions to cook a vegetable soup',
                 'From now on, I will wait until you look at me to give you the next step. It may take a moment for me to detect your gaze, so please be patient. If I am not sure if you are looking or not I will make a non-speech noise like this:'
             ];
 
-
+            
         }
 
 
@@ -350,7 +352,14 @@
             ws.send(JSON.stringify(msg));
         }
 
-
+        function createListObject(e){
+            return '<li>' + e.text +  '</li>'
+        }
+        function inputRecipe(list){
+            var recipeHTML = list.map(createListObject(element));
+            document.getElementById('recipelist').innerHTML = recipeHTML
+        }
+        
 
     </script>
 
@@ -361,6 +370,33 @@
     <h1>Tama control station</h1>
     <div id= "recipe">
 
+    <b> Select a recipe using dropdown list </b>
+    <select id="myList" onchange="favTrial()">
+        <option> ---Choose recipe--- </option>
+        <option> Intro</option>
+        <option> Recipe 1</option>
+        <option> Recipe 2</option>
+        
+        <b>Steps Control:</b>
+        <button type="button" onClick="restart()">Restart</button>
+        <button type="button" onClick="back()">Back</button>
+        <button onclick="next()">Next</button>
+        <button type="button" onClick="repeat()">Repeat</button>
+        <button type="button" onClick="reset()">Reset</button>
+        <button type="button" onClick="play()">play the current step</button>
+        <button type="button" onClick="doNoUnderstand()">I do not understand</button>
+        <button type="button" onClick="error()">Error</button><br><br>
+    
+        <label for="html">Step number:</label>
+        <input type="text" id="inc" value="-1"></input><br><br>
+        <label for="html">Speech Text:</label>
+        <input type="text" id="speechtext" value=""></input><br><br>
+
+        <div id="recipelist">
+
+        </div>
+    </select>
+
     </div>
     <div id= "short">
         <button type="button" onclick="startTrial()">Start trial</button>
@@ -368,46 +404,20 @@
     </div>
     <div id= "gaze">
         <b>Head Control:</b>
+
         <button type="button" onclick="moveRight()">Move Right</button>
         <button type="button" onclick="moveHome()">Move Home</button>
         <button type="button" onclick="moveLeft()">Move Left</button>
         <button type="button" onclick="headOn()">Head on</button>
         <button type="button" onclick="headOff()">Head off</button><br><br>
+        <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br><br>
     </div>
-    <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br><br>
+    
     <!--<input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activated</input><br>>
     <!--<input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>-->
 
 
 
-
-
-    <b> Select your trial using dropdown list </b>
-    <select id="myList" onchange="favTrial()">
-        <option> ---Choose recipe--- </option>
-        <option> Intro</option>
-        <option> Recipe 1</option>
-        <option> Recipe 2</option>
-        
-    </select>
-    <p> Your selected trial is:
-        <input type="text" id="favourite" size="20" </p><br><br>
-        
-
-    <b>Steps Control:</b>
-    <button type="button" onClick="restart()">Restart</button>
-    <button type="button" onClick="back()">Back</button>
-    <button onclick="next()">Next</button>
-    <button type="button" onClick="repeat()">Repeat</button>
-    <button type="button" onClick="reset()">Reset</button>
-    <button type="button" onClick="play()">play the current step</button>
-    <button type="button" onClick="doNoUnderstand()">I do not understand</button>
-    <button type="button" onClick="error()">Error</button><br><br>
-
-    <label for="html">Step number:</label>
-    <input type="text" id="inc" value="-1"></input><br><br>
-    <label for="html">Speech Text:</label>
-    <input type="text" id="speechtext" value=""></input><br><br>
 
 
     <p>Message Bus:</p>
@@ -422,12 +432,15 @@
     #recipe{
         width: 30%;
         background-color: beige;
+        display: inline-block;
     }
     #short{
         width: 20%;
+        display: inline-block;
     }
     #gaze{
-        width: 30%;
+        width: 49%;
         background-color: beige;
+        display: inline-block;
     }
 </style>
