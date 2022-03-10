@@ -483,24 +483,18 @@
 
 
         function readTextFile() {
-            var request = new XMLHttpRequest();
-            request.overrideMimeType("application/json");
             //filePath = '/mycroft/client/enclosure/recipe.json'
-
-            request.open('GET', dataJson );
             console.log(dataJson);
-            request.onreadystatechange = function () {
-                if ((request.readyState === 4) && (request.status === 200)) {
-                    var items = JSON.parse(request.responseText);
-                    console.log(items);
-                    var output = "<ul>";
-                    for (var key in items) {
-                        output += "<li id=" +items[key].n + " >" + items[key].Name + "</li>";
-                    }
-                    output += "</ul>";
-                    document.getElementById("update").innerHTML = output;
-                }
-            }; 
+
+            var items = JSON.parse(dataJson);
+            console.log(items);
+            var output = "<ul>";
+            for (var key in items) {
+                output += "<li id=" +items[key].n + " >" + items[key].Name + "</li>";
+            }
+            output += "</ul>";
+            document.getElementById("update").innerHTML = output;
+            
         }
 
     </script>
