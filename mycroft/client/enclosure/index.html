@@ -326,78 +326,101 @@
         }
 
 
-        dataJson = {
+        dataJson ={
 	"1": {
 		"n": "1",
 		"Name": "Now, soup",
-		"Text": "Now, we are going to cook a vegetable soup"
+		"Text": "Now, we are going to cook a vegetable soup, ask me if you need help!"
 	},
 	"2": {
 		"n": "2",
-		"Name": "Olive oil",
-		"Text": "Heat the olive oil in a large pot over medium heat",
+		"Name": "butter",
+		"Text": "Heat the butter in a large pot over medium heat",
 		"Alternatives": {
 			"2.1": {
 				"n": "2.1",
 				"Name": "Interject",
-				"Text": "If you don't have olive oil, you can use butter"
+				"Text": "If you don't have butter, you can use olive oil"
 			},
 			"2.2": {
 				"n": "2.2",
 				"Name": "Abrupt",
-				"Text": "Replacing olive oil with butter, remembert to ..."
-			},
+				"Text": "Replacing butter with olive oil, remembert to lower the heat as the frying temperature is higher for oil"
+			}
 		}
 	},
 	"3": {
 		"n": "3",
 		"Name": "Onions",
-		"Text": "Add the onions and season with salt and pepper"
-	},
-	"4": {
-		"n": "4",
-		"Name": "Simmer, and add veg",
-		"Text": "Let simmer for 3 minutes, then add two garlic cloves, one carrot, two celery sticks, and half a zucchini",
+		"Text": "Chop the onions and add them to the pot. Season with salt and pepper",
 		"Alternatives": {
-			"4.1": {
-				"n": "4.1",
-				"Name": "inj",
-				"Text": "If you want a sweater soup, add another carrot."
+			"3.1": {
+				"n": "3.1",
+				"Name": "Interject",
+				"Text": "Just add a bit of salt, remember that the broth is salty"
+			},
+			"3.2": {
+				"n": "3.2",
+				"Name": "Interject",
+				"Text": "Chop the onion to one centimeter large pieces"
 			}
 		}
 	},
+	"4": {
+		"n": "4",
+		"Name": "Simmer",
+		"Text": "Let simmer for 3 minutes"
+	},
 	"5": {
 		"n": "5",
-		"Name": "Season and simmer",
-		"Text": "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently."
+		"Name": "add veg",
+		"Text": "Chop and add two garlic cloves, one carrot, two celery sticks, and half a zucchini",
+		"Alternatives": {
+			"5.1": {
+				"n": "5.1",
+				"Name": "inj",
+				"Text": "If you want a sweater soup, add another carrot."
+			},
+			"5.2": {
+				"n": "5.2",
+				"Name": "inj",
+				"Text": "You want the vegetables to pick up just a little color."
+			}
+		}
 	},
 	"6": {
 		"n": "6",
-		"Name": "color",
-		"Text": "You want the vegetables to pick up just a little color."
+		"Name": "Season and simmer",
+		"Text": "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently."
 	},
 	"7": {
 		"n": "7",
-		"Name": "If thicker",
-		"Text": "If you want a thicker soup, add cream and let it simmer",
+		"Name": "Add cannellini et al",
+		"Text": "Add the bell pepper, tomatoes, and chili to the pot and let simmer for 3-4 minutes. ",
 		"Alternatives": {
 			"7.1": {
 				"n": "7.1",
 				"Name": "inj",
+				"Text": "You want a less spicy soup, remove the seeds from the chili."
+			}
+		}
+	},
+	"8": {
+		"n": "8",
+		"Name": "If thicker",
+		"Text": "For a thicker soup, add cream and let it simmer",
+		"Alternatives": {
+			"8.1": {
+				"n": "8.1",
+				"Name": "inj",
 				"Text": "If you dont have cream, drain and rinse the cannellini beans and then either puree or mash half of them."
 			},
-			"7.2": {
-				"n": "7.2",
+			"8.2": {
+				"n": "8.2",
 				"Name": "Abrupt",
 				"Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
 			}
 		}
-
-	},
-	"8": {
-		"n": "8",
-		"Name": "Add cannellini et al",
-		"Text": "Add the cannellini beans, bell pepper, tomatoes, and oregano to the pot and let simmer for 3-4 minutes. "
 	},
 	"9": {
 		"n": "9",
@@ -412,10 +435,9 @@
 			"9.2": {
 				"n": "9.2",
 				"Name": "Abrupt",
-				"Text": "There are other ways to increase the thickness of a soup, you can add flour and water, or mashed cannellini beans"
+				"Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
 			},
 		}
-		
 	},
 	"10": {
 		"n": "10",
@@ -425,7 +447,12 @@
 	"11": {
 		"n": "11",
 		"Name": "Cook for 15",
-		"Text": "Cover the pot and let the dumplings cook for 15-20 minutes."
+		"Text": "Cover the pot let it cook for 15-20 minutes."
+	},
+	"12": {
+		"n": "12",
+		"Name": "End",
+		"Text": "Thank you for cooking with me"
 	}
 };
 
