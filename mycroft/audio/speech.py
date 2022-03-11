@@ -20,6 +20,7 @@ from mycroft.configuration import Configuration
 from mycroft.metrics import report_timing, Stopwatch
 from mycroft.tts import TTSFactory
 from mycroft.util import check_for_signal
+from mycroft.util import create_signal
 from mycroft.util.log import LOG
 from mycroft.messagebus.message import Message
 from mycroft.tts.remote_tts import RemoteTTSException
@@ -161,7 +162,6 @@ def mimic_fallback_tts(utterance, ident, listen):
     LOG.debug("Mimic fallback, utterance : " + str(utterance))
     tts.execute(utterance, ident, listen)
 
-
 def handle_stop(event):
     """Handle stop message.
 
@@ -172,6 +172,27 @@ def handle_stop(event):
         _last_stop_signal = time.time()
         tts.playback.clear()  # Clear here to get instant stop
         bus.emit(Message("mycroft.stop.handled", {"by": "TTS"}))
+
+def handle_pause(event):
+    """Handle pause message.
+
+    pause any speech.
+    """
+   
+    if check_for_signal("isSpeaking", -1):
+        create_signal("speechStopped", -1)
+        tts.playback.sendSpace() 
+        bus.emit(Message("mycroft.pause.handled", {"by": "TTS"}))
+
+def handle_play(event):
+    """Handle pause message.
+
+    pause any speech.
+    """
+   
+    if check_for_signal("speechStopped", -1):
+        tts.playback.sendSpace() 
+        bus.emit(Message("mycroft.play.handled", {"by": "TTS"}))
 
 
 def init(messagebus):
@@ -192,6 +213,9 @@ def init(messagebus):
     bus.on('mycroft.stop', handle_stop)
     bus.on('mycroft.audio.speech.stop', handle_stop)
     bus.on('speak', handle_speak)
+    bus.on('mycroft.audio.speech.pause', handle_pause)
+    bus.on('mycroft.audio.speech.play', handle_play)
+    
 
     tts = TTSFactory.create()
     tts.init(bus)

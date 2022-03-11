@@ -252,6 +252,8 @@ class AudioService:
         self.bus.on('mycroft.audio.service.list_backends', self._list_backends)
         self.bus.on('mycroft.audio.service.seek_forward', self._seek_forward)
         self.bus.on('mycroft.audio.service.seek_backward', self._seek_backward)
+        #self.bus.on('mycroft.utterance.pause', self._pause_utterance)
+        #self.bus.on('mycroft.utterance.resume', self._resume_utterance)
         self.bus.on('recognizer_loop:audio_output_start', self._lower_volume)
         self.bus.on('recognizer_loop:record_begin', self._lower_volume)
         self.bus.on('recognizer_loop:audio_output_end', self._restore_volume)
