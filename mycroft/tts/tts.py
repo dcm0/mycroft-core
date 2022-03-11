@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+from cmath import log
 from copy import deepcopy
 import os
 import random
@@ -77,6 +78,10 @@ class PlaybackThread(Thread):
 
 
     def sendSpace(self):
+<<<<<<< HEAD
+=======
+        LOG.info("Sending the command to the process")
+>>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
         self.p.stdin.write("s".encode("utf-8"))
         self.p.stdin.flush()
 

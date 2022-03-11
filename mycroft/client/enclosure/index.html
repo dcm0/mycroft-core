@@ -611,11 +611,14 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         function readIngredients(){
             var output2 = "";
 =======
 =======
 >>>>>>> f175d74aca487ba0f72cc38c37a4c6c4eb25670a
+=======
+>>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
         function readIngredients() {
             var output2 = "<ul>";
 >>>>>>> 3a173c85834f19559ebb92ffd7c515657bb9d286
@@ -661,6 +664,7 @@
             var secondsLabel = document.getElementById("seconds");
             var timemsg = " "
             
+<<<<<<< HEAD
             const myArray = text.split(":");
             let minutes = myArray[0];
             let seconds = myArray[0];
@@ -670,6 +674,13 @@
 
             }else{
                 timemsg = minutes + "minutes";
+=======
+            if (minutesLabel == 0){
+                timemsg = "It is been cooking for " + seconds + "seconds";
+
+            }else{
+                timemsg = "it is been cooking for" + minutes + "minutes";
+>>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
             }
 
             speackmsg(timemsg);
@@ -711,6 +722,7 @@
         <br><br>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <button type="button" onClick="stopAudio('stop audio', 'mycroft.audio.speech.pause')" style="background-color:yellow;">Pasue</button>
 
         <button type="button" onClick="stopAudio('pause audio', 'mycroft.audio.speech.play')" style="background-color:green;">Play</button>
@@ -722,6 +734,8 @@
 
 
 =======
+=======
+>>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
        
         <button type="button" onClick="audioAction('pause audio', 'mycroft.audio.speech.pause')"
         style="background-color:yellow;">Pause</button>
@@ -736,6 +750,7 @@
         <br><br>
 
 
+<<<<<<< HEAD
 >>>>>>> 3a173c85834f19559ebb92ffd7c515657bb9d286
 =======
        
@@ -753,12 +768,15 @@
 
 
 >>>>>>> f175d74aca487ba0f72cc38c37a4c6c4eb25670a
+=======
+>>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
         <b>Generic sayings:</b>
         <button type="button"
             onClick="speackmsg('I am Sorry, I do not understand, I can not provide inforamtion about what you have asked!')">I
             do not understand</button>
         <button type="button" onClick="speackmsg('The recipe says ')">The recipe says ...</button>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the pot and people faces</button>
@@ -770,6 +788,10 @@
         <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the
             pot and people faces</button>
 >>>>>>> f175d74aca487ba0f72cc38c37a4c6c4eb25670a
+=======
+        <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the
+            pot and people faces</button>
+>>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
         <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value)">Speak</button><br>
@@ -778,10 +800,14 @@
         <label id="minutes">00</label>:<label id="seconds">00</label><br>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         <!-- <button type="button" onClick="TextToSpeech(document.getElementById('timer').value)">Time passd</button><br> -->
 =======
         <button type="button" onClick="readTime()">Read time</button><br> -->
 >>>>>>> f175d74aca487ba0f72cc38c37a4c6c4eb25670a
+=======
+        <button type="button" onClick="readTime()">Read time</button><br> -->
+>>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
 
     </div>
 
@@ -841,6 +867,7 @@
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 /* CSS */
 button {
@@ -873,3 +900,6 @@ button {
 =======
 </style>
 >>>>>>> f175d74aca487ba0f72cc38c37a4c6c4eb25670a
+=======
+</style>
+>>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
