@@ -78,7 +78,10 @@ class PlaybackThread(Thread):
 
 
     def sendSpace(self):
+<<<<<<< HEAD
+=======
         LOG.info("Sending the command to the process")
+>>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
         self.p.stdin.write("s".encode("utf-8"))
         self.p.stdin.flush()
 
