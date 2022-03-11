@@ -599,7 +599,7 @@
             var output2 = "<ul>";
             for (var key3 in ingredientsJson) {
                 item = ingredientsJson[key3];
-                output2 += createRecipeItem(ingredientsJson, 2);
+                output2 += createRecipeItem(ingredientsJson[key3], 2);
                 console.log(ingredientsJson[key3])
             }
 
