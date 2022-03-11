@@ -298,7 +298,7 @@
             ws.send(JSON.stringify(msg));
         }
 
-       
+
         function audioAction(logLine, action) {
             var msg = {
                 type: action,
@@ -551,13 +551,13 @@
             console.log("item" + item.toString())
             //htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'>" + item.Text + "<button onclick=\"TextToSpeech('"+item.Text+"');\" style='float:right'> Speak </button> </div>";
             if (type == 0) {
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button> </div>";
             }
             else if (type == 1) {
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px;margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px;'><textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px; margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button> </div>";
             }
             else if (type == 2) {
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value)\" style='float:right'>Speak all the text</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "')\" style='float:right'>Name</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value)\" style='float:right'>All</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "')\" style='float:right'>Name</button> </div>";
 
             }
 
@@ -590,7 +590,7 @@
 
             //var items = JSON.parse(dataJson);
             //console.log(items);
-            var output = "<ul>";
+            var output = "";
             for (var key in dataJson) {
                 item = dataJson[key]
                 output += createRecipeItem(dataJson[key],0);
@@ -604,20 +604,20 @@
                 console.log("----------------");
 
             }
-            output += "</ul>";
+            output += "";
             document.getElementById("recipelist").innerHTML = output;
         }
 
 
         function readIngredients(){
-            var output2 = "<ul>";
+            var output2 = "";
             for (var key3 in ingredientsJson) {
                 item = ingredientsJson[key3];
                 output2 += createRecipeItem(ingredientsJson[key3], 2);
                 console.log(ingredientsJson[key3])
             }
 
-            output2 += "</ul>";
+            output2 += "";
             document.getElementById("ingredientslist").innerHTML = output2;
 
         }
@@ -656,19 +656,19 @@
         <button type="button" onclick="endTrial()">End trial</button><br><br> -->
         <br><br>
         <button type="button" onClick="stopAudio('stop audio', 'mycroft.audio.speech.pause')" style="background-color:yellow;">Pasue</button>
-        
+
         <button type="button" onClick="stopAudio('pause audio', 'mycroft.audio.speech.play')" style="background-color:green;">Play</button>
-        
+
         <button type="button" onClick="stopAudio('play audio', 'mycroft.audio.speech.stop')" style="background-color:red;">S T O P</button>
-        
+
         <br><br>
 
-    
-        
+
+
         <b>Generic sayings:</b>
         <button type="button" onClick="speackmsg('I am Sorry, I do not understand, I can not provide inforamtion about what you have asked!')">I do not understand</button>
         <button type="button" onClick="speackmsg('The recipe says ')">The recipe says ...</button>
-        
+
         <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the pot and people faces</button>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
@@ -729,4 +729,29 @@
     .active{
       border: 3px solid green;
     }
+
+/* CSS */
+button {
+  background-color: rgba(51, 51, 51, 0.05);
+  align-items: center;
+  border-radius: 8px;
+  border-width: 0;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
 </style>
