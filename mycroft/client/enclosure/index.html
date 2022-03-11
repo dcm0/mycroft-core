@@ -554,24 +554,41 @@
             return htmlStringItem;
         }
 
+
+        function recipePress(divname){
+          //this function both controlls the 'whats the last thing I pressed'
+          //as well as the texhtospeech
+          var elements = document.getElementsByClassName("active")
+          if(elements.length>0){
+            elements[0].classList.remove("active");
+          }
+
+
+            // for (item in elements){
+            //   item.classList.remove("active");
+            // }
+          console.log(divname)
+          divname.classList.add("active");
+          TextToSpeech(divname.value);
+        }
+
         function readTextFile() {
             //filePath = '/mycroft/client/enclosure/recipe.json'
-            console.log(dataJson);
+
+
+            //var items = JSON.parse(dataJson);
+            //console.log(items);
             var output = "<ul>";
             for (var key in dataJson) {
                 item = dataJson[key]
-                console.log(item);
-                console.log(key);
-                console.log(dataJson[key]);
-                output += createRecipeItem(dataJson[key], 0);
-                if (dataJson[key].Alternatives != null) {
-                    console.log(dataJson[key].Alternatives)
+                output += createRecipeItem(dataJson[key],0);
+                if (dataJson[key].Alternatives != null){
                     alt = dataJson[key].Alternatives
                     for (var key2 in alt) {
-                        console.log(alt[key2])
-                        output += createRecipeItem(alt[key2], 1);
+                        output += createRecipeItem(alt[key2],1);
                     }
                 }
+
                 console.log("----------------");
 
             }
@@ -671,11 +688,22 @@
     #short {
         width: 20%;
         display: inline-block;
+        vertical-align:top;
+        position: fixed;
+        top: 20px;
+        right: 30%;
     }
 
     #gaze {
         width: 30%;
         background-color: beige;
         display: inline-block;
+        vertical-align:top;
+        position: fixed;
+        top: 20px;
+        right: 0px;
+    }
+    .active{
+      border: 3px solid green;
     }
 </style>
