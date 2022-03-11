@@ -43,7 +43,7 @@
         function ChangeColor() {
             var msg = {
                 type: 'enclosure.eyes.yellow',
-                data: '',
+                data: { 'posVertical': 10 },
                 end: '',
                 context: { destination: '' }
             };
@@ -70,7 +70,7 @@
             logData('Left');
             var msg = {
                 type: 'enclosure.head.move',
-                data: { 'pos': 30 },
+                data: { 'pos': 30},
                 end: '',
                 context: { destination: '' }
             };
@@ -538,6 +538,7 @@
             <button type="button" onclick="moveLeft()">Move Left</button>
             <button type="button" onclick="headOn()">Head on</button>
             <button type="button" onclick="headOff()">Head off</button><br><br>
+            <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Change color to yellow</button>
 
 
             <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activated</input><br>>
