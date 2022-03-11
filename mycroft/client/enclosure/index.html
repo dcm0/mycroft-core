@@ -465,7 +465,6 @@
                 "Text": "2 tablespoons Olive Oil"
             },
 
-
             "2": {
                 "n": "2",
                 "Name": "White Onion",
@@ -547,7 +546,7 @@
                 htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px;margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg" + item.n + "').value)\" style='float:right'>Speak</button> </div>";
             }
             else if (type == 2) {
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value)\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById(ingtext" + item.n + ").value)\" style='float:right'>Speak</button> </div>";
 
             }
 
