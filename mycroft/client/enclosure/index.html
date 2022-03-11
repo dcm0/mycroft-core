@@ -624,8 +624,8 @@
         function startTimer() {
 
             if ((document.getElementById("minutes").innerText !=00) | (document.getElementById("seconds").innerText !=00)){
-                document.getElementById("minutes") = 00;
-                document.getElementById("seconds") = 00;
+                document.getElementById("minutes").innerText = 0;
+                document.getElementById("seconds").innerText = 0;
                 console.log('in if time');
 
             }
@@ -732,7 +732,7 @@
         <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value)">Speak</button><br>
 
         <button type="button" onClick="startTimer()">Start a timer</button>
-        <label id="minutes">00</label>:<label id="seconds">00</label><br>
+        <label id="minutes">0</label>:<label id="seconds">0</label><br>
         <button type="button" onClick=" readTime()">Read time</button><br> 
        
 
