@@ -657,25 +657,13 @@
             var minutesLabel = document.getElementById("minutes");
             var secondsLabel = document.getElementById("seconds");
             var timemsg = " "
-<<<<<<< HEAD
 
-            const myArray = text.split(":");
-            let minutes = myArray[0];
-            let seconds = myArray[0];
-
-            if (minutes == 0){
-                timemsg = seconds + "seconds";
-
-            }else{
-                timemsg = minutes + "minutes";
-=======
             
             if (minutesLabel == 0){
                 timemsg = "It is been cooking for " + secondsLabel + " seconds";
 
             }else{
                 timemsg = "it is been cooking for " + minutesLabel + " minutes";
->>>>>>> 365064f7523704e71d854eb0e234ee776dfb4b84
             }
 
             speackmsg(timemsg);
