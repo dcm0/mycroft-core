@@ -540,10 +540,10 @@
             console.log("item" + item.toString())
             //htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'>" + item.Text + "<button onclick=\"TextToSpeech('"+item.Text+"');\" style='float:right'> Speak </button> </div>";
             if (type == 0) {
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg" + item.n + "').value)\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button> </div>";
             }
             else if (type == 1) {
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px;margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg" + item.n + "').value)\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px;margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button> </div>";
             }
             else if (type == 2) {
                 htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById(ingtext" + item.n + ").value)\" style='float:right'>Speak</button> </div>";
@@ -596,7 +596,7 @@
             document.getElementById("recipelist").innerHTML = output;
         }
 
-        function readIgredients(){
+        function readIngredients(){
 
             var output2 = "<ul>";
             for (var key3 in ingredientsJson) {
@@ -637,7 +637,7 @@
     <div id="short">
         <!-- <button type="button" onclick="startTrial()">Start trial</button>
         <button type="button" onclick="endTrial()">End trial</button><br><br> -->
-        <button type="button" onClick="readIgredients()">Add the list of ingredients</button>
+        <button type="button" onClick="readIngredients()">Add the list of ingredients</button>
         <div id="ingredientslist">
         </div>
         <br><br>
