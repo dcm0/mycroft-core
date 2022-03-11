@@ -56,6 +56,7 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.green', self.green)
         self.bus.on('enclosure.eyes.pink', self.pink)
         self.bus.on('enclosure.eyes.blue', self.blue)
+        self.bus.on('enclosure.eyes.none', self.none)
         self.bus.on('enclosure.eyes.setpixel', self.set_pixel)
         self.bus.on('enclosure.eyes.fill', self.fill)
         self.bus.on('enclosure.eyes.shutdown', self.close)
@@ -187,6 +188,10 @@ class EnclosureEyes:
 
     def blue(self, event=None):
         self.writer.write("BLUE")
+
+    def none(self, event=None):
+        self.writer.write("NONE")
+
 
 
     def close(self, event=None):   
