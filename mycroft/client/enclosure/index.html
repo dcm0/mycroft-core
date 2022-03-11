@@ -188,14 +188,12 @@
         }
 
 
-
         function next() {
             logData('Next');
             document.getElementById('inc').value = ++i;
             currentstepnum = i;
             document.getElementById('speechtext').value = data[i];
             speackmsg(data[i]);
-
 
         }
 
@@ -657,10 +655,10 @@
             var timemsg = " "
             
             if (minutesLabel == 0){
-                timemsg = "It is been cooking for " + secondsLabel + "seconds";
+                timemsg = "It is been cooking for " + secondsLabel + " seconds";
 
             }else{
-                timemsg = "it is been cooking for" + minutesLabel + "minutes";
+                timemsg = "it is been cooking for " + minutesLabel + " minutes";
             }
             console.log(timemsg);
             speackmsg(timemsg);
