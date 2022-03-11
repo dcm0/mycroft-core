@@ -624,11 +624,18 @@
 
 
         function startTimer() {
+
+            if ((document.getElementById("minutes").innerText !=0) | (document.getElementById("seconds").innerText !=0)){
+                document.getElementById("minutes") = 00;
+                document.getElementById("seconds") = 00;
+
+            }
+           
             var minutesLabel = document.getElementById("minutes");
             var secondsLabel = document.getElementById("seconds");
             
             var totalSeconds = 0;
-            setInterval(setTime, 1000);
+            var intervalID = setInterval(setTime, 1000);
 
             function setTime() {
                 ++totalSeconds;
