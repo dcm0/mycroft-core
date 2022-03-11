@@ -299,6 +299,17 @@
         }
 
 
+        function audioAction(logLine, action) {
+            var msg = {
+                type: action,
+                data: logLine,
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+
         // Adding a text and button on click
         var counter = 0;
         function addTxtBtn() {
@@ -546,30 +557,31 @@
                 htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px;margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button> </div>";
             }
             else if (type == 2) {
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value)\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value)\" style='float:right'>Speak all the text</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "')\" style='float:right'>Name</button> </div>";
 
             }
+
 
             //htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
             return htmlStringItem;
         }
 
 
-        function recipePress(divname){
-          //this function both controlls the 'whats the last thing I pressed'
-          //as well as the texhtospeech
-          var elements = document.getElementsByClassName("active")
-          if(elements.length>0){
-            elements[0].classList.remove("active");
-          }
+        function recipePress(divname) {
+            //this function both controlls the 'whats the last thing I pressed'
+            //as well as the texhtospeech
+            var elements = document.getElementsByClassName("active")
+            if (elements.length > 0) {
+                elements[0].classList.remove("active");
+            }
 
 
             // for (item in elements){
             //   item.classList.remove("active");
             // }
-          console.log(divname)
-          divname.classList.add("active");
-          TextToSpeech(divname.value);
+            console.log(divname)
+            divname.classList.add("active");
+            TextToSpeech(divname.value);
         }
 
         function readTextFile() {
@@ -581,11 +593,11 @@
             var output = "<ul>";
             for (var key in dataJson) {
                 item = dataJson[key]
-                output += createRecipeItem(dataJson[key],0);
-                if (dataJson[key].Alternatives != null){
+                output += createRecipeItem(dataJson[key], 0);
+                if (dataJson[key].Alternatives != null) {
                     alt = dataJson[key].Alternatives
                     for (var key2 in alt) {
-                        output += createRecipeItem(alt[key2],1);
+                        output += createRecipeItem(alt[key2], 1);
                     }
                 }
 
@@ -595,7 +607,9 @@
             output += "</ul>";
             document.getElementById("recipelist").innerHTML = output;
         }
-        function readIngredients(){
+
+
+        function readIngredients() {
             var output2 = "<ul>";
             for (var key3 in ingredientsJson) {
                 item = ingredientsJson[key3];
@@ -605,6 +619,32 @@
 
             output2 += "</ul>";
             document.getElementById("ingredientslist").innerHTML = output2;
+
+        }
+
+
+        function startTimer() {
+
+            var minutesLabel = document.getElementById("minutes");
+            var secondsLabel = document.getElementById("seconds");
+            
+            var totalSeconds = 0;
+            setInterval(setTime, 1000);
+
+            function setTime() {
+                ++totalSeconds;
+                secondsLabel.innerHTML = pad(totalSeconds % 60);
+                minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+            }
+
+            function pad(val) {
+                var valString = val + "";
+                if (valString.length < 2) {
+                    return "0" + valString;
+                } else {
+                    return valString;
+                }
+            }
 
         }
 
@@ -627,7 +667,11 @@
 
         <!-- <b>List of recommendations:</b><br> -->
         <!-- <button onclick="addTxtBtn()">Add a recommendations</button> -->
+        <br><br>
 
+        <button type="button" onClick="readIngredients()">Add the list of ingredients</button>
+        <div id="ingredientslist">
+        </div>
 
 
     </div>
@@ -636,18 +680,29 @@
     <div id="short">
         <!-- <button type="button" onclick="startTrial()">Start trial</button>
         <button type="button" onclick="endTrial()">End trial</button><br><br> -->
-        <button type="button" onClick="readIngredients()">Add the list of ingredients</button>
-        <div id="ingredientslist">
-        </div>
+        <br><br>
+        <button type="button" onClick="audioAction('play audio', 'mycroft.audio.speech.stop')"
+            style="background-color:red;">S T O P</button>
+
         <br><br>
 
+
         <b>Generic sayings:</b>
-        <button type="button" onClick="speackmsg('I am Sorry, I do not understand, I can not provide inforamtion about what you have asked!')">I do not understand</button>
+        <button type="button"
+            onClick="speackmsg('I am Sorry, I do not understand, I can not provide inforamtion about what you have asked!')">I
+            do not understand</button>
         <button type="button" onClick="speackmsg('The recipe says ')">The recipe says ...</button>
-        <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the pot and people faces</button>
+
+        <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the
+            pot and people faces</button>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
         <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value)">Speak</button><br>
+
+        <button type="button" onClick="startTimer()">Start a timer</button>
+        <label id="minutes">00</label>:<label id="seconds">00</label><br>
+
+        <!-- <button type="button" onClick="TextToSpeech(document.getElementById('timer').value)">Time passd</button><br> -->
 
     </div>
 
@@ -686,7 +741,7 @@
     #short {
         width: 20%;
         display: inline-block;
-        vertical-align:top;
+        vertical-align: top;
         position: fixed;
         top: 20px;
         right: 30%;
@@ -696,12 +751,13 @@
         width: 30%;
         background-color: beige;
         display: inline-block;
-        vertical-align:top;
+        vertical-align: top;
         position: fixed;
         top: 20px;
         right: 0px;
     }
-    .active{
-      border: 3px solid green;
+
+    .active {
+        border: 3px solid green;
     }
 </style>
