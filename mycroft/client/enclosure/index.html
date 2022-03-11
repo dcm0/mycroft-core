@@ -609,10 +609,8 @@
         }
 
 
-
         function readIngredients(){
             var output2 = "";
-
             for (var key3 in ingredientsJson) {
                 item = ingredientsJson[key3];
                 output2 += createRecipeItem(ingredientsJson[key3], 2);
@@ -628,7 +626,7 @@
         function startTimer() {
             var minutesLabel = document.getElementById("minutes");
             var secondsLabel = document.getElementById("seconds");
-            
+
             var totalSeconds = 0;
             setInterval(setTime, 1000);
 
@@ -651,18 +649,21 @@
 
 
         function readTime(){
-            console.log("readTime");
-            var minutesLabel = document.getElementById("minutes").innerText;
-            var secondsLabel = document.getElementById("seconds").innerText;
+            var minutesLabel = document.getElementById("minutes");
+            var secondsLabel = document.getElementById("seconds");
             var timemsg = " "
-            
-            if (minutesLabel == 0){
-                timemsg = "It is been cooking for " + secondsLabel + "seconds";
+
+            const myArray = text.split(":");
+            let minutes = myArray[0];
+            let seconds = myArray[0];
+
+            if (minutes == 0){
+                timemsg = seconds + "seconds";
 
             }else{
-                timemsg = "it is been cooking for" + minutesLabel + "minutes";
+                timemsg = minutes + "minutes";
             }
-            console.log(timemsg);
+
             speackmsg(timemsg);
 
         }
@@ -701,20 +702,16 @@
         <button type="button" onclick="endTrial()">End trial</button><br><br> -->
         <br><br>
 
-
-
-
-       
         <button type="button" onClick="audioAction('pause audio', 'mycroft.audio.speech.pause')"
         style="background-color:yellow;">Pause</button>
-        
+
         <button type="button" onClick="audioAction('play audio', 'mycroft.audio.speech.play')"
         style="background-color:green;">Play</button>
-       
+
         <button type="button" onClick="audioAction('stop audio', 'mycroft.audio.speech.stop')"
             style="background-color:red;">S T O P</button>
 
-          
+
         <br><br>
 
 
@@ -724,18 +721,16 @@
             do not understand</button>
         <button type="button" onClick="speackmsg('The recipe says ')">The recipe says ...</button>
 
-
-        <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the pot and people faces</button>
-
+        <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the
+            pot and people faces</button>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
         <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value)">Speak</button><br>
-        <br><br>
+
         <button type="button" onClick="startTimer()">Start a timer</button>
         <label id="minutes">00</label>:<label id="seconds">00</label><br>
 
-        <button type="button" onClick="readTime()">Read time</button><br> 
-
+        <!-- <button type="button" onClick="TextToSpeech(document.getElementById('timer').value)">Time passd</button><br> -->
 
     </div>
 
@@ -744,7 +739,7 @@
     <div id="gaze">
         <b>Head Control:</b>
         <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br>
-        < <button type="button" onclick="moveRight()">Move Right</button>
+        <button type="button" onclick="moveRight()">Move Right</button>
             <button type="button" onclick="moveHome()">Move Home</button>
             <button type="button" onclick="moveLeft()">Move Left</button>
             <button type="button" onclick="headOn()">Head on</button>
@@ -754,7 +749,7 @@
             <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button>
 
 
-            <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activated</input><br>>
+            <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activated</input><br>
             <input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>
 
 
