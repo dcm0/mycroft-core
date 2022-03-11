@@ -180,7 +180,7 @@ def handle_pause(event):
     """
    
     if check_for_signal("isSpeaking", -1):
-        create_signal("speechStopped", -1)
+        #create_signal("speechStopped", -1)
         tts.playback.sendSpace() 
         bus.emit(Message("mycroft.pause.handled", {"by": "TTS"}))
 
@@ -190,7 +190,7 @@ def handle_play(event):
     pause any speech.
     """
    
-    if check_for_signal("speechStopped", -1):
+    if check_for_signal("isSpeaking", -1):
         tts.playback.sendSpace() 
         bus.emit(Message("mycroft.play.handled", {"by": "TTS"}))
 
