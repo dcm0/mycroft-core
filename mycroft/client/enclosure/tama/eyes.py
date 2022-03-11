@@ -263,7 +263,7 @@ class EnclosureEyes:
         x_sign = 0 
         x_m = event.data['pos']
         y_sign = 0
-        y_m = event.data['posVertical']
+        y_m = event.data['posvertical']
         update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
         self.writer.write(update_pos)
 
