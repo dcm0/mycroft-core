@@ -624,7 +624,6 @@
 
 
         function startTimer() {
-
             var minutesLabel = document.getElementById("minutes");
             var secondsLabel = document.getElementById("seconds");
             
@@ -645,6 +644,27 @@
                     return valString;
                 }
             }
+
+        }
+
+
+        function readTime(){
+            var minutesLabel = document.getElementById("minutes");
+            var secondsLabel = document.getElementById("seconds");
+            var timemsg = " "
+            
+            const myArray = text.split(":");
+            let minutes = myArray[0];
+            let seconds = myArray[0];
+
+            if (minutes == 0){
+                timemsg = seconds + "seconds";
+
+            }else{
+                timemsg = minutes + "minutes";
+            }
+
+            speackmsg(timemsg);
 
         }
 
