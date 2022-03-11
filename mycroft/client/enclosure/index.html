@@ -43,7 +43,7 @@
         function ChangeColor() {
             var msg = {
                 type: 'enclosure.eyes.yellow',
-                data: { 'posVertical': 10 },
+                data: { 'pos': 0, 'posvertical': 10},
                 end: '',
                 context: { destination: '' }
             };
@@ -57,7 +57,7 @@
             logData('Home');
             var msg = {
                 type: 'enclosure.head.move',
-                data: { 'pos': 0 },
+                data: { 'pos': 0, 'posvertical': 0},
                 end: '',
                 context: { destination: '' }
             };
@@ -70,7 +70,7 @@
             logData('Left');
             var msg = {
                 type: 'enclosure.head.move',
-                data: { 'pos': 30},
+                data: { 'pos': 30, 'posvertical': 0},
                 end: '',
                 context: { destination: '' }
             };
@@ -83,7 +83,7 @@
             logData('Right');
             var msg = {
                 type: 'enclosure.head.move',
-                data: { 'pos': -30 },
+                data: { 'pos': -30, 'posvertical': 0 },
                 end: '',
                 context: { destination: '' }
             };
