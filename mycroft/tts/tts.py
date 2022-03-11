@@ -77,7 +77,7 @@ class PlaybackThread(Thread):
 
 
     def sendSpace(self):
-        self.p.stdin.write(" ".encode("utf-8"))
+        self.p.stdin.write("s".encode("utf-8"))
         self.p.stdin.flush()
 
     def run(self):
