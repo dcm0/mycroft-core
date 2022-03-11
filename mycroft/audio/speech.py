@@ -173,26 +173,6 @@ def handle_stop(event):
         tts.playback.clear()  # Clear here to get instant stop
         bus.emit(Message("mycroft.stop.handled", {"by": "TTS"}))
 
-def handle_pause(event):
-    """Handle pause message.
-
-    pause any speech.
-    """
-   
-    if check_for_signal("isSpeaking", -1):
-        #create_signal("speechStopped", -1)
-        tts.playback.sendSpace() 
-        bus.emit(Message("mycroft.pause.handled", {"by": "TTS"}))
-
-def handle_play(event):
-    """Handle pause message.
-
-    pause any speech.
-    """
-   
-    if check_for_signal("isSpeaking", -1):
-        tts.playback.sendSpace() 
-        bus.emit(Message("mycroft.play.handled", {"by": "TTS"}))
 
 
 def init(messagebus):
@@ -213,8 +193,7 @@ def init(messagebus):
     bus.on('mycroft.stop', handle_stop)
     bus.on('mycroft.audio.speech.stop', handle_stop)
     bus.on('speak', handle_speak)
-    bus.on('mycroft.audio.speech.pause', handle_pause)
-    bus.on('mycroft.audio.speech.play', handle_play)
+
     
 
     tts = TTSFactory.create()

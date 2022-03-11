@@ -188,14 +188,12 @@
         }
 
 
-
         function next() {
             logData('Next');
             document.getElementById('inc').value = ++i;
             currentstepnum = i;
             document.getElementById('speechtext').value = data[i];
             speackmsg(data[i]);
-
 
         }
 
@@ -652,6 +650,7 @@
             var minutesLabel = document.getElementById("minutes");
             var secondsLabel = document.getElementById("seconds");
             var timemsg = " "
+<<<<<<< HEAD
 
             const myArray = text.split(":");
             let minutes = myArray[0];
@@ -662,6 +661,14 @@
 
             }else{
                 timemsg = minutes + "minutes";
+=======
+            
+            if (minutesLabel == 0){
+                timemsg = "It is been cooking for " + secondsLabel + " seconds";
+
+            }else{
+                timemsg = "it is been cooking for " + minutesLabel + " minutes";
+>>>>>>> 365064f7523704e71d854eb0e234ee776dfb4b84
             }
 
             speackmsg(timemsg);
@@ -715,7 +722,8 @@
         <br><br>
 
 
-        <b>Generic sayings:</b>
+        <b>Generic sayings:</b> <br>
+
         <button type="button"
             onClick="speackmsg('I am Sorry, I do not understand, I can not provide inforamtion about what you have asked!')">I
             do not understand</button>
