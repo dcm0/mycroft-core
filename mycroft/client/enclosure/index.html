@@ -298,6 +298,17 @@
             ws.send(JSON.stringify(msg));
         }
 
+       
+        function audioAction(logLine, action) {
+            var msg = {
+                type: action,
+                data: logLine,
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
 
         // Adding a text and button on click
         var counter = 0;
@@ -546,9 +557,10 @@
                 htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px;margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button> </div>";
             }
             else if (type == 2) {
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value)\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value)\" style='float:right'>Speak all the text</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "')\" style='float:right'>Name</button> </div>";
 
             }
+
 
             //htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
             return htmlStringItem;
@@ -595,6 +607,8 @@
             output += "</ul>";
             document.getElementById("recipelist").innerHTML = output;
         }
+
+
         function readIngredients(){
             var output2 = "<ul>";
             for (var key3 in ingredientsJson) {
@@ -627,7 +641,11 @@
 
         <!-- <b>List of recommendations:</b><br> -->
         <!-- <button onclick="addTxtBtn()">Add a recommendations</button> -->
+        <br><br>
 
+        <button type="button" onClick="readIngredients()">Add the list of ingredients</button>
+        <div id="ingredientslist">
+        </div>
 
 
     </div>
@@ -636,14 +654,21 @@
     <div id="short">
         <!-- <button type="button" onclick="startTrial()">Start trial</button>
         <button type="button" onclick="endTrial()">End trial</button><br><br> -->
-        <button type="button" onClick="readIngredients()">Add the list of ingredients</button>
-        <div id="ingredientslist">
-        </div>
+        <br><br>
+        <button type="button" onClick="stopAudio('stop audio', 'mycroft.audio.speech.pause')" style="background-color:yellow;">Pasue</button>
+        
+        <button type="button" onClick="stopAudio('pause audio', 'mycroft.audio.speech.play')" style="background-color:green;">Play</button>
+        
+        <button type="button" onClick="stopAudio('play audio', 'mycroft.audio.speech.stop')" style="background-color:red;">S T O P</button>
+        
         <br><br>
 
+    
+        
         <b>Generic sayings:</b>
         <button type="button" onClick="speackmsg('I am Sorry, I do not understand, I can not provide inforamtion about what you have asked!')">I do not understand</button>
         <button type="button" onClick="speackmsg('The recipe says ')">The recipe says ...</button>
+        
         <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the pot and people faces</button>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
