@@ -334,7 +334,9 @@
 
         function createRecipeItem(item){
             console.log("item" + item.toString())
-            htmlStringItem = "<div id=" + item.n + " style='border:1px solid black'>" + item.Name + "<button onclick=\"TextToSpeech('"+item.Text+"');\"> Speak </button> </div>";
+            //htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'>" + item.Text + "<button onclick=\"TextToSpeech('"+item.Text+"');\" style='float:right'> Speak </button> </div>";
+            htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" +item.n+"\" style='height:50px;width:300px''>"+ item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg"+ item.n + "').value)\" style='float:right'>Speak</button> </div>";
+                
             //htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
             return htmlStringItem;
         }
@@ -434,7 +436,7 @@
 </html>
 <style>
     #recipe {
-        width: 30%;
+        width: 40%;
         background-color: beige;
         display: inline-block;
     }
@@ -445,7 +447,7 @@
     }
 
     #gaze {
-        width: 40%;
+        width: 30%;
         background-color: beige;
         display: inline-block;
     }
