@@ -48,7 +48,7 @@
             logData('Home');
             var msg = {
                 type: 'enclosure.head.move',
-                data: { 'pos': 0, 'posvertical': 0},
+                data: { 'pos': 0, 'posvertical': 0 },
                 end: '',
                 context: { destination: '' }
             };
@@ -61,7 +61,7 @@
             logData('Left');
             var msg = {
                 type: 'enclosure.head.move',
-                data: { 'pos': 30, 'posvertical': 0},
+                data: { 'pos': 30, 'posvertical': 0 },
                 end: '',
                 context: { destination: '' }
             };
@@ -130,7 +130,7 @@
 
             var msg = {
                 type: 'enclosure.head.move',
-                data: { 'pos': 0, 'posvertical': 10},
+                data: { 'pos': 0, 'posvertical': 10 },
                 end: '',
                 context: { destination: '' }
             };
@@ -326,147 +326,231 @@
         }
 
 
-        dataJson ={
-	"1": {
-		"n": "1",
-		"Name": "Now, soup",
-		"Text": "Now, we are going to cook a vegetable soup, ask me if you need help!"
-	},
-	"2": {
-		"n": "2",
-		"Name": "butter",
-		"Text": "Heat the butter in a large pot over medium heat",
-		"Alternatives": {
-			"2.1": {
-				"n": "2.1",
-				"Name": "Interject",
-				"Text": "If you don't have butter, you can use olive oil"
-			},
-			"2.2": {
-				"n": "2.2",
-				"Name": "Abrupt",
-				"Text": "Replacing butter with olive oil, remembert to lower the heat as the frying temperature is higher for oil"
-			}
-		}
-	},
-	"3": {
-		"n": "3",
-		"Name": "Onions",
-		"Text": "Chop the onions and add them to the pot. Season with salt and pepper",
-		"Alternatives": {
-			"3.1": {
-				"n": "3.1",
-				"Name": "Interject",
-				"Text": "Just add a bit of salt, remember that the broth is salty"
-			},
-			"3.2": {
-				"n": "3.2",
-				"Name": "Interject",
-				"Text": "Chop the onion to one centimeter large pieces"
-			}
-		}
-	},
-	"4": {
-		"n": "4",
-		"Name": "Simmer",
-		"Text": "Let simmer for 3 minutes"
-	},
-	"5": {
-		"n": "5",
-		"Name": "add veg",
-		"Text": "Chop and add two garlic cloves, one carrot, two celery sticks, and half a zucchini",
-		"Alternatives": {
-			"5.1": {
-				"n": "5.1",
-				"Name": "inj",
-				"Text": "If you want a sweater soup, add another carrot."
-			},
-			"5.2": {
-				"n": "5.2",
-				"Name": "inj",
-				"Text": "You want the vegetables to pick up just a little color."
-			}
-		}
-	},
-	"6": {
-		"n": "6",
-		"Name": "Season and simmer",
-		"Text": "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently."
-	},
-	"7": {
-		"n": "7",
-		"Name": "Add cannellini et al",
-		"Text": "Add the bell pepper, tomatoes, and chili to the pot and let simmer for 3-4 minutes. ",
-		"Alternatives": {
-			"7.1": {
-				"n": "7.1",
-				"Name": "inj",
-				"Text": "You want a less spicy soup, remove the seeds from the chili."
-			}
-		}
-	},
-	"8": {
-		"n": "8",
-		"Name": "If thicker",
-		"Text": "For a thicker soup, add cream and let it simmer",
-		"Alternatives": {
-			"8.1": {
-				"n": "8.1",
-				"Name": "inj",
-				"Text": "If you dont have cream, drain and rinse the cannellini beans and then either puree or mash half of them."
-			},
-			"8.2": {
-				"n": "8.2",
-				"Name": "Abrupt",
-				"Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
-			}
-		}
-	},
-	"9": {
-		"n": "9",
-		"Name": "Broth",
-		"Text": "Pour the broth into the pot and bring to a slow boil.",
-		"Alternatives": {
-			"9.1": {
-				"n": "9.1",
-				"Name": "inj",
-				"Text": "If you dont have prepared broth, you can add add two cups of water and a Bouillon cube."
-			},
-			"9.2": {
-				"n": "9.2",
-				"Name": "Abrupt",
-				"Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
-			},
-		}
-	},
-	"10": {
-		"n": "10",
-		"Name": "swiss chard",
-		"Text": "Once the broth is slowly bubbling, add the swiss chard."
-	},
-	"11": {
-		"n": "11",
-		"Name": "Cook for 15",
-		"Text": "Cover the pot let it cook for 15-20 minutes."
-	},
-	"12": {
-		"n": "12",
-		"Name": "End",
-		"Text": "Thank you for cooking with me"
-	}
-};
+        dataJson = {
+            "1": {
+                "n": "1",
+                "Name": "Now, soup",
+                "Text": "Now, we are going to cook a vegetable soup, ask me if you need help!"
+            },
+            "2": {
+                "n": "2",
+                "Name": "butter",
+                "Text": "Heat the butter in a large pot over medium heat",
+                "Alternatives": {
+                    "2.1": {
+                        "n": "2.1",
+                        "Name": "Interject",
+                        "Text": "If you don't have butter, you can use olive oil"
+                    },
+                    "2.2": {
+                        "n": "2.2",
+                        "Name": "Abrupt",
+                        "Text": "Replacing butter with olive oil, remembert to lower the heat as the frying temperature is higher for oil"
+                    }
+                }
+            },
+            "3": {
+                "n": "3",
+                "Name": "Onions",
+                "Text": "Chop the onions and add them to the pot. Season with salt and pepper",
+                "Alternatives": {
+                    "3.1": {
+                        "n": "3.1",
+                        "Name": "Interject",
+                        "Text": "Just add a bit of salt, remember that the broth is salty"
+                    },
+                    "3.2": {
+                        "n": "3.2",
+                        "Name": "Interject",
+                        "Text": "Chop the onion to one centimeter large pieces"
+                    }
+                }
+            },
+            "4": {
+                "n": "4",
+                "Name": "Simmer",
+                "Text": "Let simmer for 3 minutes"
+            },
+            "5": {
+                "n": "5",
+                "Name": "add veg",
+                "Text": "Chop and add two garlic cloves, one carrot, two celery sticks, and half a zucchini",
+                "Alternatives": {
+                    "5.1": {
+                        "n": "5.1",
+                        "Name": "inj",
+                        "Text": "If you want a sweater soup, add another carrot."
+                    },
+                    "5.2": {
+                        "n": "5.2",
+                        "Name": "inj",
+                        "Text": "You want the vegetables to pick up just a little color."
+                    }
+                }
+            },
+            "6": {
+                "n": "6",
+                "Name": "Season and simmer",
+                "Text": "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently."
+            },
+            "7": {
+                "n": "7",
+                "Name": "Add cannellini et al",
+                "Text": "Add the bell pepper, tomatoes, and chili to the pot and let simmer for 3-4 minutes. ",
+                "Alternatives": {
+                    "7.1": {
+                        "n": "7.1",
+                        "Name": "inj",
+                        "Text": "You want a less spicy soup, remove the seeds from the chili."
+                    }
+                }
+            },
+            "8": {
+                "n": "8",
+                "Name": "If thicker",
+                "Text": "For a thicker soup, add cream and let it simmer",
+                "Alternatives": {
+                    "8.1": {
+                        "n": "8.1",
+                        "Name": "inj",
+                        "Text": "If you dont have cream, drain and rinse the cannellini beans and then either puree or mash half of them."
+                    },
+                    "8.2": {
+                        "n": "8.2",
+                        "Name": "Abrupt",
+                        "Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
+                    }
+                }
+            },
+            "9": {
+                "n": "9",
+                "Name": "Broth",
+                "Text": "Pour the broth into the pot and bring to a slow boil.",
+                "Alternatives": {
+                    "9.1": {
+                        "n": "9.1",
+                        "Name": "inj",
+                        "Text": "If you dont have prepared broth, you can add add two cups of water and a Bouillon cube."
+                    },
+                    "9.2": {
+                        "n": "9.2",
+                        "Name": "Abrupt",
+                        "Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
+                    },
+                }
+            },
+            "10": {
+                "n": "10",
+                "Name": "swiss chard",
+                "Text": "Once the broth is slowly bubbling, add the swiss chard."
+            },
+            "11": {
+                "n": "11",
+                "Name": "Cook for 15",
+                "Text": "Cover the pot let it cook for 15-20 minutes."
+            },
+            "12": {
+                "n": "12",
+                "Name": "End",
+                "Text": "Thank you for cooking with me"
+            }
+        };
 
-        function createRecipeItem(item,type){
+
+
+        ingredientsJson = {
+            "1": {
+                "n": "1",
+                "Name": "Olive oil",
+                "Text": "2 tablespoons Olive Oil"
+            },
+
+
+            "2": {
+                "n": "2",
+                "Name": "White Onion",
+                "Text": "Tow third cup chopped White Onion",
+            },
+
+
+            "3": {
+                "n": "3",
+                "Name": "Salt",
+                "Text": "Half teaspoon Salt",
+            },
+
+            "4": {
+                "n": "4",
+                "Name": "Pepper",
+                "Text": "Half teaspoon Pepper",
+            },
+
+
+            "5": {
+                "n": "5",
+                "Name": "Garlic",
+                "Text": "2 cloves of minced Garlic"
+            },
+
+            "6": {
+                "n": "6",
+                "Name": "Carrot",
+                "Text": "Tow third cup chopped Carrot"
+            },
+            "7": {
+                "n": "7",
+                "Name": "Celery",
+                "Text": "Tow third cup chopped Celery"
+            },
+            "8": {
+                "n": "8",
+                "Name": "Zucchini",
+                "Text": "2 Zucchini, diced",
+            },
+            "9": {
+                "n": "9",
+                "Name": "Cannellini beans",
+                "Text": "1 can of Cannellini Beans",
+            },
+            "10": {
+                "n": "10",
+                "Name": "Bell pepper",
+                "Text": "Tow third cup Chopped Red Bell Pepper"
+            },
+            "11": {
+                "n": "11",
+                "Name": "Tomatoes",
+                "Text": "1 can of Fire Roasted Diced Tomatoes"
+            },
+            "12": {
+                "n": "12",
+                "Name": "Dried oregano",
+                "Text": "Half teaspoon dried Oregano"
+            },
+            "13": {
+                "n": "13",
+                "Name": "Broth",
+                "Text": "6 cups of Vegetable or Chicken Broth"
+            }
+        };
+
+
+
+
+        function createRecipeItem(item, type) {
             console.log("item" + item.toString())
             //htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'>" + item.Text + "<button onclick=\"TextToSpeech('"+item.Text+"');\" style='float:right'> Speak </button> </div>";
-            if (type == 0){
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" +item.n+"\" style='height:50px;width:300px''>"+ item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg"+ item.n + "').value)\" style='float:right'>Speak</button> </div>";
-            
+            if (type == 0) {
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg" + item.n + "').value)\" style='float:right'>Speak</button> </div>";
             }
-            else{
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" +item.n+"\" style='height:50px;width:300px;margin-left:10px;''>"+ item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg"+ item.n + "').value)\" style='float:right'>Speak</button> </div>";
+            else if (type == 1) {
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px;margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg" + item.n + "').value)\" style='float:right'>Speak</button> </div>";
             }
-                
+            else if (type == 2) {
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg" + item.n + "').value)\" style='float:right'>Speak</button> </div>";
+
+            }
+
             //htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
             return htmlStringItem;
         }
@@ -474,35 +558,41 @@
         function readTextFile() {
             //filePath = '/mycroft/client/enclosure/recipe.json'
             console.log(dataJson);
-
-            //var items = JSON.parse(dataJson);
-            //console.log(items);
             var output = "<ul>";
             for (var key in dataJson) {
                 item = dataJson[key]
                 console.log(item);
                 console.log(key);
                 console.log(dataJson[key]);
-                output += createRecipeItem(dataJson[key],0);
-                if (dataJson[key].Alternatives != null){
+                output += createRecipeItem(dataJson[key], 0);
+                if (dataJson[key].Alternatives != null) {
                     console.log(dataJson[key].Alternatives)
                     alt = dataJson[key].Alternatives
                     for (var key2 in alt) {
                         console.log(alt[key2])
-                        output += createRecipeItem(alt[key2],1);
+                        output += createRecipeItem(alt[key2], 1);
                     }
                 }
-                
                 console.log("----------------");
 
+            }
+            output += "</ul>";
+            document.getElementById("recipelist").innerHTML = output;
+        }
 
+        function readIgredients(){
+
+            var output2 = "<ul>";
+            for (var key3 in ingredientsJson) {
+                item = ingredientsJson[key];
+                output2 += createRecipeItem(ingredientsJson, 2);
             }
 
             output += "</ul>";
-            document.getElementById("recipelist").innerHTML = output;
+            document.getElementById("ingredientslist").innerHTML = output;
 
         }
-        
+
 
     </script>
 
@@ -512,28 +602,16 @@
 <body>
     <h1>Tama control station</h1>
     <div id="recipe">
-   
+
         <div id="recipelist">
         </div>
         <br><br>
 
-        <b>Steps Control:</b>
-        <button type="button" onClick="restart()">Restart</button>
-        <button type="button" onClick="back()">Back</button>
-        <button onclick="next()">Next</button>
-        <button type="button" onClick="repeat()">Repeat</button>
-        <button type="button" onClick="reset()">Reset</button>
-        <button type="button" onClick="play()">play the current step</button>
-        <input type="text" id="speechtext" value=""></input>
-
-        <label for="html">Step number:</label>
-        <input type="text" id="inc" value="-1"></input><br><br>
-
-        <button type="button" onClick="readTextFile()">Add a recipe</button>
+        <button type="button" onClick="readTextFile()">Add the recipe steps</button>
 
 
-        <b>List of recommendations:</b><br>
-        <button onclick="addTxtBtn()">Add a recommendations</button>
+        <!-- <b>List of recommendations:</b><br> -->
+        <!-- <button onclick="addTxtBtn()">Add a recommendations</button> -->
 
 
 
@@ -541,18 +619,21 @@
 
 
     <div id="short">
-        <button type="button" onclick="startTrial()">Start trial</button>
-        <button type="button" onclick="endTrial()">End trial</button><br><br>
+        <!-- <button type="button" onclick="startTrial()">Start trial</button>
+        <button type="button" onclick="endTrial()">End trial</button><br><br> -->
+        <button type="button" onClick="readIgredients()">Add the list of ingredients</button>
+        <div id="ingredientslist">
+        </div>
+        <br><br>
+
         <b>Generic sayings:</b>
-        <button type="button" onClick="speackmsg('I am Sorry, I do not understand!')">I do not understand</button>
-        <button type="button" onClick="speackmsg('yes')">Yes</button>
-        <button type="button" onClick="speackmsg('no')">No</button>
-        <button type="button" onClick="speackmsg('May be you can turn down the heat')">Turn down the heat</button>
-        <button type="button" onClick="speackmsg('May be you can increase the heat')">Increase the heat</button>
-        <button type="button" onClick="error()">Error</button><br><br>
+        <button type="button" onClick="speackmsg('I am Sorry, I do not understand, I can not provide inforamtion about what you have asked!')">I do not understand</button>
+        <button type="button" onClick="speackmsg('The recipe says ')">The recipe says ...</button>
+        <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the pot and people faces</button>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
-        <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value)">Speak</button><br><br>
+        <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value)">Speak</button><br>
+
     </div>
 
 
