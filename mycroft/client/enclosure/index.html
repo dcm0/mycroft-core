@@ -546,7 +546,7 @@
                 htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px;margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button> </div>";
             }
             else if (type == 2) {
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById(ingtext" + item.n + ").value)\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value)\" style='float:right'>Speak</button> </div>";
 
             }
 
@@ -595,13 +595,12 @@
             output += "</ul>";
             document.getElementById("recipelist").innerHTML = output;
         }
-
         function readIngredients(){
-
             var output2 = "<ul>";
             for (var key3 in ingredientsJson) {
                 item = ingredientsJson[key3];
                 output2 += createRecipeItem(ingredientsJson, 2);
+                console.log(ingredientsJson[key3])
             }
 
             output2 += "</ul>";
