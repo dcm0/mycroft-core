@@ -7,17 +7,19 @@
 	"2": {
 		"n": "2",
 		"Name": "Olive oil",
-		"Text": "Heat the olive oil in a large pot over medium heat"
-	},
-	"2.1": {
-		"n": "2.1",
-		"Name": "Interject",
-		"Text": "If you don't have olive oil, you can use butter"
-	},
-	"2.2": {
-		"n": "2.2",
-		"Name": "Abrupt",
-		"Text": "Replacing olive oil with butter, remembert to ..."
+		"Text": "Heat the olive oil in a large pot over medium heat",
+		"Alternatives": {
+			"2.1": {
+				"n": "2.1",
+				"Name": "Interject",
+				"Text": "If you don't have olive oil, you can use butter"
+			},
+			"2.2": {
+				"n": "2.2",
+				"Name": "Abrupt",
+				"Text": "Replacing olive oil with butter, remembert to ..."
+			},
+		}
 	},
 	"3": {
 		"n": "3",
