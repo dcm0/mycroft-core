@@ -29,7 +29,14 @@
 	"4": {
 		"n": "4",
 		"Name": "Simmer, and add veg",
-		"Text": "Let simmer for 3 minutes, then add the garlic, carrot, celery, and zucchini"
+		"Text": "Let simmer for 3 minutes, then add two garlic cloves, one carrot, two celery sticks, and half a zucchini",
+		"Alternatives": {
+			"4.1": {
+				"n": "4.1",
+				"Name": "inj",
+				"Text": "If you want a sweater soup, add another carrot."
+			}
+		}
 	},
 	"5": {
 		"n": "5",
@@ -44,7 +51,20 @@
 	"7": {
 		"n": "7",
 		"Name": "If thicker",
-		"Text": "If you want a thicker soup, drain and rinse the cannellini beans and then either puree or mash half of them."
+		"Text": "If you want a thicker soup, add cream and let it simmer",
+		"Alternatives": {
+			"7.1": {
+				"n": "7.1",
+				"Name": "inj",
+				"Text": "If you dont have cream, drain and rinse the cannellini beans and then either puree or mash half of them."
+			},
+			"7.2": {
+				"n": "7.2",
+				"Name": "Abrupt",
+				"Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
+			}
+		}
+
 	},
 	"8": {
 		"n": "8",
@@ -54,7 +74,20 @@
 	"9": {
 		"n": "9",
 		"Name": "Broth",
-		"Text": "Pour the broth into the pot and bring to a slow boil."
+		"Text": "Pour the broth into the pot and bring to a slow boil.",
+		"Alternatives": {
+			"9.1": {
+				"n": "9.1",
+				"Name": "inj",
+				"Text": "If you dont have prepared broth, you can add add two cups of water and a Bouillon cube."
+			},
+			"9.2": {
+				"n": "9.2",
+				"Name": "Abrupt",
+				"Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
+			},
+		}
+		
 	},
 	"10": {
 		"n": "10",

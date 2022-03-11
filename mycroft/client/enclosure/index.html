@@ -279,10 +279,6 @@
             speackmsg(data[j - 1]);
         }
 
-        function doNoUnderstand() {
-            logData('I do not understand');
-            speackmsg('I am Sorry, I do not understand!');
-        }
 
         function startTrial() {
             logData('Start trial');
@@ -330,12 +326,86 @@
         }
 
 
-        dataJson = { "1": { "n": "1", "Name": "Now, soup", "Text": "Now, we are going to cook a vegetable soup" }, "2": { "n": "2", "Name": "Olive oil", "Text": "Heat the olive oil in a large pot over medium heat" }, "2a": { "n": "2a", "Name": "Interject", "Text": "If you don not have olive oil, you can use butter" }, "2b": { "n": "2b", "Name": "Abrupt", "Text": "Replacing olive oil with butter, remember to decrease the heat" }, "3": { "n": "3", "Name": "Onions", "Text": "Add the onions and season with salt and pepper" }, "4": { "n": "4", "Name": "Simmer, and add veg", "Text": "Let simmer for 3 minutes, then add the garlic, carrot, celery, and zucchini" }, "5": { "n": "5", "Name": "Season and simmer", "Text": "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently." }, "6": { "n": "6", "Name": "color", "Text": "You want the vegetables to pick up just a little color." }, "7": { "n": "7", "Name": "If thicker", "Text": "If you want a thicker soup, drain and rinse the cannellini beans and then either puree or mash half of them." }, "8": { "n": "8", "Name": "Add cannellini et al", "Text": "Add the cannellini beans, bell pepper, tomatoes, and oregano to the pot and let simmer for 3-4 minutes. " }, "9": { "n": "9", "Name": "Broth", "Text": "Pour the broth into the pot and bring to a slow boil." }, "10": { "n": "10", "Name": "swiss chard", "Text": "Once the broth is slowly bubbling, add the swiss chard." }, "11": { "n": "11", "Name": "Cook for 15", "Text": "Cover the pot and let the soup cook for 15-20 minutes." } };
+        dataJson = {
+	"1": {
+		"n": "1",
+		"Name": "Now, soup",
+		"Text": "Now, we are going to cook a vegetable soup"
+	},
+	"2": {
+		"n": "2",
+		"Name": "Olive oil",
+		"Text": "Heat the olive oil in a large pot over medium heat",
+		"Alternatives": {
+			"2.1": {
+				"n": "2.1",
+				"Name": "Interject",
+				"Text": "If you don't have olive oil, you can use butter"
+			},
+			"2.2": {
+				"n": "2.2",
+				"Name": "Abrupt",
+				"Text": "Replacing olive oil with butter, remembert to ..."
+			},
+		}
+	},
+	"3": {
+		"n": "3",
+		"Name": "Onions",
+		"Text": "Add the onions and season with salt and pepper"
+	},
+	"4": {
+		"n": "4",
+		"Name": "Simmer, and add veg",
+		"Text": "Let simmer for 3 minutes, then add the garlic, carrot, celery, and zucchini"
+	},
+	"5": {
+		"n": "5",
+		"Name": "Season and simmer",
+		"Text": "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently."
+	},
+	"6": {
+		"n": "6",
+		"Name": "color",
+		"Text": "You want the vegetables to pick up just a little color."
+	},
+	"7": {
+		"n": "7",
+		"Name": "If thicker",
+		"Text": "If you want a thicker soup, drain and rinse the cannellini beans and then either puree or mash half of them."
+	},
+	"8": {
+		"n": "8",
+		"Name": "Add cannellini et al",
+		"Text": "Add the cannellini beans, bell pepper, tomatoes, and oregano to the pot and let simmer for 3-4 minutes. "
+	},
+	"9": {
+		"n": "9",
+		"Name": "Broth",
+		"Text": "Pour the broth into the pot and bring to a slow boil."
+	},
+	"10": {
+		"n": "10",
+		"Name": "swiss chard",
+		"Text": "Once the broth is slowly bubbling, add the swiss chard."
+	},
+	"11": {
+		"n": "11",
+		"Name": "Cook for 15",
+		"Text": "Cover the pot and let the dumplings cook for 15-20 minutes."
+	}
+};
 
-        function createRecipeItem(item){
+        function createRecipeItem(item,type){
             console.log("item" + item.toString())
             //htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'>" + item.Text + "<button onclick=\"TextToSpeech('"+item.Text+"');\" style='float:right'> Speak </button> </div>";
-            htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" +item.n+"\" style='height:50px;width:300px''>"+ item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg"+ item.n + "').value)\" style='float:right'>Speak</button> </div>";
+            if (type == 0){
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" +item.n+"\" style='height:50px;width:300px''>"+ item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg"+ item.n + "').value)\" style='float:right'>Speak</button> </div>";
+            
+            }
+            else{
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" +item.n+"\" style='height:50px;width:300px;margin-left:10px;''>"+ item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg"+ item.n + "').value)\" style='float:right'>Speak</button> </div>";
+            }
                 
             //htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
             return htmlStringItem;
@@ -353,7 +423,16 @@
                 console.log(item);
                 console.log(key);
                 console.log(dataJson[key]);
-                output += createRecipeItem(dataJson[key]);
+                output += createRecipeItem(dataJson[key],0);
+                if (dataJson[key].Alternatives != null){
+                    console.log(dataJson[key].Alternatives)
+                    alt = dataJson[key].Alternatives
+                    for (var key2 in alt) {
+                        console.log(alt[key2])
+                        output += createRecipeItem(alt[key2],1);
+                    }
+                }
+                
                 console.log("----------------");
 
 
@@ -405,9 +484,11 @@
         <button type="button" onclick="startTrial()">Start trial</button>
         <button type="button" onclick="endTrial()">End trial</button><br><br>
         <b>Generic sayings:</b>
-        <button type="button" onClick="doNoUnderstand()">I do not understand</button>
-        <button type="button" onClick="speackmsg('yes')">Ys</button>
+        <button type="button" onClick="speackmsg('I am Sorry, I do not understand!')">I do not understand</button>
+        <button type="button" onClick="speackmsg('yes')">Yes</button>
         <button type="button" onClick="speackmsg('no')">No</button>
+        <button type="button" onClick="speackmsg('May be you can turn down the heat')">Turn down the heat</button>
+        <button type="button" onClick="speackmsg('May be you can increase the heat')">Increase the heat</button>
         <button type="button" onClick="error()">Error</button><br><br>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
