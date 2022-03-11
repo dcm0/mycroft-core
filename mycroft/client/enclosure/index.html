@@ -40,26 +40,6 @@
         };
 
 
-        function ChangeColor() {
-            var msg = {
-                type: 'enclosure.eyes.yellow',
-                data: '',
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg));
-
-
-            var msg = {
-                type: 'enclosure.head.move',
-                data: { 'pos': 0, 'posvertical': -20},
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg));
-
-
-        }
 
 
 
@@ -137,6 +117,24 @@
             };
             ws.send(JSON.stringify(msg));
 
+        }
+
+        function changeEyeColor(color) {
+            var msg = {
+                type: color,
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 0, 'posvertical': -20},
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
         }
 
 
@@ -272,15 +270,6 @@
         }
 
 
-        function changeEyeColor(color) {
-            var msg = {
-                type: color,
-                data: '',
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg));
-        }
 
         function play() {
             logData('Play');
