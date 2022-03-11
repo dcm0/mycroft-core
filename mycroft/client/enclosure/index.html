@@ -460,39 +460,52 @@
             console.log("item" + item.toString())
             //htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'>" + item.Text + "<button onclick=\"TextToSpeech('"+item.Text+"');\" style='float:right'> Speak </button> </div>";
             if (type == 0){
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" +item.n+"\" style='height:50px;width:300px''>"+ item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg"+ item.n + "').value)\" style='float:right'>Speak</button> </div>";
-            
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" +item.n+"\" style='height:50px;width:300px''>"+ item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg"+ item.n + "'))\" style='float:right'>Speak</button> </div>";
+
             }
             else{
-                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" +item.n+"\" style='height:50px;width:300px;margin-left:10px;''>"+ item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('textmsg"+ item.n + "').value)\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:1px solid black; margin-top:5px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" +item.n+"\" style='height:50px;width:300px;margin-left:10px;''>"+ item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg"+ item.n + "'))\" style='float:right'>Speak</button> </div>";
             }
-                
+
             //htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
             return htmlStringItem;
         }
 
+
+        function recipePress(divname){
+          //this function both controlls the 'whats the last thing I pressed'
+          //as well as the texhtospeech
+          var elements = document.getElementsByClassName("active")
+          if(elements.length>0){
+            elements[0].classList.remove("active");
+          }
+
+
+            // for (item in elements){
+            //   item.classList.remove("active");
+            // }
+          console.log(divname)
+          divname.classList.add("active");
+          TextToSpeech(divname.value);
+        }
+
         function readTextFile() {
             //filePath = '/mycroft/client/enclosure/recipe.json'
-            console.log(dataJson);
+
 
             //var items = JSON.parse(dataJson);
             //console.log(items);
             var output = "<ul>";
             for (var key in dataJson) {
                 item = dataJson[key]
-                console.log(item);
-                console.log(key);
-                console.log(dataJson[key]);
                 output += createRecipeItem(dataJson[key],0);
                 if (dataJson[key].Alternatives != null){
-                    console.log(dataJson[key].Alternatives)
                     alt = dataJson[key].Alternatives
                     for (var key2 in alt) {
-                        console.log(alt[key2])
                         output += createRecipeItem(alt[key2],1);
                     }
                 }
-                
+
                 console.log("----------------");
 
 
@@ -502,7 +515,7 @@
             document.getElementById("recipelist").innerHTML = output;
 
         }
-        
+
 
     </script>
 
@@ -512,7 +525,7 @@
 <body>
     <h1>Tama control station</h1>
     <div id="recipe">
-   
+
         <div id="recipelist">
         </div>
         <br><br>
@@ -590,11 +603,22 @@
     #short {
         width: 20%;
         display: inline-block;
+        vertical-align:top;
+        position: fixed;
+        top: 20px;
+        right: 30%;
     }
 
     #gaze {
         width: 30%;
         background-color: beige;
         display: inline-block;
+        vertical-align:top;
+        position: fixed;
+        top: 20px;
+        right: 0px;
+    }
+    .active{
+      border: 3px solid green;
     }
 </style>
