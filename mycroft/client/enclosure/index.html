@@ -609,19 +609,10 @@
         }
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         function readIngredients(){
             var output2 = "";
-=======
-=======
->>>>>>> f175d74aca487ba0f72cc38c37a4c6c4eb25670a
-=======
->>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
-        function readIngredients() {
-            var output2 = "<ul>";
->>>>>>> 3a173c85834f19559ebb92ffd7c515657bb9d286
+
             for (var key3 in ingredientsJson) {
                 item = ingredientsJson[key3];
                 output2 += createRecipeItem(ingredientsJson[key3], 2);
@@ -664,23 +655,11 @@
             var secondsLabel = document.getElementById("seconds").value;
             var timemsg = " "
             
-<<<<<<< HEAD
-            const myArray = text.split(":");
-            let minutes = myArray[0];
-            let seconds = myArray[0];
-
-            if (minutes == 0){
-                timemsg = seconds + "seconds";
-
-            }else{
-                timemsg = minutes + "minutes";
-=======
             if (minutesLabel == 0){
                 timemsg = "It is been cooking for " + seconds + "seconds";
 
             }else{
                 timemsg = "it is been cooking for" + minutes + "minutes";
->>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
             }
 
             speackmsg(timemsg);
@@ -720,22 +699,10 @@
         <!-- <button type="button" onclick="startTrial()">Start trial</button>
         <button type="button" onclick="endTrial()">End trial</button><br><br> -->
         <br><br>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <button type="button" onClick="stopAudio('stop audio', 'mycroft.audio.speech.pause')" style="background-color:yellow;">Pasue</button>
-
-        <button type="button" onClick="stopAudio('pause audio', 'mycroft.audio.speech.play')" style="background-color:green;">Play</button>
-
-        <button type="button" onClick="stopAudio('play audio', 'mycroft.audio.speech.stop')" style="background-color:red;">S T O P</button>
-
-        <br><br>
 
 
 
-=======
-=======
->>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
+
        
         <button type="button" onClick="audioAction('pause audio', 'mycroft.audio.speech.pause')"
         style="background-color:yellow;">Pause</button>
@@ -750,48 +717,15 @@
         <br><br>
 
 
-<<<<<<< HEAD
->>>>>>> 3a173c85834f19559ebb92ffd7c515657bb9d286
-=======
-       
-        <button type="button" onClick="audioAction('pause audio', 'mycroft.audio.speech.pause')"
-        style="background-color:yellow;">Pause</button>
-        
-        <button type="button" onClick="audioAction('play audio', 'mycroft.audio.speech.play')"
-        style="background-color:green;">Play</button>
-       
-        <button type="button" onClick="audioAction('stop audio', 'mycroft.audio.speech.stop')"
-            style="background-color:red;">S T O P</button>
-
-          
-        <br><br>
-
-
->>>>>>> f175d74aca487ba0f72cc38c37a4c6c4eb25670a
-=======
->>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
         <b>Generic sayings:</b>
         <button type="button"
             onClick="speackmsg('I am Sorry, I do not understand, I can not provide inforamtion about what you have asked!')">I
             do not understand</button>
         <button type="button" onClick="speackmsg('The recipe says ')">The recipe says ...</button>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the pot and people faces</button>
-=======
-        <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the
-            pot and people faces</button>
->>>>>>> 3a173c85834f19559ebb92ffd7c515657bb9d286
-=======
-        <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the
-            pot and people faces</button>
->>>>>>> f175d74aca487ba0f72cc38c37a4c6c4eb25670a
-=======
-        <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the
-            pot and people faces</button>
->>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
+
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
         <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value)">Speak</button><br>
@@ -799,15 +733,8 @@
         <button type="button" onClick="startTimer()">Start a timer</button>
         <label id="minutes">00</label>:<label id="seconds">00</label><br>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <!-- <button type="button" onClick="TextToSpeech(document.getElementById('timer').value)">Time passd</button><br> -->
-=======
         <button type="button" onClick="readTime()">Read time</button><br> -->
->>>>>>> f175d74aca487ba0f72cc38c37a4c6c4eb25670a
-=======
-        <button type="button" onClick="readTime()">Read time</button><br> -->
->>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
+
 
     </div>
 
@@ -865,9 +792,6 @@
     .active {
         border: 3px solid green;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 /* CSS */
 button {
@@ -894,12 +818,3 @@ button {
   touch-action: manipulation;
 }
 </style>
-=======
-</style>
->>>>>>> 3a173c85834f19559ebb92ffd7c515657bb9d286
-=======
-</style>
->>>>>>> f175d74aca487ba0f72cc38c37a4c6c4eb25670a
-=======
-</style>
->>>>>>> 8fe6a8ba4bedb4db10a9c5f14959e69581110124
