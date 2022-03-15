@@ -11,8 +11,8 @@
         // window.location.hostname
         // Let us open a web socket
 
-          //"ws://130.237.158.153:8181/core"  -- SU
-         //"ws://130.237.40.92:8181/core" --- KTH
+        //"ws://130.237.158.153:8181/core"  -- SU
+        //"ws://130.237.40.92:8181/core" --- KTH
         var ws = new WebSocket("ws://130.237.158.153:8181/core");
         ws.onmessage = function (evt) {
             var received_msg = JSON.parse(evt.data); // the whole json
@@ -609,7 +609,7 @@
         }
 
 
-        function readIngredients(){
+        function readIngredients() {
             var output2 = "";
             for (var key3 in ingredientsJson) {
                 item = ingredientsJson[key3];
@@ -623,19 +623,30 @@
         }
 
 
-        function startTimer() {
+        var myInterval;
 
-            if ((document.getElementById("minutes").innerText != 00) | (document.getElementById("seconds").innerText !=00)){
-                document.getElementById("minutes").innerText = 0;
-                document.getElementById("seconds").innerText = 0;
-              
+        function stopTimer() {
+            clearInterval(myInterval);
+        }
+
+        function startTimer() {
+            var btn = document.getElementById("timer");
+
+            if (btn.innerText === "Start timer") {
+                btn.innerText = "Restart timer";
+            } 
+            if ((parseInt(document.getElementById("minutes").innerText) != 0) | (parseInt(document.getElementById("seconds").innerText) != 0)) {
+                document.getElementById("minutes").innerText = 00;
+                document.getElementById("seconds").innerText = 00;
+                stopTimer();
             }
-           
+
             var minutesLabel = document.getElementById("minutes");
             var secondsLabel = document.getElementById("seconds");
 
             var totalSeconds = 0;
-            var intervalID = setInterval(setTime, 1000);
+            myInterval = setInterval(setTime, 1000);
+
 
             function setTime() {
                 ++totalSeconds;
@@ -657,17 +668,16 @@
         //function to stop the interasl ID 
 
 
-        function readTime(){
-            var minutesLabel = document.getElementById("minutes").innerHTML;
-            var secondsLabel = document.getElementById("seconds").innerHTML;
+        function readTime() {
+            var minutesLabel = parseInt(document.getElementById("minutes").innerHTML);
+            var secondsLabel = parseInt(document.getElementById("seconds").innerHTML);
             var timemsg = " "
 
-            
-            if (minutesLabel == 0){
+            if (minutesLabel == 0) {
                 timemsg = "It is been cooking for " + secondsLabel + " seconds";
 
-            }else{
-                timemsg = "it is been cooking for " + minutesLabel + " minutes";
+            } else {
+                timemsg = "it is been cooking for " + minutesLabel + " minutes and " + secondsLabel + " seconds";
             }
 
             speackmsg(timemsg);
@@ -709,10 +719,10 @@
         <br><br>
 
         <button type="button" onClick="audioAction('pause audio', 'mycroft.audio.speech.pause')"
-        style="background-color:yellow;">Pause</button>
+            style="background-color:yellow;">Pause</button>
 
         <button type="button" onClick="audioAction('play audio', 'mycroft.audio.speech.play')"
-        style="background-color:green;">Play</button>
+            style="background-color:green;">Play</button>
 
         <button type="button" onClick="audioAction('stop audio', 'mycroft.audio.speech.stop')"
             style="background-color:red;">S T O P</button>
@@ -734,12 +744,11 @@
         <input type="text" id="textmsg" value=""></input>
         <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value)">Speak</button><br>
 
-        <button type="button" onClick="startTimer()">Start a timer</button>
-        <label id="minutes">0</label>:<label id="seconds">0</label><br>
-        <button type="button" onClick=" readTime()">Read time</button><br> 
-       
+        <label id="minutes">00</label>:<label id="seconds">00</label><br>
+        <button type="button" id=timer onClick="startTimer()">Start timer</button>
+        <button type="button" onClick="readTime()">Read time</button><br>
 
-      
+
 
     </div>
 
@@ -749,21 +758,21 @@
         <b>Head Control:</b>
         <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br>
         <button type="button" onclick="moveRight()">Move Right</button>
-            <button type="button" onclick="moveHome()">Move Home</button>
-            <button type="button" onclick="moveLeft()">Move Left</button>
-            <button type="button" onclick="headOn()">Head on</button>
-            <button type="button" onclick="headOff()">Head off</button><br><br>
-            <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Change color to yellow</button>
-            <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Change color to green</button>
-            <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button>
+        <button type="button" onclick="moveHome()">Move Home</button>
+        <button type="button" onclick="moveLeft()">Move Left</button>
+        <button type="button" onclick="headOn()">Head on</button>
+        <button type="button" onclick="headOff()">Head off</button><br><br>
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Change color to yellow</button>
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Change color to green</button>
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button>
 
 
-            <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activated</input><br>
-            <input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>
+        <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activated</input><br>
+        <input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>
 
 
-            <!-- <p>Message Bus:</p> -->
-            <!-- <textarea id="info" name="info" rows="10" cols="50"></textarea> -->
+        <!-- <p>Message Bus:</p> -->
+        <!-- <textarea id="info" name="info" rows="10" cols="50"></textarea> -->
 
 </body>
 
@@ -798,28 +807,28 @@
         border: 3px solid green;
     }
 
-/* CSS */
-button {
-  background-color: rgba(51, 51, 51, 0.05);
-  align-items: center;
-  border-radius: 8px;
-  border-width: 0;
-  color: #333333;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 10px 12px;
-  text-align: center;
-  transition: all 200ms;
-  vertical-align: baseline;
-  white-space: nowrap;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
+    /* CSS */
+    button {
+        background-color: rgba(51, 51, 51, 0.05);
+        align-items: center;
+        border-radius: 8px;
+        border-width: 0;
+        color: #333333;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        list-style: none;
+        margin: 0;
+        padding: 10px 12px;
+        text-align: center;
+        transition: all 200ms;
+        vertical-align: baseline;
+        white-space: nowrap;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
 </style>
