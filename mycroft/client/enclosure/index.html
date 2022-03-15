@@ -11,7 +11,9 @@
         // window.location.hostname
         // Let us open a web socket
 
-        var ws = new WebSocket("ws://130.237.40.92:8181/core");
+          //"ws://130.237.158.153:8181/core"  -- SU
+         //"ws://130.237.40.92:8181/core" --- KTH
+        var ws = new WebSocket("ws://130.237.158.153:8181/core");
         ws.onmessage = function (evt) {
             var received_msg = JSON.parse(evt.data); // the whole json
             // document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
@@ -623,11 +625,10 @@
 
         function startTimer() {
 
-            if ((document.getElementById("minutes").innerText !=00) | (document.getElementById("seconds").innerText !=00)){
+            if ((document.getElementById("minutes").innerText != 00) | (document.getElementById("seconds").innerText !=00)){
                 document.getElementById("minutes").innerText = 0;
                 document.getElementById("seconds").innerText = 0;
-                console.log('in if time');
-
+              
             }
            
             var minutesLabel = document.getElementById("minutes");
@@ -652,6 +653,8 @@
             }
 
         }
+
+        //function to stop the interasl ID 
 
 
         function readTime(){
