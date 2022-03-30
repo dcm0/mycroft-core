@@ -450,7 +450,7 @@ class EnclosureWriter(Thread):
                     mylist = line.split(":")
                     eye=(str)(mylist[1]) #EYE L/R
                     delta=(int)(mylist[2]) #Change in brighness
-                    if eye=='L':
+                    if eye=='L':                    
                        LOG.info("L has been selected")
                        self.eye_alphas[0]=delta/100
                     else:

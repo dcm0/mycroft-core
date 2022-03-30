@@ -1,129 +1,140 @@
-{
-	"1": {
-		"n": "1",
-		"Name": "Now, soup",
-		"Text": "Now, we are going to cook a vegetable soup, ask me if you need help!"
-	},
-	"2": {
-		"n": "2",
-		"Name": "butter",
-		"Text": "Heat the butter in a large pot over medium heat",
-		"Alternatives": {
-			"2.1": {
-				"n": "2.1",
-				"Name": "Interject",
-				"Text": "If you don't have butter, you can use olive oil"
-			},
-			"2.2": {
-				"n": "2.2",
-				"Name": "Abrupt",
-				"Text": "Replacing butter with olive oil, remembert to lower the heat as the frying temperature is higher for oil"
+	{
+		"1": {
+			"n": "1",
+			"Name": "Now, soup",
+			"Text": "Now, we are going to cook a vegetable soup, ask me if you need help!",
+			"Time": 0
+		},
+		"2": {
+			"n": "2",
+			"Name": "butter",
+			"Text": "Heat the butter in a large pot over medium heat",
+			"Time": 0,
+			"Alternatives": {
+				"2.1": {
+					"n": "2.1",
+					"Name": "Interject",
+					"Text": "If you don't have butter, you can use olive oil"
+				},
+				"2.2": {
+					"n": "2.2",
+					"Name": "Abrupt",
+					"Text": "Replacing butter with olive oil, remembert to lower the heat as the frying temperature is higher for oil"
+				}
 			}
-		}
-	},
-	"3": {
-		"n": "3",
-		"Name": "Onions",
-		"Text": "Chop the onions and add them to the pot. Season with salt and pepper",
-		"Alternatives": {
-			"3.1": {
-				"n": "3.1",
-				"Name": "Interject",
-				"Text": "Just add a bit of salt, remember that the broth is salty"
-			},
-			"3.2": {
-				"n": "3.2",
-				"Name": "Interject",
-				"Text": "Chop the onion to one centimeter large pieces"
+		},
+		"3": {
+			"n": "3",
+			"Name": "Onions",
+			"Text": "Chop the onions and add them to the pot. Season with salt and pepper",
+			"Time": 0,
+			"Alternatives": {
+				"3.1": {
+					"n": "3.1",
+					"Name": "Interject",
+					"Text": "Just add a bit of salt, remember that the broth is salty"
+				},
+				"3.2": {
+					"n": "3.2",
+					"Name": "Interject",
+					"Text": "Chop the onion to one centimeter large pieces"
+				}
 			}
-		}
-	},
-	"4": {
-		"n": "4",
-		"Name": "Simmer",
-		"Text": "Let simmer for 3 minutes"
-	},
-	"5": {
-		"n": "5",
-		"Name": "add veg",
-		"Text": "Chop and add two garlic cloves, one carrot, two celery sticks, and half a zucchini",
-		"Alternatives": {
-			"5.1": {
-				"n": "5.1",
-				"Name": "inj",
-				"Text": "If you want a sweater soup, add another carrot."
-			},
-			"5.2": {
-				"n": "5.2",
-				"Name": "inj",
-				"Text": "You want the vegetables to pick up just a little color."
+		},
+		"4": {
+			"n": "4",
+			"Name": "Simmer",
+			"Text": "Let simmer for 3 minutes",
+			"Time": 3
+		},
+		"5": {
+			"n": "5",
+			"Name": "add veg",
+			"Text": "Chop and add two garlic cloves, one carrot, two celery sticks, and half a zucchini",
+			"Alternatives": {
+				"5.1": {
+					"n": "5.1",
+					"Name": "inj",
+					"Text": "If you want a sweater soup, add another carrot."
+				},
+				"5.2": {
+					"n": "5.2",
+					"Name": "inj",
+					"Text": "You want the vegetables to pick up just a little color."
+				}
 			}
-		}
-	},
-	"6": {
-		"n": "6",
-		"Name": "Season and simmer",
-		"Text": "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently."
-	},
-	"7": {
-		"n": "7",
-		"Name": "Add cannellini et al",
-		"Text": "Add the bell pepper, tomatoes, and chili to the pot and let simmer for 3-4 minutes. ",
-		"Alternatives": {
-			"7.1": {
-				"n": "7.1",
-				"Name": "inj",
-				"Text": "You want a less spicy soup, remove the seeds from the chili."
+		},
+		"6": {
+			"n": "6",
+			"Name": "Season and simmer",
+			"Text": "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently.",
+			"Time": 6
+		},
+		"7": {
+			"n": "7",
+			"Name": "Add cannellini et al",
+			"Text": "Add the bell pepper, tomatoes, and chili to the pot and let simmer for 3-4 minutes. ",
+			"Time": 4,
+			"Alternatives": {
+				"7.1": {
+					"n": "7.1",
+					"Name": "inj",
+					"Text": "You want a less spicy soup, remove the seeds from the chili."
+				}
 			}
-		}
-	},
-	"8": {
-		"n": "8",
-		"Name": "If thicker",
-		"Text": "For a thicker soup, add cream and let it simmer",
-		"Alternatives": {
-			"8.1": {
-				"n": "8.1",
-				"Name": "inj",
-				"Text": "If you dont have cream, drain and rinse the cannellini beans and then either puree or mash half of them."
-			},
-			"8.2": {
-				"n": "8.2",
-				"Name": "Abrupt",
-				"Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
+		},
+		"8": {
+			"n": "8",
+			"Name": "If thicker",
+			"Text": "For a thicker soup, add cream and let it simmer",
+			"Time": 0,
+			"Alternatives": {
+				"8.1": {
+					"n": "8.1",
+					"Name": "inj",
+					"Text": "If you dont have cream, drain and rinse the cannellini beans and then either puree or mash half of them."
+				},
+				"8.2": {
+					"n": "8.2",
+					"Name": "Abrupt",
+					"Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
+				}
 			}
+		},
+		"9": {
+			"n": "9",
+			"Name": "Broth",
+			"Text": "Pour the broth into the pot and bring to a slow boil.",
+			"Time": 0,
+			"Alternatives": {
+				"9.1": {
+					"n": "9.1",
+					"Name": "inj",
+					"Text": "If you dont have prepared broth, you can add add two cups of water and a Bouillon cube."
+				},
+				"9.2": {
+					"n": "9.2",
+					"Name": "Abrupt",
+					"Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
+				},
+			}
+		},
+		"10": {
+			"n": "10",
+			"Name": "swiss chard",
+			"Text": "Once the broth is slowly bubbling, add the swiss chard.",
+			"Time": 0
+		},
+		"11": {
+			"n": "11",
+			"Name": "Cook for 15",
+			"Text": "Cover the pot let it cook for 15-20 minutes.",
+			"Time": 20
+		},
+		"12": {
+			"n": "12",
+			"Name": "End",
+			"Text": "Thank you for cooking with me",
+			"Time": 0
 		}
-	},
-	"9": {
-		"n": "9",
-		"Name": "Broth",
-		"Text": "Pour the broth into the pot and bring to a slow boil.",
-		"Alternatives": {
-			"9.1": {
-				"n": "9.1",
-				"Name": "inj",
-				"Text": "If you dont have prepared broth, you can add add two cups of water and a Bouillon cube."
-			},
-			"9.2": {
-				"n": "9.2",
-				"Name": "Abrupt",
-				"Text": "There are other ways to increase the thickness of a soup, you can can add flour and water, or mashed cannellini beans"
-			},
-		}
-	},
-	"10": {
-		"n": "10",
-		"Name": "swiss chard",
-		"Text": "Once the broth is slowly bubbling, add the swiss chard."
-	},
-	"11": {
-		"n": "11",
-		"Name": "Cook for 15",
-		"Text": "Cover the pot let it cook for 15-20 minutes."
-	},
-	"12": {
-		"n": "12",
-		"Name": "End",
-		"Text": "Thank you for cooking with me"
 	}
-}
