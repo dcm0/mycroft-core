@@ -474,7 +474,7 @@ def create_gui_service(enclosure, config):
     # Disable all tornado logging so mycroft loglevel isn't overridden
     tornado.options.parse_command_line(['--logging=None'])
 
-    routes = [(config['route'], GUIWebsocketHandler), ('/wizard', WizardWebHandler)]
+    routes = [(config['route'], WizardWebHandler), ('/wizard', WizardWebHandler)]
 
     application = web.Application(routes, debug=True)
     application.enclosure = enclosure
