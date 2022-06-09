@@ -211,6 +211,7 @@ in mycroft.conf.
 Do you want to run on 'master' or against a dev branch?  Unless you are
 a developer modifying mycroft-core itself, you should run on the
 'master' branch.  It is updated bi-weekly with a stable release.
+(For Tama we must choose the DEV branch, so choose No)
   Y)es, run on the stable 'master' branch
   N)o, I want to run unstable branches"
     if get_YN ; then
@@ -228,6 +229,7 @@ Mycroft is actively developed and constantly evolving.  It is recommended
 that you update regularly.  Would you like to automatically update
 whenever launching Mycroft?  This is highly recommended, especially for
 those running against the 'master' branch.
+(For Tama it might be safer to do it manually)
   Y)es, automatically check for updates
   N)o, I will be responsible for keeping Mycroft updated."
     if get_YN ; then
