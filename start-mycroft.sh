@@ -265,6 +265,7 @@ case ${_opt} in
         "$DIR/bin/mycroft-skill-testrunner" vktest "$@"
         ;;
     "audiotest")
+        echo "Lauch opt ${_opt}" 
         launch_process "${_opt}"
         ;;
     "wakewordtest")
