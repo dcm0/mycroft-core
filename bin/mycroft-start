@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Copyright 2019 Mycroft AI Inc.
 #
@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-SOURCE="$0"
+SOURCE="${BASH_SOURCE[0]}"
+echo "Source set to "$SOURCE
 cd -P "$( dirname "$SOURCE" )"/.. || exit
 DIR="$( pwd )"
-
+echo "DIR set to "$DIR
 . "$DIR/start-mycroft.sh" "$@"
