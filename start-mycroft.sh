@@ -106,7 +106,7 @@ launch_process() {
 
     # Launch process in foreground
     echo "Starting $1"
-    python3 -m ${_module} "$@"
+    python3 -m ${_module} $_params
 }
 
 require_process() {
@@ -266,9 +266,9 @@ case ${_opt} in
         ;;
     "audiotest")
         
-        #_opt = $2    
-        #echo "Lauch opt ${_opt}" 
-        launch_process #"${_opt}"
+    
+        echo "Lauch opt ${_opt}" 
+        launch_process "${_opt}"
         ;;
     "wakewordtest")
         launch_process "${_opt}"
