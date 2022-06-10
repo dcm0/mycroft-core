@@ -51,6 +51,10 @@ def create_enclosure(platform):
         LOG.info("Creating Mark II Enclosure")
         from mycroft.client.enclosure.mark2 import EnclosureMark2
         enclosure = EnclosureMark2()
+    elif platform == "tama":
+        LOG.info("Creating Tama Enclosure")
+        from mycroft.client.enclosure.tama import EnclosureTama
+        enclosure = EnclosureTama()
     else:
         LOG.info("Creating generic enclosure, platform='{}'".format(platform))
 
