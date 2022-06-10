@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Copyright 2017 Mycroft AI Inc.
 #
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-SOURCE="$0"
+SOURCE="${BASH_SOURCE[0]}"
 echo "Start Source set to "$SOURCE
 
 script=${0}
@@ -168,7 +168,7 @@ check_dependencies() {
         git pull
     fi
     if [ ! -f .installed ] ; then
-        echo "NOT found .dev_opts.jason"
+        echo "NOT found .installed"
     fi
 
     if ! md5sum -c > /dev/null 2>&1 < .installed ; then
