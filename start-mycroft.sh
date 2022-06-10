@@ -15,12 +15,17 @@
 # limitations under the License.
 
 SOURCE="$0"
+echo "Start Source set to "$SOURCE
 
 script=${0}
+echo "SCript starts as "$script
 script=${script##*/}
+echo "Then Script is starts as "$script
 cd -P "$( dirname "$SOURCE" )" || exit 1 # Enter scripts folder or fail!
 DIR="$( pwd )"
+echo "DIR starts as "$DIR
 VIRTUALENV_ROOT=${VIRTUALENV_ROOT:-"${DIR}/.venv"}
+echo "VIRTUALENV_ROOT starts as "$VIRTUALENV_ROOT
 
 help() {
     echo "${script}:  Mycroft command/service launcher"
@@ -152,13 +157,22 @@ launch_all() {
 
 check_dependencies() {
     if [ -f .dev_opts.json ] ; then
+        echo "Found .dev_opts.jason"
         auto_update=$( jq -r ".auto_update" < .dev_opts.json 2> /dev/null)
     else
+        echo "NOT found .dev_opts.jason"
         auto_update="false"
     fi
     if [ "$auto_update" = "true" ] ; then
         # Check github repo for updates (e.g. a new release)
         git pull
+    fi
+    if [ ! -f .installed ] ; then
+        echo "NOT found .dev_opts.jason"
+    fi
+
+    if ! md5sum -c > /dev/null 2>&1 < .installed ; then
+        echo "md5sum failed for .installed"
     fi
 
     if [ ! -f .installed ] || ! md5sum -c > /dev/null 2>&1 < .installed ; then
