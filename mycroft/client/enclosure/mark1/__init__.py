@@ -272,9 +272,9 @@ class EnclosureMark1(Enclosure):
     def __init__(self):
         super().__init__()
 
-        self.__init_serial()
-        self.reader = EnclosureReader(self.serial, self.bus, self.lang)
-        self.writer = EnclosureWriter(self.serial, self.bus)
+        #self.__init_serial()
+        #self.reader = EnclosureReader(self.serial, self.bus, self.lang)
+        #self.writer = EnclosureWriter(self.serial, self.bus)
 
         # Prepare to receive message when the Arduino responds to the
         # following "system.version"
