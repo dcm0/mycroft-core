@@ -266,9 +266,9 @@ case ${_opt} in
         ;;
     "audiotest")
         
-        _opt = $2    
-        echo "Lauch opt ${_opt}" 
-        launch_process "${_opt}"
+        #_opt = $2    
+        #echo "Lauch opt ${_opt}" 
+        launch_process #"${_opt}"
         ;;
     "wakewordtest")
         launch_process "${_opt}"
