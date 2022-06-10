@@ -15,7 +15,8 @@
 # limitations under the License.
 
 SOURCE="${BASH_SOURCE[0]}"
-cd -P "$( dirname "$SOURCE" )"/..
+echo "Source set to "$SOURCE
+cd -P "$( dirname "$SOURCE" )"/.. || exit
 DIR="$( pwd )"
-
-. "$DIR/start-mycroft.sh" $@
+echo "DIR set to "$DIR
+. "$DIR/start-mycroft.sh" "$@"

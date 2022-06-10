@@ -14,17 +14,26 @@
 # limitations under the License.
 #
 
-import re
 import json
-import inflection
-from os.path import exists, isfile
+import os
+import re
+from os.path import exists, isfile, join, dirname
+
+import xdg.BaseDirectory
 from requests import RequestException
 
+from mycroft.util.combo_lock import ComboLock
+from mycroft.util.file_utils import get_temp_path
+from mycroft.util import camel_case_split
 from mycroft.util.json_helper import load_commented_json, merge_dict
 from mycroft.util.log import LOG
 
-from .locations import (DEFAULT_CONFIG, SYSTEM_CONFIG, USER_CONFIG,
-                        WEB_CONFIG_CACHE)
+from .locations import (
+    DEFAULT_CONFIG,
+    OLD_USER_CONFIG,
+    SYSTEM_CONFIG,
+    USER_CONFIG
+)
 
 
 def is_remote_list(values):
@@ -51,7 +60,8 @@ def translate_remote(config, setting):
         if k not in IGNORED_SETTINGS:
             # Translate the CamelCase values stored remotely into the
             # Python-style names used within mycroft-core.
-            key = inflection.underscore(re.sub(r"Setting(s)?", "", k))
+            key = re.sub(r"Setting(s)?", "", k)
+            key = camel_case_split(key).replace(" ", "_").lower()
             if isinstance(v, dict):
                 config[key] = config.get(key, {})
                 translate_remote(config[key], v)
@@ -83,8 +93,11 @@ def translate_list(config, values):
 
 class LocalConf(dict):
     """Config dictionary from file."""
+    _lock = ComboLock(get_temp_path('local-conf.lock'))
+
     def __init__(self, path):
         super(LocalConf, self).__init__()
+        self.is_valid = True  # is loaded json valid, updated when load occurs
         if path:
             self.path = path
             self.load_local(path)
@@ -105,29 +118,55 @@ class LocalConf(dict):
             except Exception as e:
                 LOG.error("Error loading configuration '{}'".format(path))
                 LOG.error(repr(e))
+                self.is_valid = False
         else:
             LOG.debug("Configuration '{}' not defined, skipping".format(path))
 
-    def store(self, path=None):
-        """Cache the received settings locally.
+    def store(self, path=None, force=False):
+        """Save config to disk.
 
         The cache will be used if the remote is unreachable to load settings
         that are as close to the user's as possible.
+
+        path (str): path to store file to, if missing will use the path from
+                    where the config was loaded.
+        force (bool): Set to True if writing should occur despite the original
+                      was malformed.
+
+        Returns:
+            (bool) True if save was successful, else False.
         """
-        path = path or self.path
-        with open(path, 'w') as f:
-            json.dump(self, f, indent=2)
+        result = False
+        with self._lock:
+            path = path or self.path
+            config_dir = dirname(path)
+            if not exists(config_dir):
+                os.makedirs(config_dir)
+
+            if self.is_valid or force:
+                with open(path, 'w') as f:
+                    json.dump(self, f, indent=2)
+                result = True
+            else:
+                LOG.warning((f'"{path}" was not a valid config file when '
+                             'loaded, will not save config. Please correct '
+                             'the json or remove it to allow updates.'))
+                result = False
+        return result
 
     def merge(self, conf):
         merge_dict(self, conf)
 
 
 class RemoteConf(LocalConf):
+    _lock = ComboLock(get_temp_path('remote-conf.lock'))
     """Config dictionary fetched from mycroft.ai."""
+
     def __init__(self, cache=None):
         super(RemoteConf, self).__init__(None)
 
-        cache = cache or WEB_CONFIG_CACHE
+        cache = cache or join(xdg.BaseDirectory.xdg_cache_home, 'mycroft',
+                              'web_cache.json')
         from mycroft.api import is_paired
         if not is_paired():
             self.load_local(cache)
@@ -155,7 +194,7 @@ class RemoteConf(LocalConf):
             translate_remote(config, setting)
             for key in config:
                 self.__setitem__(key, config[key])
-            self.store(cache)
+            self.store(cache, force=True)
 
         except RequestException as e:
             LOG.error("RequestException fetching remote configuration: {}"
@@ -168,13 +207,24 @@ class RemoteConf(LocalConf):
             self.load_local(cache)
 
 
+def _log_old_location_deprecation():
+    LOG.warning("\n ===============================================\n"
+                " ==             DEPRECATION WARNING           ==\n"
+                " ===============================================\n"
+                f" You still have a config file at {OLD_USER_CONFIG}\n"
+                " Note that this location is deprecated and will"
+                " not be used in the future\n"
+                " Please move it to "
+                f"{join(xdg.BaseDirectory.xdg_config_home, 'mycroft')}")
+
+
 class Configuration:
     """Namespace for operations on the configuration singleton."""
     __config = {}  # Cached config
     __patch = {}  # Patch config that skills can update to override config
 
     @staticmethod
-    def get(configs=None, cache=True):
+    def get(configs=None, cache=True, remote=True):
         """Get configuration
 
         Returns cached instance if available otherwise builds a new
@@ -183,6 +233,7 @@ class Configuration:
         Args:
             configs (list): List of configuration dicts
             cache (boolean): True if the result should be cached
+            remote (boolean): False if the Remote settings shouldn't be loaded
 
         Returns:
             (dict) configuration dictionary.
@@ -190,23 +241,50 @@ class Configuration:
         if Configuration.__config:
             return Configuration.__config
         else:
-            return Configuration.load_config_stack(configs, cache)
+            return Configuration.load_config_stack(configs, cache, remote)
 
     @staticmethod
-    def load_config_stack(configs=None, cache=False):
+    def load_config_stack(configs=None, cache=False, remote=True):
         """Load a stack of config dicts into a single dict
 
         Args:
             configs (list): list of dicts to load
             cache (boolean): True if result should be cached
-
+            remote (boolean): False if the Mycroft Home settings shouldn't
+                              be loaded
         Returns:
             (dict) merged dict of all configuration files
         """
         if not configs:
-            configs = [LocalConf(DEFAULT_CONFIG), RemoteConf(),
-                       LocalConf(SYSTEM_CONFIG), LocalConf(USER_CONFIG),
-                       Configuration.__patch]
+            configs = []
+
+            # First use the patched config
+            configs.append(Configuration.__patch)
+
+            # Then use XDG config
+            # This includes both the user config and
+            # /etc/xdg/mycroft/mycroft.conf
+            for conf_dir in xdg.BaseDirectory.load_config_paths('mycroft'):
+                configs.append(LocalConf(join(conf_dir, 'mycroft.conf')))
+
+            # Then check the old user config
+            if isfile(OLD_USER_CONFIG):
+                _log_old_location_deprecation()
+                configs.append(LocalConf(OLD_USER_CONFIG))
+
+            # Then use the system config (/etc/mycroft/mycroft.conf)
+            configs.append(LocalConf(SYSTEM_CONFIG))
+
+            # Then use remote config
+            if remote:
+                configs.append(RemoteConf())
+
+            # Then use the config that comes with the package
+            configs.append(LocalConf(DEFAULT_CONFIG))
+
+            # Make sure we reverse the array, as merge_dict will put every new
+            # file on top of the previous one
+            configs = reversed(configs)
         else:
             # Handle strings in stack
             for index, item in enumerate(configs):

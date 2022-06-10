@@ -17,21 +17,20 @@ Predefined step definitions for handling dialog interaction with Mycroft for
 use with behave.
 """
 from os.path import join, exists, basename
-from glob import glob
+from pathlib import Path
 import re
+from string import Formatter
 import time
 
 from behave import given, when, then
 
+from mycroft.dialog import MustacheDialogRenderer
 from mycroft.messagebus import Message
 from mycroft.audio import wait_while_speaking
+from mycroft.util.format import expand_options
 
 from test.integrationtests.voight_kampff import (mycroft_responses, then_wait,
                                                  then_wait_fail)
-
-
-TIMEOUT = 10
-SLEEP_LENGTH = 0.25
 
 
 def find_dialog(skill_path, dialog, lang):
@@ -47,10 +46,15 @@ def find_dialog(skill_path, dialog, lang):
 
 def load_dialog_file(dialog_path):
     """Load dialog files and get the contents."""
-    with open(dialog_path) as f:
-        lines = f.readlines()
-    return [l.strip().lower() for l in lines
-            if l.strip() != '' and l.strip()[0] != '#']
+    renderer = MustacheDialogRenderer()
+    renderer.load_template_file('template', dialog_path)
+    expanded_lines = []
+    for template in renderer.templates:
+        # Expand parentheses in lines
+        for line in renderer.templates[template]:
+            expanded_lines += expand_options(line)
+    return [line.strip().lower() for line in expanded_lines
+            if line.strip() != '' and line.strip()[0] != '#']
 
 
 def load_dialog_list(skill_path, dialog):
@@ -69,6 +73,26 @@ def load_dialog_list(skill_path, dialog):
     return load_dialog_file(dialog_path), debug
 
 
+def _get_dialog_files(skill_path, lang):
+    """Generator expression returning all dialog files.
+
+    This includes both the 'locale' and the older style 'dialog' folder.
+
+    Args:
+        skill_path (str): skill root folder
+        lang (str): language code to check
+
+    yields:
+        (Path) path of each found dialog file
+    """
+    in_dialog_dir = Path(skill_path, 'dialog', lang).rglob('*.dialog')
+    for dialog_path in in_dialog_dir:
+        yield dialog_path
+    in_locale_dir = Path(skill_path, 'locale', lang).rglob('*.dialog')
+    for dialog_path in in_locale_dir:
+        yield dialog_path
+
+
 def dialog_from_sentence(sentence, skill_path, lang):
     """Find dialog file from example sentence.
 
@@ -79,9 +103,8 @@ def dialog_from_sentence(sentence, skill_path, lang):
 
     Returns (str): Dialog file best matching the sentence.
     """
-    dialog_paths = join(skill_path, 'dialog', lang, '*.dialog')
     best = (None, 0)
-    for path in glob(dialog_paths):
+    for path in _get_dialog_files(skill_path, lang):
         patterns = load_dialog_file(path)
         match, _ = _match_dialog_patterns(patterns, sentence.lower())
         if match is not False:
@@ -96,19 +119,25 @@ def dialog_from_sentence(sentence, skill_path, lang):
 def _match_dialog_patterns(dialogs, sentence):
     """Match sentence against a list of dialog patterns.
 
-    Returns index of found match.
+    dialogs (list of str): dialog file entries to match against
+    sentence (str): string to match.
+
+    Returns:
+        (tup) index of found match, debug text
     """
     # Allow custom fields to be anything
-    dialogs = [re.sub(r'{.*?\}', r'.*', dia) for dia in dialogs]
-    # Remove left over '}'
-    dialogs = [re.sub(r'\}', r'', dia) for dia in dialogs]
-    dialogs = [re.sub(r' .* ', r' .*', dia) for dia in dialogs]
-    # Merge consequtive .*'s into a single .*
-    dialogs = [re.sub(r'\.\*( \.\*)+', r'.*', dia) for dia in dialogs]
-    # Remove double whitespaces
-    dialogs = ['^' + ' '.join(dia.split()) for dia in dialogs]
+    # i.e {field} gets turned into ".*"
+    regexes = []
+    for dialog in dialogs:
+        data = {element[1]: '.*'
+                for element in Formatter().parse(dialog)}
+        regexes.append(dialog.format(**data))
+
+    # Remove double whitespaces and ensure that it matches from
+    # the beginning of the line.
+    regexes = ['^' + ' '.join(reg.split()) for reg in regexes]
     debug = 'MATCHING: {}\n'.format(sentence)
-    for index, regex in enumerate(dialogs):
+    for index, regex in enumerate(regexes):
         match = re.match(regex, sentence)
         debug += '---------------\n'
         debug += '{} {}\n'.format(regex, match is not None)
@@ -235,8 +264,14 @@ def then_contains(context, text):
 @then('the user replies "{text}"')
 @then('the user says "{text}"')
 def then_user_follow_up(context, text):
-    time.sleep(2)
+    """Send a user response after being prompted by device.
+
+    The sleep after the device is finished speaking is to address a race
+    condition in the MycroftSkill base class conversational code.  It can
+    be removed when the race condition is addressed.
+    """
     wait_while_speaking()
+    time.sleep(2)
     context.bus.emit(Message('recognizer_loop:utterance',
                              data={'utterances': [text],
                                    'lang': context.lang,
@@ -247,13 +282,10 @@ def then_user_follow_up(context, text):
 
 @then('mycroft should send the message "{message_type}"')
 def then_messagebus_message(context, message_type):
-    """Set a timeout for the current Scenario."""
-    cnt = 0
-    while context.bus.get_messages(message_type) == []:
-        if cnt > int(TIMEOUT * (1.0 / SLEEP_LENGTH)):
-            assert False, "Message not found"
-            break
-        else:
-            cnt += 1
+    """Verify a specific message is sent."""
+    def check_dummy(message):
+        """We are just interested in the message data, just the type."""
+        return True, ""
 
-        time.sleep(SLEEP_LENGTH)
+    message_found, _ = then_wait(message_type, check_dummy, context)
+    assert message_found, "No matching message received."
