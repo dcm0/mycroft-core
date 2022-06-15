@@ -49,7 +49,7 @@ class CameraManager(Thread):
         self.other = None
         self.detecting = False
         self.image = GrayscaleImage()
-        self.camera_side = camera_side 
+        self.camera_side = camera_side # from tama perspective
         self.wakeFromGaze = True
         
 
