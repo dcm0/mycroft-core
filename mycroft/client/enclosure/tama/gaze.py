@@ -141,7 +141,7 @@ class CameraManager(Thread):
                             self.bus.emit(Message('enclosure.eyes.rawface', data))
 
                         if (pitch<10 and pitch>-2 and yaw<5 and yaw>-5):
-                            LOG.info("Found a looker" + self.camera_side)
+                            LOG.info("Found a looker from camera " + self.camera_side)
                             if biggestLooker:
                                 if biggestLooker.size < face.size:
                                     biggestLooker = face
