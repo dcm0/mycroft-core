@@ -199,7 +199,7 @@ class CameraManager(Thread):
                         x_sign = 0 
                         x_m = f_pos
                         y_sign = 0
-                        y_m = 30
+                        y_m = 10
                         LOG.info("In Move Right")
                         update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                         #self.writer.write(update_pos)
@@ -210,7 +210,7 @@ class CameraManager(Thread):
                         x_sign = 0 
                         x_m = f_pos
                         y_sign = 0
-                        y_m = 30
+                        y_m = 10
                         LOG.info("In Move Left")
                         update_pos='MOVE:'+str(x_sign)+":"+str(x_m)+":"+str(y_sign)+":"+str(y_m)+":\n"
                         #self.writer.write(update_pos)
