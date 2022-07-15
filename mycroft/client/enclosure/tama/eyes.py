@@ -75,7 +75,7 @@ class EnclosureEyes:
 
 
     def playSound(self, message):
-        audiopath = str(Path().absolute()) +'/mycroft/client/enclosure/tama/error.mp3'
+        audiopath = str(Path().absolute()) +'/mycroft/client/enclosure/tama/alarm.mov'
         LOG.info("BING Error sound "+ audiopath)
         play_audio_file(audiopath)
 
