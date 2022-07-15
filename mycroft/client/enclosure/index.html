@@ -556,7 +556,6 @@
 
 
 
-
         function createRecipeItem(item, type) {
             console.log("item" + item.toString())
             //step
@@ -567,7 +566,7 @@
 
                 } else {
                     // add a div for the timer and modify the timer function to be called from different button and get information from div
-                    htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button>  <label id=\"minutes"+ item.n+"\" >00</label>:<label id=\"seconds" + item.n + "\">00</label><br>  <button type=\"button\" onClick=\"timeOut('minutes" + item.n + "', 'seconds" + item.n + "', '"+ item.Time + "' )\" style='float:right'>Start Timer</button>   </div>";
+                    htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button>  <label id=\"minutes"+ item.n+"\" >00</label>:<label id=\"seconds" + item.n + "\">00</label><br>  <button type=\"button\" onClick=\"timeOut('minutes" + item.n + "', 'seconds" + item.n + "', '"+ item.Time + "' )\" style='float:right'>Start Timer</button>  </div>";
                 }
                                                                                                                                                                                                                                                                                                                                                                                 
 
@@ -675,7 +674,9 @@
         function timeOut(min, sec, time){
         var numSecAlarm = time * 1000; // Tama for the final alarm
         var numSecWar = numSecAlarm - 300; //the time when tama gives the alert the equation is (min * 60 * 1000) - 300, this way Tama will alert before 30 min of the timer finishes  
-        const myTimeout1 = setTimeout(actionOnTimeOut,numSecWar); // a time out for the warning 30 sec before the time is over
+        var minutesLabelTimer = document.getElementById(min);
+        var secondsLabelTimer = document.getElementById(sec);
+        const myTimeout1 = setTimeout(actionOnTimeOut,15000); // a time out for the warning 30 sec before the time is over
         const myTimeout2 = setTimeout(alarm,numSecAlarm);
 
         }
@@ -684,16 +685,14 @@
         function actionOnTimeOut(){
             console.log('Hi');
             // Alert the user in the speech mode
-            speackmsg("It will be done in 30 sec.");
+            speackmsg("It will be done in 30 seconds.");
 
             //Look at the pot in gaze mode, the pot is to the right from tama perspectives.
             moveRight();
         }
 
         function alarm(){
-
         console.log('Alert');
-
         error();
 
         }
