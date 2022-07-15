@@ -121,6 +121,18 @@
 
         }
 
+        function goAVR() {
+            logData('go AVR');
+            var msg = {
+                type: 'enclosure.eyes.avr',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+        }
+
         function changeEyeColor(color) {
             var msg = {
                 type: color,
@@ -816,6 +828,7 @@
         <button type="button" onclick="headOff()">Head off</button><br><br>
         <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Change color to yellow</button>
         <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Change color to green</button>
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.avr')">AVR</button>
         <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button>
 
 
