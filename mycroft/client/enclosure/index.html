@@ -16,7 +16,7 @@
         var ip = location.host;
         //var ws = new WebSocket("ws://130.237.40.92:8181/core");
         alert(ip);
-        var ws = new WebSocket("ws://"+ip+":8181/core");
+        var ws = new WebSocket("ws://"+ip+"/core");
         ws.onmessage = function (evt) {
             var received_msg = JSON.parse(evt.data); // the whole json
             // document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
