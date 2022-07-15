@@ -481,22 +481,13 @@ class EnclosureWriter(Thread):
                     #    self.signs[1]=b'\xFF'
 
                     #Do we still need the signs for this? I'm not sure any more 
-                    LOG.info("Moving to " + mylist[2] + " " + mylist[4])
-                    # self.movement((int)(mylist[2]), (int)(mylist[4]), True)
-                    # self.valx=abs(self.current_pos[0])
-                    # self.valy=abs(self.current_pos[1])
-                    # self.serial.write('M'.encode())
-                    # self.serial.write(self.signs[0])
-                    # self.serial.write(self.valx.to_bytes(1, 'little'))
-                    # self.serial.write(self.signs[1])
-                    # self.serial.write(self.valy.to_bytes(1, 'little'))
-                    # self.serial.write(self.val0.to_bytes(1, 'little'))
-                    # self.serial.write(self.val0.to_bytes(1, 'little'))
-
+                    int cx = (int)mylist[2]
+                    int cy = (int)mylist[4]
+                    LOG.info("Moving to " + cx + " " + cy)
                     self.serial.write('M'.encode())
                     self.val1=1
                     self.val0=0
-                    self.movement(30,30)
+                    self.movement(cx, cy, True)
                     self.valx=abs(self.current_pos[0])
                     self.valy=abs(self.current_pos[1])
                     self.serial.write(self.signs[0])
@@ -505,6 +496,19 @@ class EnclosureWriter(Thread):
                     self.serial.write(self.valy.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
                     self.serial.write(self.val0.to_bytes(1, 'little'))
+
+                    # self.serial.write('M'.encode())
+                    # self.val1=1
+                    # self.val0=0
+                    # self.movement(30,30)
+                    # self.valx=abs(self.current_pos[0])
+                    # self.valy=abs(self.current_pos[1])
+                    # self.serial.write(self.signs[0])
+                    # self.serial.write(self.valx.to_bytes(1, 'little'))
+                    # self.serial.write(self.signs[1])
+                    # self.serial.write(self.valy.to_bytes(1, 'little'))
+                    # self.serial.write(self.val0.to_bytes(1, 'little'))
+                    # self.serial.write(self.val0.to_bytes(1, 'little'))
 
                     
                     #LOG.info("Current position "+" "+ str(self.current_pos))
