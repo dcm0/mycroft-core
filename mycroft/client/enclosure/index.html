@@ -673,10 +673,11 @@
         //Alert on time out for cooking
         function timeOut(min, sec, time){
         var numSecAlarm = time * 1000; // Tama for the final alarm
-        var numSecWar = numSecAlarm - 300; //the time when tama gives the alert the equation is (min * 60 * 1000) - 300, this way Tama will alert before 30 min of the timer finishes  
-        var minutesLabelTimer = document.getElementById(min);
-        var secondsLabelTimer = document.getElementById(sec);
-        const myTimeout1 = setTimeout(actionOnTimeOut,20000); // a time out for the warning 30 sec before the time is over
+        var numSecWar = numSecAlarm - 3000; //the time when tama gives the alert the equation is (min * 60 * 1000) - 300, this way Tama will alert before 30 min of the timer finishes  
+        console.log(numSecWar)
+        var minutesLabelTimer = document.getElementById(min); // labels
+        var secondsLabelTimer = document.getElementById(sec); // labels
+        const myTimeout1 = setTimeout(actionOnTimeOut,); // a time out for the warning 30 sec before the time is over
         //const myTimeout2 = setTimeout(alarm,numSecAlarm);
 
         }
