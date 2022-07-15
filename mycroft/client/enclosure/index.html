@@ -679,12 +679,23 @@
         console.log('Alarm time : ' + numSecAlarm)
         var minutesLabelTimer = document.getElementById(min); // labels
         var secondsLabelTimer = document.getElementById(sec); // labels
-        const myTimeout1 = setTimeout(actionOnTimeOut,numSecWar); // a time out for the warning 30 sec before the time is over
-        const myTimeout2 = setTimeout(alarm,3000);
+        
+        var myInterval = new Array();
+        var totalSeconds = 0;
+        myInterval[index] = setInterval(setTime, 1000);
 
+        function setTime() {
+          ++totalSeconds;
+          secondsLabelTimer.innerHTML = pad(totalSeconds % 60);
+          minutesLabelTimer.innerHTML = pad(parseInt(totalSeconds / 60));
+            }
+
+        const myTimeout1 = setTimeout(actionOnTimeOut,numSecWar); // a time out for the warning 30 sec before the time is over
+        const myTimeout2 = setTimeout(alarm,numSecAlarm);
         }
 
-        //Tama after the alert
+
+        //Alarm function 
         function actionOnTimeOut(){
             console.log('Hi');
             // Alert the user in the speech mode
@@ -697,9 +708,7 @@
         function alarm(){
         console.log('Alert');
         error();
-
         }
-
 
 
         function pad(val) {
