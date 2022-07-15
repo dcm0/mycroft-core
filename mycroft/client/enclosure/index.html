@@ -686,6 +686,7 @@
 
         //changing the timer lables 
         var myInterval = new Array();
+        var index = 100;
         var totalSeconds = 0;
         myInterval[index] = setInterval(setTime, 1000);
 
@@ -694,7 +695,6 @@
           secondsLabelTimer.innerHTML = pad(totalSeconds % 60);
           minutesLabelTimer.innerHTML = pad(parseInt(totalSeconds / 60));
             }
-
         }
 
 
