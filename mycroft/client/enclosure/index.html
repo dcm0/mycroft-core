@@ -43,6 +43,17 @@
 
 
 
+        function moveEyesUp() {
+            logData('Home');
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 0, 'posvertical': 30 },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+        }
 
 
 
@@ -826,9 +837,11 @@
         <button type="button" onclick="moveLeft()">Move Left</button>
         <button type="button" onclick="headOn()">Head on</button>
         <button type="button" onclick="headOff()">Head off</button><br><br>
+        <button type="button" onclick="moveEyesUp()">Move eyes up</button>
         <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Change color to yellow</button>
         <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Change color to green</button>
         <button type="button" onclick="changeEyeColor('enclosure.eyes.avr')">AVR</button>
+        
         <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button>
 
 
