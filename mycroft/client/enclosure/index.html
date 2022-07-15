@@ -44,7 +44,7 @@
 
 
         function moveEyesUp() {
-            logData('Home');
+            logData('Eyes up');
             var msg = {
                 type: 'enclosure.head.move',
                 data: { 'pos': 30, 'posvertical': 30 },
@@ -852,8 +852,8 @@
         <button type="button" onclick="moveEyesUp()">Move eyes up</button>
         <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Change color to yellow</button>
         <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Change color to green</button>
-        <button type="button" onclick="changeEyeColor('enclosure.eyes.avr')">AVR</button>
-        <button type="button" onclick="changeEyeColor('enclosure.eyes.avl')">AVL</button>
+        <button type="button" onclick="goAVR()">AVR</button>
+        <button type="button" onclick="goAVL()">AVL</button>
         
         <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button>
 
