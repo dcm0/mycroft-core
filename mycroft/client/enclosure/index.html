@@ -13,7 +13,10 @@
 
         //"ws://10.204.0.28:8181/core"  -- SU
         //"ws://130.237.40.92:8181/core" --- KTH
-        var ws = new WebSocket("ws://130.237.40.92:8181/core");
+        var ip = location.host;
+        //var ws = new WebSocket("ws://130.237.40.92:8181/core");
+        alert(ip);
+        var ws = new WebSocket("ws://"+ip+":8181/core");
         ws.onmessage = function (evt) {
             var received_msg = JSON.parse(evt.data); // the whole json
             // document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
