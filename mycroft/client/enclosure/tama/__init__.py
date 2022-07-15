@@ -483,7 +483,7 @@ class EnclosureWriter(Thread):
                     #Do we still need the signs for this? I'm not sure any more 
                     cx = int(mylist[2])
                     cy = int(mylist[4])
-                    LOG.info("Moving to " + cx + " " + cy)
+                    LOG.info(f'Moving to {cx} {cy}')
                     self.serial.write('M'.encode())
                     self.val1=1
                     self.val0=0
