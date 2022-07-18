@@ -160,6 +160,30 @@
 
         }
 
+        function goAVR_pos() {
+            logData('go AVR');
+      
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': -30, 'posvertical': 30},
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+        function goAVL_pos() {
+            logData('go AVL');
+        
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 30, 'posvertical': 30},
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
         function changeEyeColor(color) {
             var msg = {
                 type: color,
@@ -858,6 +882,8 @@
         <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Change color to green</button>
         <button type="button" onclick="goAVR()">AVR</button>
         <button type="button" onclick="goAVL()">AVL</button>
+        <button type="button" onclick="goAVL_pos()">AVL pos</button>
+        <button type="button" onclick="goAVR_pos()">AVR pos</button>
         
         <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button>
 
