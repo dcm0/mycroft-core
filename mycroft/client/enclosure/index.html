@@ -908,22 +908,25 @@
 
 
     <div id="gaze">
-        <b>Head Control:</b>
+        <b>Head Control:</b><br>
         <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br>
+        <button type="button" onclick="headOn()">Head on</button>
+        <button type="button" onclick="headOff()">Head off</button><br><br>
+
         <button type="button" onclick="moveRight()">Move Right</button>
         <button type="button" onclick="moveHome()">Move Home</button>
         <button type="button" onclick="moveLeft()">Move Left</button>
-        <button type="button" onclick="headOn()">Head on</button>
-        <button type="button" onclick="headOff()">Head off</button><br><br>
-        <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Yellow eyes</button>
-        <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Green eyes</button>
         <button type="button" onclick="goAVL_pos()">AVL pos</button>
         <button type="button" onclick="goAVR_pos()">AVR pos</button>
 
         <button type="button" onclick="goAVR()">AVR</button>
         <button type="button" onclick="goAVL()">AVL</button>
-        
-        <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button><br>
+ 
+        <b>Eyes Control:</b><br>
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Yellow eyes</button>
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Green eyes</button>
+
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button><br><br>
 
         <b>Speech agent activation:</b> <br>
         <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activation-mutual gaze</input><br>
