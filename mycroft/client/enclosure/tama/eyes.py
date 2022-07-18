@@ -69,6 +69,7 @@ class EnclosureEyes:
         self.bus.on('recognizer_loop:audio_output_end', self.talkOver)
         self.bus.on('enclosure.head.move', self.move)
         self.bus.on('enclosure.sounds.bing', self.playSound)
+        self.bus.on('enclosure.sounds.hmm', self.playHmm)
         self.bus.on('enclosure.trial.start', self.trialStart)
         self.bus.on('enclosure.trial.end', self.trialEnd)
         self.bus.on('enclosure.trial.log', self.trialLog)
@@ -76,9 +77,16 @@ class EnclosureEyes:
         self.bus.on('enclosure.eyes.rgb.get', self.handle_get_color)
 
 
+
+
     def playSound(self, message):
         audiopath = str(Path().absolute()) +'/mycroft/client/enclosure/tama/alarm.mp3'
         LOG.info("BING Error sound "+ audiopath)
+        play_audio_file(audiopath)
+
+    def playHmm(self, message):
+        audiopath = str(Path().absolute()) +'/mycroft/client/enclosure/tama/hmm.mp3'
+        LOG.info("Hmm sound "+ audiopath)
         play_audio_file(audiopath)
 
 

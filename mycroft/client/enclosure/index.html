@@ -328,8 +328,46 @@
                 };
                 ws.send(JSON.stringify(msg))
             }, delayInMilliseconds);
+        }
+
+
+
+
+        function hmm() {
+            logData('Hmm');
+            var msg = {
+                type: 'enclosure.eyes.pink',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+
+            ws.send(JSON.stringify(msg));
+            msg = {
+                type: 'enclosure.sounds.hmm',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+
+            var delayInMilliseconds = 2000;
+            setTimeout(function () {
+                //your code to be executed after 1 second
+                console.log('go green');
+                var msg = {
+                    type: 'enclosure.eyes.green',
+                    data: '',
+                    end: '',
+                    context: { destination: '' }
+                };
+                ws.send(JSON.stringify(msg))
+            }, delayInMilliseconds);
 
         }
+
+
 
 
 
@@ -845,6 +883,7 @@
 
 
         <b>Generic sayings:</b> <br>
+        <button type="button" onclick="hmm()">Hmm sound</button>
 
         <button type="button"
             onClick="speackmsg('I am Sorry, I do not understand, I can not provide inforamtion about what you have asked!')">I
@@ -856,7 +895,6 @@
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
         <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value)">Speak</button><br>
-
 
         <label id="minutes">00</label>:<label id="seconds">00</label><br>
         <button type="button" id=timer onClick="startTimer('minutes','seconds', 100)">Start</button>
@@ -877,13 +915,13 @@
         <button type="button" onclick="moveLeft()">Move Left</button>
         <button type="button" onclick="headOn()">Head on</button>
         <button type="button" onclick="headOff()">Head off</button><br><br>
-        <button type="button" onclick="moveEyesUp()">Move eyes up</button>
-        <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Change color to yellow</button>
-        <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Change color to green</button>
-        <button type="button" onclick="goAVR()">AVR</button>
-        <button type="button" onclick="goAVL()">AVL</button>
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Yellow eyes</button>
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Green eyes</button>
         <button type="button" onclick="goAVL_pos()">AVL pos</button>
         <button type="button" onclick="goAVR_pos()">AVR pos</button>
+
+        <button type="button" onclick="goAVR()">AVR</button>
+        <button type="button" onclick="goAVL()">AVL</button>
         
         <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button>
 
