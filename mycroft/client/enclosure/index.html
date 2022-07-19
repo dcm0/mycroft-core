@@ -234,7 +234,10 @@
         var i = -1;
         var currentstepnum = i;
         function speackmsg(msg) {
-            goAVL_pos(); // look at the user
+            if(document.getElementById("mutualGaze")){
+                goAVL_pos(); // look at the user
+            }
+
             logData('Speak msg' + ' ' + msg);
             var msg = {
                 type: 'speak',
@@ -243,6 +246,11 @@
                 context: { destination: '' }
             };
             ws.send(JSON.stringify(msg));
+
+            if(document.getElementById("mutualGaze")){
+               moveHome(); // go back home
+            }
+
         }
 
 
@@ -934,9 +942,14 @@
 
         <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button><br><br>
 
+        <b>Kitchen Study:</b> <br>
+        <input type="checkbox"  id="mutualGaze">Tama - mutual gaze</input><br>
+
         <b>Speech agent activation:</b> <br>
         <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activation-mutual gaze</input><br>
         <input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>
+
+        
 
 
         <!-- <p>Message Bus:</p> -->
