@@ -192,14 +192,6 @@
                 context: { destination: '' }
             };
             ws.send(JSON.stringify(msg));
-
-            var msg = {
-                type: 'enclosure.head.move',
-                data: { 'pos': 0, 'posvertical': 0 },
-                end: '',
-                context: { destination: '' }
-            };
-            ws.send(JSON.stringify(msg));
         }
 
 
