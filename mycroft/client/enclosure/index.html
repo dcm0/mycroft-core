@@ -222,6 +222,9 @@
 
         function TextToSpeech(text) {
             logData('Speak msg' + ' ' + text);
+            if(document.getElementById("mutualGaze").checked == true){
+                goAVL_pos(); // look at the user
+            }
             var msg = {
                 type: 'speak',
                 data: { 'utterance': text },
@@ -246,7 +249,6 @@
                 context: { destination: '' }
             };
             ws.send(JSON.stringify(msg));
-
         }
 
 
@@ -939,7 +941,7 @@
         <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button><br><br>
 
         <b>Kitchen Study:</b> <br>
-        <input type="checkbox"  id="mutualGaze">Tama - mutual gaze</input><br>
+        <input type="checkbox"  id="mutualGaze" checked>Tama - mutual gaze</input><br>
 
         <b>Speech agent activation:</b> <br>
         <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activation-mutual gaze</input><br>
