@@ -234,7 +234,7 @@
         var i = -1;
         var currentstepnum = i;
         function speackmsg(msg) {
-            if(document.getElementById("mutualGaze")){
+            if(document.getElementById("mutualGaze").checked == true){
                 goAVL_pos(); // look at the user
             }
 
@@ -898,7 +898,7 @@
         <button type="button" onClick="speackmsg('No ')">No</button>
         
         
-        <button type="button" onClick="speackmsg('I am asorry, I can only see the pot and people faces')">I can see the
+        <button type="button" onClick="speackmsg('I am sorry, I can only see the pot and people faces')">I can see the
             pot and people faces</button>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
