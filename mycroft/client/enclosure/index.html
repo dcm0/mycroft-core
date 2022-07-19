@@ -248,6 +248,7 @@
             ws.send(JSON.stringify(msg));
 
             if(document.getElementById("mutualGaze")){
+            var delayInMilliseconds = 3000;
                moveHome(); // go back home
             }
 
@@ -892,7 +893,7 @@
         <button type="button" onclick="hmm()">Hmm sound</button>
 
         <button type="button"
-            onClick="speackmsg('I am Sorry, I do not understand, I can not provide inforamtion about what you have asked!')">I
+            onClick="speackmsg('I am Sorry, I do not understand, I can not provide information about what you have asked!')">I
             do not understand</button>
         <button type="button" onClick="speackmsg('The recipe says ')">The recipe says ...</button>
         
