@@ -222,9 +222,10 @@
 
         function TextToSpeech(text) {
             logData('Speak msg' + ' ' + text);
-            if(document.getElementById("mutualGaze").checked == true){
-                goAVL_pos(); // look at the user
+            if(document.getElementById("AVLOnSpeak").checked == true){
+                goAVL_pos(); // look at the user kitchen study the user to the left
             }
+
             var msg = {
                 type: 'speak',
                 data: { 'utterance': text },
@@ -237,7 +238,7 @@
         var i = -1;
         var currentstepnum = i;
         function speackmsg(msg) {
-            if(document.getElementById("mutualGaze").checked == true){
+            if(document.getElementById("AVLOnSpeak").checked == true){
                 goAVL_pos(); // look at the user
             }
 
@@ -941,7 +942,7 @@
         <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button><br><br>
 
         <b>Kitchen Study:</b> <br>
-        <input type="checkbox"  id="mutualGaze" checked>Tama - mutual gaze</input><br>
+        <input type="checkbox"  id="AVLOnSpeak" checked>Tama - head move to avl on speak</input><br>
 
         <b>Speech agent activation:</b> <br>
         <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activation-mutual gaze</input><br>
