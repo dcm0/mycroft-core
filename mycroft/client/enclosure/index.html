@@ -454,7 +454,7 @@
             btn.name = "speakBtn";
 
             btn.onclick = function () {
-                TextToSpeech(document.getElementById(textId).value,5);
+                TextToSpeech(document.getElementById(textId).value);
             };
 
             document.body.appendChild(btn);
@@ -711,7 +711,7 @@
             }
             //ingredients
             else if (type == 2) {
-                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value )\" style='float:right'>All</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "', 'type" + 2 + "')\" style='float:right'>Name</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value, type" + 2 + "'  )\" style='float:right'>All</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "', 'type" + 2 + "')\" style='float:right'>Name</button> </div>";
 
             }
 
