@@ -698,22 +698,22 @@
             //step
             if (type == 0) {
                 if (item.Time == 0) {
-                    htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'), '"+ alt + "')\" style='float:right'>Speak</button> </div>";
+                    htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'), '"+ 1 + "')\" style='float:right'>Speak</button> </div>";
 
                 } else {
                     // add a div for the timer and modify the timer function to be called from different button and get information from div
-                    htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'), '"+ alt + "')\" style='float:right'>Speak</button>  <label id=\"minutes"+ item.n+"\" >00</label>:<label id=\"seconds" + item.n + "\">00</label><br>  <button type=\"button\" onClick=\"timeOut('minutes" + item.n + "', 'seconds" + item.n + "', '"+ item.Time + "' )\" style='float:right;margin-top: -28px;'>Start Timer</button>  </div>";
+                    htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'), '"+ 1 + "')\" style='float:right'>Speak</button>  <label id=\"minutes"+ item.n+"\" >00</label>:<label id=\"seconds" + item.n + "\">00</label><br>  <button type=\"button\" onClick=\"timeOut('minutes" + item.n + "', 'seconds" + item.n + "', '"+ item.Time + "' )\" style='float:right;margin-top: -28px;'>Start Timer</button>  </div>";
                 }
                                                                                                                                                                                                                                                                                                                                                                                 
 
             }
             //alternative
             else if (type == 1) {
-                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px;'><textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px; margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'), '"+ alt + "')\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px;'><textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px; margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'), '"+ 1 + "')\" style='float:right'>Speak</button> </div>";
             }
             //ingredients
             else if (type == 2) {
-                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value, '"+ ing + "')\" style='float:right'>All</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "', 'type" + 2 + "')\" style='float:right'>Name</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value, '"+ 2 + "')\" style='float:right'>All</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "', 'type" + 2 + "')\" style='float:right'>Name</button> </div>";
 
             }
 
