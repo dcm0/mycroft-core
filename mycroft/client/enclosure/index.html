@@ -184,6 +184,18 @@
             ws.send(JSON.stringify(msg));
         }
 
+        function goAVL_pos() {
+            logData('go AVL');
+        
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 0, 'posvertical': 35},
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
         function changeEyeColor(color) {
             var msg = {
                 type: color,
@@ -929,6 +941,7 @@
 
         <button type="button" onclick="moveHome()">Move Home</button>
         <button type="button" onclick="goAVL_pos()">AVL pos</button><br>
+        <button type="button" onclick="goUp_pos()">Up</button><br>
 
         <button type="button" onclick="moveRight()">Move Right</button>
         <button type="button" onclick="moveLeft()">Move Left</button>
