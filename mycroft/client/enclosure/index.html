@@ -232,8 +232,16 @@
         }
 
 
-        function TextToSpeech(text) {
+        function TextToSpeech(text, type) {
             logData('Speak msg' + ' ' + text);
+            if (type ==0){
+                logData('message box');
+            }else if (type ==1){
+                logData('alternative');
+            }else if (type ==2){
+                logData('ingredients');
+            }
+
             if(document.getElementById("AVLOnSpeak").checked == true){
                 goAVL_pos(); // look at the user kitchen study the user to the left
             }
@@ -421,6 +429,10 @@
             ws.send(JSON.stringify(msg));
         }
 
+        function Suggestion(){
+            logData('Suggestion');
+
+        }
 
         // Adding a text and button on click
         var counter = 0;
@@ -693,11 +705,11 @@
             }
             //alternative
             else if (type == 1) {
-                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px;'><textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px; margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'))\" style='float:right'>Speak</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px;'><textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px; margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "', 1))\" style='float:right'>Speak</button> </div>";
             }
             //ingredients
             else if (type == 2) {
-                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value)\" style='float:right'>All</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "')\" style='float:right'>Name</button> </div>";
+                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value, 2)\" style='float:right'>All</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "')\" style='float:right'>Name</button> </div>";
 
             }
 
@@ -707,7 +719,7 @@
         }
 
 
-        function recipePress(divname) {
+        function recipePress(divname, type) {
             //this function both controlls the 'whats the last thing I pressed'
             //as well as the texhtospeech
             var elements = document.getElementsByClassName("active")
@@ -716,7 +728,7 @@
             }
             console.log(divname)
             divname.classList.add("active");
-            TextToSpeech(divname.value);
+            TextToSpeech(divname.value, type);
         }
 
         function readTextFile() {
@@ -914,13 +926,14 @@
         <button type="button" onClick="speackmsg('No ')">No</button>
         <button type="button" onClick="speackmsg('You are welcome')"> Welcome</button>
         <button type="button" onClick="alarm()"> Alarm</button>
+        <button type="button" onClick="Suggestion()"> Suggestion</button>
         
         
         <button type="button" onClick="speackmsg('I am sorry, I can only see the pot and people faces')">I can see the
             pot and people faces</button>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
-        <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value)">Speak</button><br>
+        <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value, 0)">Speak</button><br>
 
         <label id="minutes">00</label>:<label id="seconds">00</label><br>
         <button type="button" id=timer onClick="startTimer('minutes','seconds', 100)">Start</button>
