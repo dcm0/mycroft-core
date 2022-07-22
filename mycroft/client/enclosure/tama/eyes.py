@@ -161,7 +161,7 @@ class EnclosureEyes:
 
     #changed from green to yellow
     def talkOver(self, event=None):
-        self.writer.write("YELLOW") 
+        self.writer.write("RED") 
 
     #CHANGED from blu and the AVR is commented 
     def think(self, event=None):
