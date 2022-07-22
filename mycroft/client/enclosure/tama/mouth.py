@@ -60,7 +60,7 @@ class EnclosureMouth:
         self.writer.write("PINK")
 
     def think(self, event=None):
-        self.writer.write("YELLOW")#changed from green
+        self.writer.write("RED")# changed from green
         self.writer.write("AVR")
 
     def listen(self, event=None):
