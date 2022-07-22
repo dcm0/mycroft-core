@@ -189,7 +189,7 @@
         
             var msg = {
                 type: 'enclosure.head.move',
-                data: { 'pos': 0, 'posvertical': 35},
+                data: { 'pos': 0, 'posvertical': 40},
                 end: '',
                 context: { destination: '' }
             };
@@ -234,12 +234,12 @@
 
         function TextToSpeech(text, type) {
             console.log(type);
-            if (type == 0){
+            if (type == 3){
                 logData('message box');
             }else if (type == 1){
                 logData('alternative');
             }else if (type == 2){
-                logData('ingredients');
+                logData('ingredient');
             }
             
             logData('Speak msg' + ' ' + text);
@@ -929,14 +929,12 @@
         <button type="button" onClick="speackmsg('No ')">No</button>
         <button type="button" onClick="speackmsg('You are welcome')"> Welcome</button>
         <button type="button" onClick="alarm()"> Alarm</button>
-        <button type="button" onClick="Suggestion()"> Suggestion</button>
-        
         
         <button type="button" onClick="speackmsg('I am sorry, I can only see the pot and people faces')">I can see the
             pot and people faces</button>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
-        <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value, 0)">Speak</button><br>
+        <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value, 3)">Speak</button><br>
 
         <label id="minutes">00</label>:<label id="seconds">00</label><br>
         <button type="button" id=timer onClick="startTimer('minutes','seconds', 100)">Start</button>
