@@ -64,7 +64,7 @@ class EnclosureMouth:
         self.writer.write("AVR")
 
     def listen(self, event=None):
-        self.writer.write("YELLOW") #yellow
+        self.writer.write("RED") #yellow
 
     def smile(self, event=None):
         self.writer.write("mouth.smile")

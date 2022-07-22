@@ -161,7 +161,7 @@ class EnclosureEyes:
 
     #changed from green to yellow
     def talkOver(self, event=None):
-        self.writer.write("GREEN") 
+        self.writer.write("YELLOW") # this is too short flash after the speaker finishes
 
     #CHANGED from blu and the AVR is commented 
     def think(self, event=None):
