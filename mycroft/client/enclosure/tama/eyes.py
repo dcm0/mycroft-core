@@ -157,7 +157,7 @@ class EnclosureEyes:
         
 
     def talk(self, event=None):
-        self.writer.write("PINK")
+        self.writer.write("RED")
 
     #changed from green to yellow
     def talkOver(self, event=None):
