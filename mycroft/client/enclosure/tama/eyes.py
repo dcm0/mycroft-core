@@ -268,7 +268,7 @@ class EnclosureEyes:
 
         if(self.automove):
             self.writer.write("HOME")
-        self.writer.write("GREEN")
+        self.writer.write("YELLOW") #changed from green
 
     def spin(self, event=None):
         self.writer.write("eyes.spin")
