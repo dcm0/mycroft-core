@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tama Page</title>
+
+    <script type="text/javascript">
+        // window.location.hostname
+        // Let us open a web socket
+
+        //"ws://10.204.0.28:8181/core"  -- SU
+        //"ws://130.237.40.92:8181/core" --- KTH
+        ws://10.204.0.28:18181/core
+        var ip = location.host;
+        //var ws = new WebSocket("ws://130.237.40.92:8181/core");
+        //alert(ip);
+        var ws = new WebSocket("ws://"+ip.replace('18181', '8181')+"/core");
+        ws.onmessage = function (evt) {
+            var received_msg = JSON.parse(evt.data); // the whole json
+            // document.getElementById("info").value = document.getElementById("info").value + "\n" + evt.data;
+            // document.getElementById("info").value = document.getElementById("info").value + "\n" + received_msg.type;
+            if (received_msg.type == "enclosure.eyes.lookstatus") {
+                alert(received_msg.data["data"]);
+                result = received_msg.data["data"];
+                autoFlag = result == "true" ? true : false;
+                document.getElementById("AutoHead").checked = autoFlag;
+                document.getElementById("AutoHead").dispatchEvent(new Event('change', { 'bubbles': true }));
+            }
+            if (received_msg.type == "enclosure.eyes.gazeWake") {
+                alert(received_msg.data["data"]);
+                result = received_msg.data["data"];
+                autoGaze = result == "true" ? true : false;
+                document.getElementById("gazeWake").checked = autoGaze;
+                document.getElementById("gazeWake").dispatchEvent(new Event('change', { 'bubbles': true }));
+            }
+            if (received_msg.type == "enclosure.eyes.voiceWake") {
+                alert(received_msg.data["data"]);
+                result = received_msg.data["data"];
+                autoWake = result == "true" ? true : false;
+                document.getElementById("voiceWake").checked = autoWake;
+                document.getElementById("voiceWake").dispatchEvent(new Event('change', { 'bubbles': true }));
+            }
+        };
+
+
+
+        function moveEyesUp() {
+            logData('Eyes up');
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 30, 'posvertical': 30 },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+        }
+
+
+
+        function moveHome() {
+            logData('Home');
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 0, 'posvertical': 0 },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+        }
+
+        // from Tama persepctives
+        function moveLeft() {
+            logData('Left');
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 30, 'posvertical': 0 },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+        }
+
+
+        function moveRight() {
+            logData('Right');
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': -30, 'posvertical': 0},
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+        }
+
+        function AutoHead() {
+            logData('AutoHead');
+            ws.send("Message to send");
+            var msg = {
+                type: 'enclosure.eyes.toggleAutolook',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+
+        function headOff() {
+            logData('Head off');
+            var msg = {
+                type: 'enclosure.eyes.off',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+        }
+
+        function headOn() {
+            logData('Head on');
+            var msg = {
+                type: 'enclosure.eyes.on',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+        }
+
+        function goAVR() {
+            logData('go AVR');
+            var msg = {
+                type: 'enclosure.eyes.avr',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+        }
+
+        function goAVL() {
+            logData('go AVL');
+            var msg = {
+                type: 'enclosure.eyes.avl',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+        }
+
+        function goAVR_pos() {
+            logData('go AVR');
+      
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': -30, 'posvertical': 35},
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+        function goAVL_pos() {
+            logData('go AVL');
+        
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 30, 'posvertical': 35},
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+        function goUp_pos() {
+            logData('go up');
+        
+            var msg = {
+                type: 'enclosure.head.move',
+                data: { 'pos': 0, 'posvertical': 40},
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+        function changeEyeColor(color) {
+            var msg = {
+                type: color,
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+
+        function gazeWake() {
+            logData('Gaze awake');
+            ws.send("Message to send");
+            var msg = {
+                type: 'enclosure.eyes.toggleGazeWake',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+        function voiceWake() {
+            logData('Voice awake');
+            ws.send("Message to send");
+            var msg = {
+                type: 'enclosure.eyes.toggleVoiceWake',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+
+        function TextToSpeech(text, type) {
+            console.log(type);
+            if (type == 3){
+                logData('message box');
+            }else if (type == 1){
+                logData('alternative');
+            }else if (type == 2){
+                logData('ingredient');
+            }
+            
+            logData('Speak msg' + ' ' + text);
+            
+            if(document.getElementById("AVLOnSpeak").checked == true){
+                goAVL_pos(); // look at the user kitchen study the user to the left
+            }
+
+            var msg = {
+                type: 'speak',
+                data: { 'utterance': text },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+        var i = -1;
+        var currentstepnum = i;
+        function speackmsg(msg) {
+            if(document.getElementById("AVLOnSpeak").checked == true){
+                goAVL_pos(); // look at the user
+            }
+
+            logData("generic sayings");
+
+            logData('Speak msg' + ' ' + msg);
+            var msg = {
+                type: 'speak',
+                data: { 'utterance': msg },
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+
+        function next() {
+            logData('Next');
+            document.getElementById('inc').value = ++i;
+            currentstepnum = i;
+            document.getElementById('speechtext').value = data[i];
+            speackmsg(data[i]);
+
+        }
+
+        function back() {
+            logData('Back');
+            document.getElementById('inc').value = --i;
+            currentstepnum = i;
+            document.getElementById('speechtext').value = data[i];
+            speackmsg(data[i]);
+        }
+
+        function restart() {
+            logData('Restart');
+            i = -1;
+            document.getElementById('inc').value = i;
+            currentstepnum = i;
+            document.getElementById('speechtext').value = '';
+        }
+
+        function reset() {
+            logData('Reset');
+            i = currentstepnum;
+            document.getElementById('inc').value = i;
+            currentstepnum = i;
+            document.getElementById('speechtext').value = data[i];
+            speackmsg(data[i]);
+        }
+
+        function repeat() {
+            logData('Repeat');
+            i = currentstepnum;
+            document.getElementById('inc').value = i;
+            currentstepnum = i;
+            document.getElementById('speechtext').value = data[i];
+            speackmsg(data[i]);
+        }
+
+
+        function error() {
+            logData('Error');
+            var msg = {
+                type: 'enclosure.eyes.pink',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+
+            ws.send(JSON.stringify(msg));
+            msg = {
+                type: 'enclosure.sounds.bing',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+
+            var delayInMilliseconds = 2000;
+            setTimeout(function () {
+                //your code to be executed after 1 second
+                console.log('go green');
+                var msg = {
+                    type: 'enclosure.eyes.green',
+                    data: '',
+                    end: '',
+                    context: { destination: '' }
+                };
+                ws.send(JSON.stringify(msg))
+            }, delayInMilliseconds);
+        }
+
+
+
+
+        function hmm() {
+            logData('Hmm');
+            var msg = {
+                type: 'enclosure.eyes.pink',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+
+            ws.send(JSON.stringify(msg));
+            msg = {
+                type: 'enclosure.sounds.hmm',
+                data: '',
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+
+
+            var delayInMilliseconds = 2000;
+            setTimeout(function () {
+                //your code to be executed after 1 second
+                console.log('go green');
+                var msg = {
+                    type: 'enclosure.eyes.green',
+                    data: '',
+                    end: '',
+                    context: { destination: '' }
+                };
+                ws.send(JSON.stringify(msg))
+            }, delayInMilliseconds);
+
+        }
+
+
+
+
+
+        function play() {
+            logData('Play');
+            //if we need to go to specific step number then we need to -1 as the array starts from 0
+            var j = document.getElementById('inc').value;
+            document.getElementById('speechtext').value = data[j - 1];
+            speackmsg(data[j - 1]);
+        }
+
+
+        function startTrial() {
+            logData('Start trial');
+        }
+
+        function endTrial() {
+            logData('End trial');
+        }
+
+        function logData(logLine) {
+            var msg = {
+                type: 'enclosure.trial.log',
+                data: logLine,
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+
+        function audioAction(logLine, action) {
+            var msg = {
+                type: action,
+                data: logLine,
+                end: '',
+                context: { destination: '' }
+            };
+            ws.send(JSON.stringify(msg));
+        }
+
+        function Suggestion(){
+            logData('Suggestion');
+
+        }
+
+        // Adding a text and button on click
+        var counter = 0;
+        function addTxtBtn() {
+            var textId = "createdmsg" + counter;
+            //var textcounter = String(counter);
+            var txt = document.createElement("INPUT");
+            txt.setAttribute("type", "text");
+            txt.setAttribute("value", " ");
+            txt.setAttribute("id", textId);
+            document.body.appendChild(txt);
+
+            var btn = document.createElement("BUTTON")
+            btn.setAttribute("value", "Speak");
+            btn.innerHTML = "Speak";
+            btn.setAttribute("id", String(counter));
+            btn.name = "speakBtn";
+
+            btn.onclick = function () {
+                TextToSpeech(document.getElementById(textId).value);
+            };
+
+            document.body.appendChild(btn);
+            counter++;
+
+        }
+
+
+        dataJson = {
+            "1": {
+                "n": "1",
+                "Name": "Now, soup",
+                "Text": "Now, we are going to cook a vegetable soup, ask me if you need help!",
+                "Time": 0
+            },
+            "2": {
+                "n": "2",
+                "Name": "butter",
+                "Text": "Heat the butter in a large pot over medium heat",
+                "Time": 0,
+                "Alternatives": {
+                    "2.1": {
+                        "n": "2.1",
+                        "Name": "Interject",
+                        "Text": "If you don't have butter, you can use olive oil"
+                    },
+                    "2.2": {
+                        "n": "2.2",
+                        "Name": "Abrupt",
+                        "Text": "When you replace butter with olive oil, remember to lower the heat as the frying temperature is higher for oil"
+                    }
+                }
+            },
+            "3": {
+                "n": "3",
+                "Name": "Onions",
+                "Text": "Chop the onions and add them to the pot. Season with salt and pepper.",
+                "Time": 0,
+                "Alternatives": {
+                    "3.1": {
+                        "n": "3.1",
+                        "Name": "Interject",
+                        "Text": "Just add a bit of salt, remember that the broth is salty."
+                    },
+                    "3.2": {
+                        "n": "3.2",
+                        "Name": "Interject",
+                        "Text": "Chop the onion to one centimeter large pieces."
+                    }
+                }
+            },
+            "4": {
+                "n": "4",
+                "Name": "Simmer",
+                "Text": "Let simmer for 3 minutes.",
+                "Time": 3
+            },
+            "5": {
+                "n": "5",
+                "Name": "add veg",
+                "Text": "Chop and add one garlic clove, then peel and chop two carrots in small pieces, one celery stick, and half a zucchini and add them to the pot.",
+                "Time": 0,
+                "Alternatives": {
+                    "5.1": {
+                        "n": "5.1",
+                        "Name": "inj",
+                        "Text": "If you want a sweeter soup, you can add another carrot."
+                    }
+                }
+            },
+            "6": {
+                "n": "6",
+                "Name": "Season and simmer",
+                "Text": "Season with some more salt and pepper and let simmer for 6 minutes, stirring frequently.",
+                "Time": 6
+            },
+            "7": {
+                "n": "7",
+                "Name": "Add cannellini et al",
+                "Text": "Add one chopped bell pepper and one can of tomatoes to the pot and let simmer for 3-4 minutes. ",
+                "Time": 4,
+                "Alternatives": {
+                    "7.1": {
+                        "n": "7.1",
+                        "Name": "inj",
+                        "Text": "If You want a spicy soup you can add some chili flakes."
+                    }
+                }
+            },
+            "8": {
+                "n": "8",
+                "Name": "If thicker",
+                "Text": "Add one dl of cream and let it simmer for two minutes",
+                "Time": 2
+            },
+
+
+            "9": {
+                "n": "9",
+                "Name": "add beans",
+                "Text": "Drain and add the Cannellini Beans",
+                "Time": 0
+            },
+
+
+            "10": {
+                "n": "10",
+                "Name": "Broth",
+                "Text": "Pour 6 dl of broth into the pot and bring it to a slow boil.",
+                "Time": 0,
+                "Alternatives": {
+                    "10.1": {
+                        "n": "10.1",
+                        "Name": "inj",
+                        "Text": "If you don't have prepared broth, you can add a vegetable or chicken Bouillon cube and six dl of water."
+                    },
+                    "10.2": {
+                        "n": "10.2",
+                        "Name": "Abrupt",
+                        "Text": "If you want to increase the thickness of a soup, you can add a table spoon of flour to a bit of water and mix them together, then add it to the soup"
+                    },
+                }
+            },
+            "11": {
+                "n": "11",
+                "Name": "swiss chard",
+                "Text": "Once the broth is slowly bubbling, chop the swiss chard leaves and add them to the soup.",
+                "Time": 0
+            },
+            "12": {
+                "n": "12",
+                "Name": "Oregano",
+                "Text": "Season with some Oregano.",
+                "Time": 0
+            },
+            "13": {
+                "n": "13",
+                "Name": "Cook for 15",
+                "Text": "Cover the pot and let it cook for 15-20 minutes.",
+                "Time": 20
+            },
+            "14": {
+                "n": "14",
+                "Name": "End",
+                "Text": "Thank you for cooking with me",
+                "Time": 0
+            }
+        };
+
+
+
+        ingredientsJson = {
+            "1": {
+                "n": "1",
+                "Name": "Butter",
+                "Text": "2 tablespoons of butter"
+            },
+
+            "2": {
+                "n": "2",
+                "Name": "White Onion",
+                "Text": "One small chopped White Onion",
+            },
+
+
+            "3": {
+                "n": "3",
+                "Name": "Salt",
+                "Text": "Half teaspoon Salt",
+            },
+
+            "4": {
+                "n": "4",
+                "Name": "Pepper",
+                "Text": "Half teaspoon Pepper",
+            },
+
+
+            "5": {
+                "n": "5",
+                "Name": "Garlic",
+                "Text": "One clove of minced Garlic"
+            },
+
+            "6": {
+                "n": "6",
+                "Name": "Carrot",
+                "Text": "Two small chopped Carrot"
+            },
+            "7": {
+                "n": "7",
+                "Name": "Celery",
+                "Text": "One stick chopped Celery"
+            },
+            "8": {
+                "n": "8",
+                "Name": "Zucchini",
+                "Text": "Half a Zucchini, diced",
+            },
+            "9": {
+                "n": "9",
+                "Name": "Cannellini beans",
+                "Text": "One can of Cannellini Beans",
+            },
+            "10": {
+                "n": "10",
+                "Name": "Bell pepper",
+                "Text": "One Chopped Red Bell Pepper"
+            },
+            "11": {
+                "n": "11",
+                "Name": "Tomatoes",
+                "Text": "One can of Diced Tomatoes"
+            },
+            "12": {
+                "n": "12",
+                "Name": "Dried oregano",
+                "Text": "Half teaspoon dried Oregano"
+            },
+
+            "13": {
+                "n": "13",
+                "Name": "Swiss chard",
+                "Text": "Two leaves swiss chard"
+            },
+
+            "14": {
+                "n": "14",
+                "Name": "Broth",
+                "Text": "6 dl of Vegetable or Chicken Broth"
+            }
+        };
+
+
+
+        function createRecipeItem(item, type) {
+            console.log("item" + item.toString())
+
+            //step
+            if (type == 0) {
+                if (item.Time == 0) {
+                    htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'), '"+ 2 + "')\" style='float:right'>Speak</button> </div>";
+
+                } else {
+                    // add a div for the timer and modify the timer function to be called from different button and get information from div
+                    htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'), '"+ 2 + "')\" style='float:right'>Speak</button>  <label id=\"minutes"+ item.n+"\" >00</label>:<label id=\"seconds" + item.n + "\">00</label><br>  <button type=\"button\" onClick=\"timeOut('minutes" + item.n + "', 'seconds" + item.n + "', '"+ item.Time + "' )\" style='float:right;margin-top: -28px;'>Start Timer</button>  </div>";
+                }
+                                                                                                                                                                                                                                                                                                                                                                                
+
+            }
+            //alternative
+            else if (type == 1) {
+                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px;'><textarea type=\"text\" id=\"textmsg" + item.n + "\" style='height:50px;width:300px; margin-left:10px;''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"recipePress(document.getElementById('textmsg" + item.n + "'), '"+ 1 + "')\" style='float:right'>Speak</button> </div>";
+            }
+            //ingredients
+            else if (type == 2) {
+                htmlStringItem = "<div id=" + item.n + " style='border:0px solid black; margin:10px; min-height: 50px'> <textarea type=\"text\" id=\"ingtext" + item.n + "\" style='height:50px;width:300px''>" + item.Text + " </textarea> <button type=\"button\" onClick=\"TextToSpeech(document.getElementById('ingtext" + item.n + "').value, '"+ 2 + "')\" style='float:right'>All</button> <button type=\"button\" onClick=\"TextToSpeech('" + item.Name + "', 'type" + 2 + "')\" style='float:right'>Name</button> </div>";
+
+            }
+
+
+            //htmlStringItem = "<li id=" + item.n + " >" + item.Name + "</li>";
+            return htmlStringItem;
+        }
+
+
+        function recipePress(divname, type) {
+            console.log("recipe press "+ type)
+            //this function both controlls the 'whats the last thing I pressed'
+            //as well as the texhtospeech
+            var elements = document.getElementsByClassName("active")
+            if (elements.length > 0) {
+                elements[0].classList.remove("active");
+            }
+            console.log(divname)
+            divname.classList.add("active");
+            TextToSpeech(divname.value, type);
+        }
+
+        function readTextFile() {
+            //filePath = '/mycroft/client/enclosure/recipe.json'
+            var output = "";
+            for (var key in dataJson) {
+                item = dataJson[key]
+                output += createRecipeItem(dataJson[key], 0);
+                if (dataJson[key].Alternatives != null) {
+                    alt = dataJson[key].Alternatives
+                    for (var key2 in alt) {
+                        output += createRecipeItem(alt[key2], 1);
+                    }
+                }
+
+                console.log("----------------");
+
+            }
+            output += "";
+            document.getElementById("recipelist").innerHTML = output;
+        }
+
+
+        function readIngredients() {
+            var output2 = "";
+            for (var key3 in ingredientsJson) {
+                item = ingredientsJson[key3];
+                output2 += createRecipeItem(ingredientsJson[key3], 2);
+                console.log(ingredientsJson[key3])
+            }
+
+            output2 += "";
+            document.getElementById("ingredientslist").innerHTML = output2;
+
+        }
+
+        var myInterval = new Array();
+        var minutesLabel;
+        var secondsLabell;
+        
+
+        function resetTimer(index){
+            clearInterval(myInterval[index]);
+            secondsLabel.innerHTML = pad(0);
+            minutesLabel.innerHTML = pad(0);
+        }
+
+        function stopTimer(index) {
+            clearInterval(myInterval[index]);
+        }
+        
+        //start timer
+        function startTimer(min, sec, index) {
+            minutesLabel = document.getElementById(min);
+            secondsLabel = document.getElementById(sec);
+          
+            if(myInterval[index] !== null){
+                clearInterval(myInterval[index]);
+                secondsLabel.innerHTML = pad(0);
+                minutesLabel.innerHTML = pad(0);
+            }
+
+            var totalSeconds = 0;
+
+            myInterval[index] = setInterval(setTime, 1000);
+
+            function setTime() {
+                ++totalSeconds;
+                secondsLabel.innerHTML = pad(totalSeconds % 60);
+                minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+            }
+        }
+
+        //Alert on time out for cooking
+        function timeOut(min, sec, time){
+        var numSecAlarm = time * 60 *1000; // Tama for the final alarm
+        var numSecWar = numSecAlarm - 30000; //the time when tama gives the alert the equation is (min * 60 * 1000) - 300, this way Tama will alert before 30 min of the timer finishes  
+        console.log('warning time : ' + numSecWar)
+        console.log('Alarm time : ' + numSecAlarm)
+        var minutesLabelTimer = document.getElementById(min); // labels
+        var secondsLabelTimer = document.getElementById(sec); // labels
+        
+        //set time out for the warning and for the alarm
+        const myTimeout1 = setTimeout(actionOnTimeOut,numSecWar); // a time out for the warning 30 sec before the time is over
+        const myTimeout2 = setTimeout(alarm,numSecAlarm);
+
+        //changing the timer lables 
+        var myInterval = new Array();
+        var index = 100;
+        var totalSeconds = 0;
+        myInterval[index] = setInterval(setTime, 1000);
+
+        function setTime() {
+          ++totalSeconds;
+          secondsLabelTimer.innerHTML = pad(totalSeconds % 60);
+          minutesLabelTimer.innerHTML = pad(parseInt(totalSeconds / 60));
+            }
+        }
+
+
+        //Alarm function 
+        function actionOnTimeOut(){
+            console.log('Hi');
+            // Alert the user in the speech mode
+            speackmsg("It will be done in 30 seconds.");
+
+            //Look at the pot in gaze mode, the pot is to the right from tama perspectives.
+            moveRight();
+        }
+
+        function alarm(){
+        console.log('Alert');
+        error();
+        }
+
+
+        function pad(val) {
+                var valString = val + "";
+                if (valString.length < 2) {
+                    return "0" + valString;
+                } else {
+                    return valString;
+                }
+            }
+
+
+        function readTime(min,sec, index) {
+            var minutesLabel = parseInt(document.getElementById(min).innerHTML);
+            var secondsLabel = parseInt(document.getElementById(sec).innerHTML);
+            var timemsg = " "
+
+            if (minutesLabel == 0) {
+                timemsg = "It is been cooking for " + secondsLabel + " seconds";
+
+            } else {
+                timemsg = "it is been cooking for " + minutesLabel + " minutes and " + secondsLabel + " seconds";
+            }
+
+            speackmsg(timemsg);
+
+        }
+
+
+    </script>
+
+
+</head>
+
+<body>
+    <h1>Tama control station</h1>
+    <div id="recipe">
+
+        <div id="recipelist">
+        </div>
+        <br><br>
+
+        <button type="button" onClick="readTextFile()">Add the recipe steps</button>
+
+
+        <!-- <b>List of recommendations:</b><br> -->
+        <!-- <button onclick="addTxtBtn()">Add a recommendations</button> -->
+        <br><br>
+
+        <button type="button" onClick="readIngredients()">Add the list of ingredients</button>
+        <div id="ingredientslist">
+        </div>
+
+
+    </div>
+
+
+    <div id="short">
+        <!-- <button type="button" onclick="startTrial()">Start trial</button>
+        <button type="button" onclick="endTrial()">End trial</button><br><br> -->
+        <br><br>
+
+        <button type="button" onClick="audioAction('stop audio', 'mycroft.audio.speech.stop')"
+            style="background-color:red;">S T O P</button>
+
+
+        <br><br>
+
+
+        <b>Generic sayings:</b> <br>
+        <button type="button" onclick="hmm()">Hmm sound</button>
+
+        <button type="button"
+            onClick="speackmsg('I am Sorry, I do not understand, I can not provide information about what you have asked!')">I
+            do not understand</button>
+        <button type="button" onClick="speackmsg('The recipe says ')">The recipe says ...</button>
+        
+        <button type="button" onClick="speackmsg('Should I start a timer? ')">Should I start a timer?</button>
+        <button type="button" onClick="speackmsg('Yes ')">Yes</button>
+        <button type="button" onClick="speackmsg('Sure ')">Sure</button>
+        <button type="button" onClick="speackmsg('No ')">No</button>
+        <button type="button" onClick="speackmsg('You are welcome')"> Welcome</button>
+        <button type="button" onClick="alarm()"> Alarm</button>
+        
+        <button type="button" onClick="speackmsg('I am sorry, I can only see the pot and people faces')">I can see the
+            pot and people faces</button>
+        <label for="html">Message:</label>
+        <input type="text" id="textmsg" value=""></input>
+        <button type="button" onClick="TextToSpeech(document.getElementById('textmsg').value, 3)">Speak</button><br>
+
+        <label id="minutes">00</label>:<label id="seconds">00</label><br>
+        <button type="button" id=timer onClick="startTimer('minutes','seconds', 100)">Start</button>
+        <button type="button" id=timer onClick="resetTimer(100)">Reset</button>
+        <button type="button" id=timer onClick="stopTimer(100)">Stop</button>
+
+        <button type="button" onClick="readTime('minutes', 'seconds',100)">Read time</button><br>
+
+    </div>
+
+
+
+    <div id="gaze">
+        <b>Head Control:</b><br>
+        <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br>
+        <button type="button" onclick="headOn()">Head on</button>
+        <button type="button" onclick="headOff()">Head off</button><br><br>
+
+        <button type="button" onclick="moveHome()">Move Home</button>
+        <button type="button" onclick="goAVL_pos()">AVL pos</button><br>
+        <button type="button" onclick="goUp_pos()">Up</button><br>
+
+        <button type="button" onclick="moveRight()">Move Right</button>
+        <button type="button" onclick="moveLeft()">Move Left</button>
+        <button type="button" onclick="goAVR_pos()">AVR pos</button><br><br>
+       
+
+        <!-- <button type="button" onclick="goAVR()">AVR</button>
+        <button type="button" onclick="goAVL()">AVL</button><br><br>-->
+ 
+        <b>Eyes Control:</b><br>
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.yellow')">Yellow eyes</button>
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.green')">Green eyes</button>
+
+        <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button><br><br>
+
+        <b>Kitchen Study:</b> <br>
+        <input type="checkbox"  id="AVLOnSpeak" checked>Tama - head move to avl on speak</input><br>
+
+        <b>Speech agent activation:</b> <br>
+        <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activation-mutual gaze</input><br>
+        <input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>
+
+        
+
+
+        <!-- <p>Message Bus:</p> -->
+        <!-- <textarea id="info" name="info" rows="10" cols="50"></textarea> -->
+
+</body>
+
+</html>
+<style>
+    #recipe {
+        width: 40%;
+        background-color: beige;
+        display: inline-block;
+    }
+
+    #short {
+        width: 20%;
+        display: inline-block;
+        vertical-align: top;
+        position: fixed;
+        top: 20px;
+        right: 30%;
+    }
+
+    #gaze {
+        width: 30%;
+        background-color: beige;
+        display: inline-block;
+        vertical-align: top;
+        position: fixed;
+        top: 20px;
+        right: 0px;
+    }
+
+    .active {
+        border: 3px solid green;
+    }
+
+    /* CSS */
+    button {
+        background-color: rgba(51, 51, 51, 0.05);
+        align-items: center;
+        border-radius: 8px;
+        border-width: 0;
+        color: #333333;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        list-style: none;
+        margin: 0;
+        padding: 10px 12px;
+        text-align: center;
+        transition: all 200ms;
+        vertical-align: baseline;
+        white-space: nowrap;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+</style>

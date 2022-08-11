@@ -536,7 +536,7 @@
             "7": {
                 "n": "7",
                 "Name": "Add cannellini et al",
-                "Text": "Add one chopped bell pepper and tomatoes to the pot and let simmer for 3-4 minutes. ",
+                "Text": "Add one chopped bell pepper and one can of tomatoes to the pot and let simmer for 3-4 minutes. ",
                 "Time": 4,
                 "Alternatives": {
                     "7.1": {
@@ -611,13 +611,13 @@
         ingredientsJson = {
             "1": {
                 "n": "1",
-                "Name": "Butter",
+                "Name": "Smör",
                 "Text": "2 tablespoons of butter"
             },
 
             "2": {
                 "n": "2",
-                "Name": "White Onion",
+                "Name": "Lök",
                 "Text": "One small chopped White Onion",
             },
 
@@ -630,25 +630,25 @@
 
             "4": {
                 "n": "4",
-                "Name": "Pepper",
+                "Name": "Peppar",
                 "Text": "Half teaspoon Pepper",
             },
 
 
             "5": {
                 "n": "5",
-                "Name": "Garlic",
+                "Name": "Vitlök",
                 "Text": "One clove of minced Garlic"
             },
 
             "6": {
                 "n": "6",
-                "Name": "Carrot",
+                "Name": "morot",
                 "Text": "Two small chopped Carrot"
             },
             "7": {
                 "n": "7",
-                "Name": "Celery",
+                "Name": "Selleri",
                 "Text": "One stick chopped Celery"
             },
             "8": {
@@ -658,22 +658,22 @@
             },
             "9": {
                 "n": "9",
-                "Name": "Cannellini beans",
+                "Name": "Vita böner",
                 "Text": "One can of Cannellini Beans",
             },
             "10": {
                 "n": "10",
-                "Name": "Bell pepper",
+                "Name": "Paprika",
                 "Text": "One Chopped Red Bell Pepper"
             },
             "11": {
                 "n": "11",
-                "Name": "Tomatoes",
+                "Name": "Tomater",
                 "Text": "One can of Diced Tomatoes"
             },
             "12": {
                 "n": "12",
-                "Name": "Dried oregano",
+                "Name": "Torkad oregano",
                 "Text": "Half teaspoon dried Oregano"
             },
 
@@ -685,7 +685,7 @@
 
             "14": {
                 "n": "14",
-                "Name": "Broth",
+                "Name": "Buljong",
                 "Text": "6 dl of Vegetable or Chicken Broth"
             }
         };
@@ -921,18 +921,18 @@
         <button type="button" onclick="hmm()">Hmm sound</button>
 
         <button type="button"
-            onClick="speackmsg('I am Sorry, I do not understand, I can not provide information about what you have asked!')">I
+            onClick="speackmsg('Ursäkta mig, jag kan inte ge information om vad du har frågat!!')">I
             do not understand</button>
-        <button type="button" onClick="speackmsg('The recipe says ')">The recipe says ...</button>
+        <button type="button" onClick="speackmsg('Receptet säger ')">The recipe says ...</button>
         
-        <button type="button" onClick="speackmsg('Should I start a timer? ')">Should I start a timer?</button>
-        <button type="button" onClick="speackmsg('Yes ')">Yes</button>
-        <button type="button" onClick="speackmsg('Sure ')">Sure</button>
-        <button type="button" onClick="speackmsg('No ')">No</button>
-        <button type="button" onClick="speackmsg('You are welcome')"> Welcome</button>
+        <button type="button" onClick="speackmsg('Ska jag starta en timer?')">Should I start a timer?</button>
+        <button type="button" onClick="speackmsg('Ja ')">Yes</button>
+        <button type="button" onClick="speackmsg('absolut')">Sure</button>
+        <button type="button" onClick="speackmsg('Nej ')">No</button>
+        <button type="button" onClick="speackmsg('Varsågod')"> Welcome</button>
         <button type="button" onClick="alarm()"> Alarm</button>
         
-        <button type="button" onClick="speackmsg('I am sorry, I can only see the pot and people faces')">I can see the
+        <button type="button" onClick="speackmsg('Ursäkta mig, jag kan bara se potten och människors ansikten')">I can see the
             pot and people faces</button>
         <label for="html">Message:</label>
         <input type="text" id="textmsg" value=""></input>
@@ -951,7 +951,7 @@
 
     <div id="gaze">
         <b>Head Control:</b><br>
-        <input type="checkbox" onClick="AutoHead()" id="AutoHead" checked>Auto head</input><br>
+        <input type="checkbox" onClick="AutoHead()" id="AutoHead">Auto head</input><br>
         <button type="button" onclick="headOn()">Head on</button>
         <button type="button" onclick="headOff()">Head off</button><br><br>
 
@@ -974,11 +974,11 @@
         <button type="button" onclick="changeEyeColor('enclosure.eyes.none')">Turn eyes off</button><br><br>
 
         <b>Kitchen Study:</b> <br>
-        <input type="checkbox"  id="AVLOnSpeak" checked>Tama - head move to avl on speak</input><br>
+        <input type="checkbox"  id="AVLOnSpeak">Tama - head move to avl on speak</input><br>
 
         <b>Speech agent activation:</b> <br>
-        <input type="checkbox" onClick="gazeWake()" id="gazeWake" checked>Gaze activation-mutual gaze</input><br>
-        <input type="checkbox" onClick="voiceWake()" id="voiceWake" checked>Listen for Wakeword</input><br><br>
+        <input type="checkbox" onClick="gazeWake()" id="gazeWake">Gaze activation-mutual gaze</input><br>
+        <input type="checkbox" onClick="voiceWake()" id="voiceWake">Listen for Wakeword</input><br><br>
 
         
 
