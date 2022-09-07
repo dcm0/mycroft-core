@@ -536,7 +536,7 @@
             "7": {
                 "n": "7",
                 "Name": "Add Paprika",
-                "Text": "å Tillsätt en hackad paprika och en burk tomater i grytan och låt puttra i 3-4 minuter.",
+                "Text": "å Tillsätt en hackad paprika och en burk tomater i grytan och låt puttra i 3 minuter.",
                 "Time": 4,
                 "Alternatives": {
                     "7.1": {
@@ -866,10 +866,10 @@
             var timemsg = " "
 
             if (minutesLabel == 0) {
-                timemsg = "It is been cooking for " + secondsLabel + " seconds";
+                timemsg = "å det har kokat för" + secondsLabel + "sekunder";
 
             } else {
-                timemsg = "it is been cooking for " + minutesLabel + " minutes and " + secondsLabel + " seconds";
+                timemsg = "å det har kokat för" + minutesLabel + " minuter och " + secondsLabel + "sekunder";
             }
 
             speackmsg(timemsg);
@@ -925,7 +925,7 @@
             do not understand</button>
         <button type="button" onClick="speackmsg('å Receptet säger ')">Receptet säger...</button>
         
-        <button type="button" onClick="speackmsg('å Ska jag starta en timer?')">Ska jag starta en timer?</button>
+        <button type="button" onClick="speackmsg('å Om du vill jag kan starta en timer')">Ska jag starta en timer?</button>
         <button type="button" onClick="speackmsg('å Ja ')">Ja</button>
         <button type="button" onClick="speackmsg('å absolut')">Absolut</button>
         <button type="button" onClick="speackmsg('å precis')">Precis</button>
